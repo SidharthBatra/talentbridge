@@ -1,0 +1,15 @@
+# Dependencies & build
+node_modules/
+dist/
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+
+# Test coverage
+coverage/
+coverage-e2e/
+
+# Logs
+*.log
