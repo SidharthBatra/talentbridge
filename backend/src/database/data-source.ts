@@ -3,6 +3,9 @@ import { config as loadEnv } from 'dotenv';
 import { DataSource } from 'typeorm';
 import { RefreshToken } from '../modules/auth/entities/refresh-token.entity';
 import { User } from '../modules/users/entities/user.entity';
+import { JobPosting } from '../modules/jobs/entities/job-posting.entity';
+import { Application } from '../modules/applications/entities/application.entity';
+import { Interview } from '../modules/interviews/entities/interview.entity';
 
 loadEnv();
 
@@ -16,7 +19,7 @@ export const AppDataSource = new DataSource({
   url:
     process.env.DATABASE_URL ??
     'postgres://talentbridge:talentbridge@localhost:5432/talentbridge',
-  entities: [User, RefreshToken],
+  entities: [User, RefreshToken, JobPosting, Application, Interview],
   // __dirname-relative so a ts-node run (src/database) picks up src/migrations
   // and a compiled run (dist/database) picks up dist/migrations — never both.
   migrations: [__dirname + '/../migrations/*.{ts,js}'],
