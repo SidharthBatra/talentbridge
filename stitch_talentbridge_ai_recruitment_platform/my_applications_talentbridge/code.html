@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Applications | TalentBridge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#006c49",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-secondary-fixed-variant": "#005236",
+                    "on-background": "#0d1c2e",
+                    "on-primary-fixed": "#000d60",
+                    "secondary-container": "#6cf8bb",
+                    "on-secondary": "#ffffff",
+                    "surface-bright": "#f8f9ff",
+                    "primary-container": "#2e3a8c",
+                    "secondary-fixed-dim": "#4edea3",
+                    "tertiary": "#412600",
+                    "error-container": "#ffdad6",
+                    "tertiary-container": "#5f3a00",
+                    "on-primary-fixed-variant": "#333f91",
+                    "error": "#ba1a1a",
+                    "surface-tint": "#4b57aa",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-container-low": "#eff4ff",
+                    "surface": "#f8f9ff",
+                    "surface-container-high": "#dce9ff",
+                    "on-surface-variant": "#454651",
+                    "outline-variant": "#c6c5d3",
+                    "on-tertiary": "#ffffff",
+                    "primary": "#142175",
+                    "primary-fixed": "#dfe0ff",
+                    "on-surface": "#0d1c2e",
+                    "on-primary-container": "#9ea9ff",
+                    "surface-variant": "#d5e3fc",
+                    "on-error-container": "#93000a",
+                    "background": "#f8f9ff",
+                    "inverse-surface": "#233144",
+                    "outline": "#767682",
+                    "on-tertiary-container": "#f29c06",
+                    "surface-container": "#e6eeff",
+                    "on-tertiary-fixed": "#2a1700",
+                    "primary-fixed-dim": "#bcc3ff",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#00714d",
+                    "on-primary": "#ffffff",
+                    "inverse-primary": "#bcc3ff",
+                    "surface-container-highest": "#d5e3fc",
+                    "on-secondary-fixed": "#002113",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#6ffbbe",
+                    "surface-dim": "#ccdbf3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "md": "16px",
+                    "margin-desktop": "40px",
+                    "sm": "12px",
+                    "gutter": "20px",
+                    "xl": "32px",
+                    "xs": "8px",
+                    "margin-mobile": "16px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "title-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .pipeline-line {
+            height: 2px;
+            flex-grow: 1;
+            margin-top: 10px;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface-container-low shadow-sm">
+<div class="flex items-center gap-xl">
+<span class="text-title-md font-title-md font-bold text-primary">TalentBridge</span>
+<div class="hidden md:flex items-center gap-lg">
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">Dashboard</a>
+<a class="text-primary border-b-2 border-primary pb-1 text-label-sm font-label-sm" href="#">Postings</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">Candidates</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-xs rounded-full hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a corporate recruiter in a bright, modern office setting. The lighting is soft and natural, emphasizing a friendly and approachable persona. The background features a clean, minimalist workspace with subtle hints of technology, consistent with a high-end HR tech platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-lcihYe-SsH0QCSWn2p_FgYYld6-zasFoYZGRP2KktjJxoaw9nzmoWTaEsGbIWsUoy0URstqe4JCvfywkDHKpZi_Ut4JrDwSe6aGDrzp4aPkz94Hz9GiTlRHWEDydiwFUUGkzOo9GwQ7iySGoQNQsQgI_dFXKpZrRPMTzxvR1Oc6xEEWqifofxyPiwq_C2LkIBwlSf5Kn8m9J3VBbTnXMnECmqIeslZW5oBjBC1LS-AxIdIWI3rVh"/>
+</div>
+</div>
+</nav>
+<!-- Sidebar & Layout Wrapper -->
+<div class="flex pt-16 min-h-screen">
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col h-full w-64 fixed left-0 bg-surface-container-low border-r border-outline-variant p-md space-y-xs overflow-y-auto">
+<div class="mb-lg px-xs">
+<div class="flex items-center gap-xs mb-xs">
+<span class="material-symbols-outlined text-primary text-headline-lg">hub</span>
+<span class="text-headline-lg font-headline-lg text-primary">Recruiter</span>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant opacity-70">Global Talent Hub</p>
+</div>
+<nav class="flex-grow space-y-base">
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-body-md font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md p-md bg-secondary-container text-on-secondary-container rounded-lg font-bold scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">work</span>
+<span class="text-body-md font-body-md">Postings</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-body-md font-body-md">Candidates</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-body-md font-body-md">Analytics</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-body-md font-body-md">Settings</span>
+</a>
+</nav>
+<button class="w-full bg-primary text-on-primary py-md rounded-xl font-bold flex items-center justify-center gap-xs mb-lg">
+<span class="material-symbols-outlined">add</span>
+<span>Post New Job</span>
+</button>
+<div class="border-t border-outline-variant pt-md">
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="text-body-md font-body-md">Help</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-body-md font-body-md">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-grow lg:ml-64 p-margin-desktop bg-surface-bright relative">
+<!-- Atmospheric Header Background -->
+<div class="absolute top-0 left-0 w-full h-48 overflow-hidden -z-10 opacity-30">
+
+</div>
+<header class="mb-xl">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">My Applications</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant">Track your active candidacy journeys across various roles.</p>
+</header>
+<!-- Filters & Actions -->
+<div class="flex flex-wrap items-center justify-between gap-md mb-lg">
+<div class="flex items-center gap-xs">
+<button class="px-md py-xs rounded-full bg-primary text-on-primary font-bold text-label-sm">Active (4)</button>
+<button class="px-md py-xs rounded-full bg-surface-container-highest text-on-surface-variant text-label-sm">Archived</button>
+<button class="px-md py-xs rounded-full bg-surface-container-highest text-on-surface-variant text-label-sm">Drafts</button>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-md">search</span>
+<input class="pl-10 pr-md py-2 border border-outline-variant rounded-lg bg-surface-container-lowest focus:outline-none focus:border-primary text-body-md" placeholder="Search applications..." type="text"/>
+</div>
+</div>
+<!-- Application List -->
+<div class="space-y-md">
+<!-- Card 1: Shortlisted -->
+<article class="glass-card rounded-xl p-lg shadow-sm border-l-4 border-primary transition-all hover:shadow-md">
+<div class="flex flex-col lg:flex-row justify-between gap-lg items-start lg:items-center">
+<div class="flex items-center gap-md min-w-[300px]">
+<div class="w-14 h-14 rounded-lg bg-surface-container-high flex items-center justify-center p-sm">
+<span class="material-symbols-outlined text-primary text-[32px]">architecture</span>
+</div>
+<div>
+<h3 class="text-title-md font-title-md text-on-surface">Senior UX Designer</h3>
+<div class="flex items-center gap-xs text-on-surface-variant text-body-md">
+<span>Google Cloud</span>
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<span>Mountain View, CA (Remote)</span>
+</div>
+</div>
+</div>
+<!-- Pipeline Stepper -->
+<div class="flex-grow flex items-center max-w-2xl w-full">
+<!-- Stage: Applied -->
+<div class="flex flex-col items-center gap-xs flex-1">
+<div class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="text-label-sm font-label-sm text-primary">Applied</span>
+</div>
+<div class="pipeline-line bg-primary"></div>
+<!-- Stage: Screened -->
+<div class="flex flex-col items-center gap-xs flex-1">
+<div class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="text-label-sm font-label-sm text-primary">Screened</span>
+</div>
+<div class="pipeline-line bg-primary"></div>
+<!-- Stage: Shortlisted (Current) -->
+<div class="flex flex-col items-center gap-xs flex-1">
+<div class="w-7 h-7 rounded-full border-2 border-primary bg-primary-container text-on-primary-container flex items-center justify-center ring-4 ring-primary-fixed-dim">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">stars</span>
+</div>
+<span class="text-label-sm font-label-sm text-primary font-bold">Shortlisted</span>
+</div>
+<div class="pipeline-line bg-outline-variant"></div>
+<!-- Stage: Interview -->
+<div class="flex flex-col items-center gap-xs flex-1 opacity-40">
+<div class="w-6 h-6 rounded-full bg-outline-variant flex items-center justify-center"></div>
+<span class="text-label-sm font-label-sm">Interview</span>
+</div>
+<div class="pipeline-line bg-outline-variant"></div>
+<!-- Stage: Offer -->
+<div class="flex flex-col items-center gap-xs flex-1 opacity-40">
+<div class="w-6 h-6 rounded-full bg-outline-variant flex items-center justify-center"></div>
+<span class="text-label-sm font-label-sm">Offer</span>
+</div>
+</div>
+<div class="flex flex-col items-end gap-sm min-w-[180px]">
+<span class="px-md py-1 bg-secondary-container text-on-secondary-container rounded-full text-label-sm font-bold flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+                                Interviewing soon
+                            </span>
+<button class="text-primary text-label-sm font-bold flex items-center gap-xs hover:underline">
+                                View Details <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 2: Interviewing -->
+<article class="glass-card rounded-xl p-lg shadow-sm border-l-4 border-secondary transition-all hover:shadow-md">
+<div class="flex flex-col lg:flex-row justify-between gap-lg items-start lg:items-center">
+<div class="flex items-center gap-md min-w-[300px]">
+<div class="w-14 h-14 rounded-lg bg-surface-container-high flex items-center justify-center p-sm">
+<span class="material-symbols-outlined text-secondary text-[32px]">dataset</span>
+</div>
+<div>
+<h3 class="text-title-md font-title-md text-on-surface">Data Infrastructure Engineer</h3>
+<div class="flex items-center gap-xs text-on-surface-variant text-body-md">
+<span>Stripe</span>
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<span>Dublin, Ireland (Hybrid)</span>
+</div>
+</div>
+</div>
+<!-- Pipeline Stepper -->
+<div class="flex-grow flex items-center max-w-2xl w-full">
+<!-- Stage: Applied -->
+<div class="flex flex-col items-center gap-xs flex-1">
+<div class="w-6 h-6 rounded-full bg-secondary text-on-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="text-label-sm font-label-sm text-secondary">Applied</span>
+</div>
+<div class="pipeline-line bg-secondary"></div>
+<!-- Stage: Screened -->
+<div class="flex flex-col items-center gap-xs flex-1">
+<div class="w-6 h-6 rounded-full bg-secondary text-on-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="text-label-sm font-label-sm text-secondary">Screened</span>
+</div>
+<div class="pipeline-line bg-secondary"></div>
+<!-- Stage: Shortlisted -->
+<div class="flex flex-col items-center gap-xs flex-1">
+<div class="w-6 h-6 rounded-full bg-secondary text-on-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="text-label-sm font-label-sm text-secondary">Shortlisted</span>
+</div>
+<div class="pipeline-line bg-secondary"></div>
+<!-- Stage: Interview (Current) -->
+<div class="flex flex-col items-center gap-xs flex-1">
+<div class="w-7 h-7 rounded-full border-2 border-secondary bg-secondary-container text-on-secondary-container flex items-center justify-center ring-4 ring-secondary-fixed-dim">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">groups</span>
+</div>
+<span class="text-label-sm font-label-sm text-secondary font-bold">Interview</span>
+</div>
+<div class="pipeline-line bg-outline-variant"></div>
+<!-- Stage: Offer -->
+<div class="flex flex-col items-center gap-xs flex-1 opacity-40">
+<div class="w-6 h-6 rounded-full bg-outline-variant flex items-center justify-center"></div>
+<span class="text-label-sm font-label-sm">Offer</span>
+</div>
+</div>
+<div class="flex flex-col items-end gap-sm min-w-[180px]">
+<span class="px-md py-1 bg-secondary-container text-on-secondary-container rounded-full text-label-sm font-bold flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">event</span>
+                                Interviewing next week
+                            </span>
+<button class="text-secondary text-label-sm font-bold flex items-center gap-xs hover:underline">
+                                View Invitation <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 3: Applied -->
+<article class="glass-card rounded-xl p-lg shadow-sm border-l-4 border-outline-variant transition-all hover:shadow-md">
+<div class="flex flex-col lg:flex-row justify-between gap-lg items-start lg:items-center">
+<div class="flex items-center gap-md min-w-[300px]">
+<div class="w-14 h-14 rounded-lg bg-surface-container-high flex items-center justify-center p-sm">
+<span class="material-symbols-outlined text-outline text-[32px]">bolt</span>
+</div>
+<div>
+<h3 class="text-title-md font-title-md text-on-surface">Product Marketing Lead</h3>
+<div class="flex items-center gap-xs text-on-surface-variant text-body-md">
+<span>Figma</span>
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<span>New York, NY (In-person)</span>
+</div>
+</div>
+</div>
+<!-- Pipeline Stepper -->
+<div class="flex-grow flex items-center max-w-2xl w-full">
+<!-- Stage: Applied (Current) -->
+<div class="flex flex-col items-center gap-xs flex-1">
+<div class="w-7 h-7 rounded-full border-2 border-primary bg-primary-container text-on-primary-container flex items-center justify-center ring-4 ring-primary-fixed-dim">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">send</span>
+</div>
+<span class="text-label-sm font-label-sm text-primary font-bold">Applied</span>
+</div>
+<div class="pipeline-line bg-outline-variant"></div>
+<!-- Stage: Screened -->
+<div class="flex flex-col items-center gap-xs flex-1 opacity-40">
+<div class="w-6 h-6 rounded-full bg-outline-variant flex items-center justify-center"></div>
+<span class="text-label-sm font-label-sm">Screened</span>
+</div>
+<div class="pipeline-line bg-outline-variant"></div>
+<!-- Stage: Shortlisted -->
+<div class="flex flex-col items-center gap-xs flex-1 opacity-40">
+<div class="w-6 h-6 rounded-full bg-outline-variant flex items-center justify-center"></div>
+<span class="text-label-sm font-label-sm">Shortlisted</span>
+</div>
+<div class="pipeline-line bg-outline-variant"></div>
+<!-- Stage: Interview -->
+<div class="flex flex-col items-center gap-xs flex-1 opacity-40">
+<div class="w-6 h-6 rounded-full bg-outline-variant flex items-center justify-center"></div>
+<span class="text-label-sm font-label-sm">Interview</span>
+</div>
+<div class="pipeline-line bg-outline-variant"></div>
+<!-- Stage: Offer -->
+<div class="flex flex-col items-center gap-xs flex-1 opacity-40">
+<div class="w-6 h-6 rounded-full bg-outline-variant flex items-center justify-center"></div>
+<span class="text-label-sm font-label-sm">Offer</span>
+</div>
+</div>
+<div class="flex flex-col items-end gap-sm min-w-[180px]">
+<span class="px-md py-1 bg-surface-variant text-on-surface-variant rounded-full text-label-sm font-bold flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+                                Pending Review
+                            </span>
+<button class="text-on-surface-variant text-label-sm font-bold flex items-center gap-xs hover:underline">
+                                View Listing <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+</div>
+<!-- AI Insight Sidebar (Floating) -->
+<div class="mt-xl grid grid-cols-1 md:grid-cols-3 gap-md">
+<div class="p-lg bg-primary-container text-on-primary-container rounded-xl flex flex-col gap-sm shadow-lg border border-primary/20">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-secondary-fixed-dim">auto_awesome</span>
+<span class="text-label-sm font-bold uppercase tracking-wider">AI Insight</span>
+</div>
+<p class="text-body-md">Your profile has a 94% match for the <strong>Senior UX Designer</strong> role. We recommend following up with the hiring manager.</p>
+<button class="w-full mt-xs bg-white/10 hover:bg-white/20 py-2 rounded-lg text-label-sm font-bold transition-colors">Generate Follow-up</button>
+</div>
+<div class="p-lg glass-card rounded-xl flex flex-col gap-sm border border-outline-variant">
+<h4 class="text-title-md font-title-md text-on-surface">Application Trends</h4>
+<div class="h-24 w-full flex items-end gap-xs py-xs">
+<div class="bg-primary/20 w-full h-1/2 rounded-t-sm"></div>
+<div class="bg-primary/40 w-full h-3/4 rounded-t-sm"></div>
+<div class="bg-primary w-full h-full rounded-t-sm"></div>
+<div class="bg-primary/60 w-full h-2/3 rounded-t-sm"></div>
+<div class="bg-primary/30 w-full h-1/3 rounded-t-sm"></div>
+</div>
+<p class="text-label-sm text-on-surface-variant">Your activity increased by 15% this week.</p>
+</div>
+<div class="p-lg glass-card rounded-xl flex flex-col gap-sm border border-outline-variant">
+<h4 class="text-title-md font-title-md text-on-surface">Upcoming Tasks</h4>
+<ul class="space-y-xs">
+<li class="flex items-center gap-xs text-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-secondary text-md">check_circle</span>
+                            Review Stripe Interview Guide
+                        </li>
+<li class="flex items-center gap-xs text-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-outline text-md">radio_button_unchecked</span>
+                            Update Portfolio Case Study
+                        </li>
+</ul>
+</div>
+</div>
+</main>
+</div>
+<!-- Mobile Navigation Shell -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container h-16 flex items-center justify-around z-50 border-t border-outline-variant">
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-bold">Dashboard</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">work</span>
+<span class="text-[10px] font-bold">Postings</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[10px] font-bold">Candidates</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-bold">Settings</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for cards
+        document.querySelectorAll('article').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-2px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body></html>

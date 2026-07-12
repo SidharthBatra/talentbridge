@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Register | TalentBridge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#006c49",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-secondary-fixed-variant": "#005236",
+                    "on-background": "#0d1c2e",
+                    "on-primary-fixed": "#000d60",
+                    "secondary-container": "#6cf8bb",
+                    "on-secondary": "#ffffff",
+                    "surface-bright": "#f8f9ff",
+                    "primary-container": "#2e3a8c",
+                    "secondary-fixed-dim": "#4edea3",
+                    "tertiary": "#412600",
+                    "error-container": "#ffdad6",
+                    "tertiary-container": "#5f3a00",
+                    "on-primary-fixed-variant": "#333f91",
+                    "error": "#ba1a1a",
+                    "surface-tint": "#4b57aa",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-container-low": "#eff4ff",
+                    "surface": "#f8f9ff",
+                    "surface-container-high": "#dce9ff",
+                    "on-surface-variant": "#454651",
+                    "outline-variant": "#c6c5d3",
+                    "on-tertiary": "#ffffff",
+                    "primary": "#142175",
+                    "primary-fixed": "#dfe0ff",
+                    "on-surface": "#0d1c2e",
+                    "on-primary-container": "#9ea9ff",
+                    "surface-variant": "#d5e3fc",
+                    "on-error-container": "#93000a",
+                    "background": "#f8f9ff",
+                    "inverse-surface": "#233144",
+                    "outline": "#767682",
+                    "on-tertiary-container": "#f29c06",
+                    "surface-container": "#e6eeff",
+                    "on-tertiary-fixed": "#2a1700",
+                    "primary-fixed-dim": "#bcc3ff",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#00714d",
+                    "on-primary": "#ffffff",
+                    "inverse-primary": "#bcc3ff",
+                    "surface-container-highest": "#d5e3fc",
+                    "on-secondary-fixed": "#002113",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#6ffbbe",
+                    "surface-dim": "#ccdbf3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "md": "16px",
+                    "margin-desktop": "40px",
+                    "sm": "12px",
+                    "gutter": "20px",
+                    "xl": "32px",
+                    "xs": "8px",
+                    "margin-mobile": "16px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "title-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .role-card input:checked + .role-content {
+            border-color: #142175;
+            background-color: #eff4ff;
+            box-shadow: 0 0 0 1px #142175;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(224, 224, 224, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden">
+<!-- Transactional Header (Simplified as per Shell Rules) -->
+<header class="w-full px-margin-desktop py-lg flex justify-between items-center z-50">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">badge</span>
+<span class="text-title-md font-title-md font-bold text-primary tracking-tight">TalentBridge</span>
+</div>
+<a class="text-primary font-label-sm text-label-sm hover:underline flex items-center gap-xs" href="/login">
+            Already have an account? <span class="font-bold">Log in</span>
+</a>
+</header>
+<main class="flex-grow flex flex-col lg:flex-row items-stretch justify-center relative px-margin-mobile lg:px-0">
+<!-- Left Side: Atmospheric/Visual (Desktop) -->
+<div class="hidden lg:flex w-5/12 bg-surface-container-low flex-col justify-center px-margin-desktop relative overflow-hidden">
+<div class="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none">
+
+</div>
+<div class="relative z-10 max-w-md">
+<h1 class="text-display-lg font-display-lg text-primary mb-lg">Hire smarter, <br/>scale faster.</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant mb-xl">
+                    Join over 5,000+ companies using TalentBridge to automate their recruitment workflow with AI-driven human insights.
+                </p>
+<div class="space-y-md">
+<div class="flex items-center gap-md p-md glass-effect rounded-xl shadow-sm border-outline-variant">
+<div class="bg-secondary-container p-xs rounded-lg">
+<span class="material-symbols-outlined text-on-secondary-container">verified</span>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-primary">AI Match Score</p>
+<p class="text-body-md font-body-md text-on-surface-variant">Instant compatibility ranking for candidates.</p>
+</div>
+</div>
+<div class="flex items-center gap-md p-md glass-effect rounded-xl shadow-sm border-outline-variant">
+<div class="bg-tertiary-container p-xs rounded-lg">
+<span class="material-symbols-outlined text-on-tertiary-container">bolt</span>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-primary">Automated Sourcing</p>
+<p class="text-body-md font-body-md text-on-surface-variant">Find top talent while you sleep.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Side: Registration Form -->
+<div class="flex-grow lg:w-7/12 flex items-center justify-center py-xl lg:py-0">
+<div class="w-full max-w-2xl px-margin-mobile">
+<div class="mb-xl text-center lg:text-left">
+<h2 class="text-headline-lg font-headline-lg text-on-surface">Create your account</h2>
+<p class="text-body-md font-body-md text-on-surface-variant mt-xs">Start your 14-day free trial. No credit card required.</p>
+</div>
+<form class="space-y-xl" onsubmit="event.preventDefault();">
+<!-- Section 1: Role Selection -->
+<div class="space-y-md">
+<label class="text-label-sm font-label-sm text-primary uppercase tracking-wider">Choose your role</label>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Candidate -->
+<label class="role-card cursor-pointer group">
+<input checked="" class="hidden" name="role" type="radio" value="candidate"/>
+<div class="role-content h-full p-md border border-outline-variant rounded-xl transition-all duration-200 hover:border-primary flex items-start gap-md">
+<div class="bg-surface-container-high p-xs rounded-lg group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">person_search</span>
+</div>
+<div>
+<p class="text-body-lg font-title-md text-on-surface">Candidate</p>
+<p class="text-label-sm font-body-md text-on-surface-variant">I want to find and apply for my dream job.</p>
+</div>
+</div>
+</label>
+<!-- Recruiter -->
+<label class="role-card cursor-pointer group">
+<input class="hidden" name="role" type="radio" value="recruiter"/>
+<div class="role-content h-full p-md border border-outline-variant rounded-xl transition-all duration-200 hover:border-primary flex items-start gap-md">
+<div class="bg-surface-container-high p-xs rounded-lg group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">work</span>
+</div>
+<div>
+<p class="text-body-lg font-title-md text-on-surface">Recruiter</p>
+<p class="text-label-sm font-body-md text-on-surface-variant">I'm looking to source and hire top talent.</p>
+</div>
+</div>
+</label>
+<!-- Hiring Manager -->
+<label class="role-card cursor-pointer group">
+<input class="hidden" name="role" type="radio" value="hiring_manager"/>
+<div class="role-content h-full p-md border border-outline-variant rounded-xl transition-all duration-200 hover:border-primary flex items-start gap-md">
+<div class="bg-surface-container-high p-xs rounded-lg group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">group</span>
+</div>
+<div>
+<p class="text-body-lg font-title-md text-on-surface">Hiring Manager</p>
+<p class="text-label-sm font-body-md text-on-surface-variant">I evaluate candidates and manage teams.</p>
+</div>
+</div>
+</label>
+<!-- Admin -->
+<label class="role-card cursor-pointer group">
+<input class="hidden" name="role" type="radio" value="admin"/>
+<div class="role-content h-full p-md border border-outline-variant rounded-xl transition-all duration-200 hover:border-primary flex items-start gap-md">
+<div class="bg-surface-container-high p-xs rounded-lg group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</div>
+<div>
+<p class="text-body-lg font-title-md text-on-surface">Admin</p>
+<p class="text-label-sm font-body-md text-on-surface-variant">I manage organization settings and data.</p>
+</div>
+</div>
+</label>
+</div>
+</div>
+<!-- Section 2: Personal Details -->
+<div class="space-y-lg">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<div class="flex flex-col gap-xs">
+<label class="text-label-sm font-label-sm text-on-surface-variant" for="name">Full Name</label>
+<input class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all placeholder:text-outline" id="name" placeholder="John Doe" type="text"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="text-label-sm font-label-sm text-on-surface-variant" for="email">Work Email</label>
+<input class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all placeholder:text-outline" id="email" placeholder="john@company.com" type="email"/>
+</div>
+</div>
+<div class="flex flex-col gap-xs relative">
+<label class="text-label-sm font-label-sm text-on-surface-variant" for="password">Password</label>
+<input class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all placeholder:text-outline" id="password" placeholder="Min. 8 characters" type="password"/>
+<button class="absolute right-md bottom-md text-on-surface-variant hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<!-- Section 3: Terms & Action -->
+<div class="pt-md space-y-lg">
+<div class="flex items-start gap-md">
+<input class="mt-1 w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary" id="terms" type="checkbox"/>
+<label class="text-body-md font-body-md text-on-surface-variant" for="terms">
+                                I agree to the <a class="text-primary hover:underline" href="#">Terms of Service</a> and <a class="text-primary hover:underline" href="#">Privacy Policy</a>. I also consent to receive helpful hiring tips and product updates.
+                            </label>
+</div>
+<button class="w-full bg-primary text-white font-title-md text-title-md py-md rounded-xl shadow-lg hover:bg-primary-container active:scale-[0.98] transition-all flex justify-center items-center gap-md" type="submit">
+                            Create Account
+                            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</form>
+<!-- Alternative Social Register -->
+<div class="mt-xl flex flex-col items-center gap-lg">
+<div class="w-full flex items-center gap-md">
+<div class="h-[1px] bg-outline-variant flex-grow"></div>
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-widest">Or sign up with</span>
+<div class="h-[1px] bg-outline-variant flex-grow"></div>
+</div>
+<div class="flex gap-md w-full">
+<button class="flex-grow flex items-center justify-center gap-sm p-md border border-outline-variant rounded-lg hover:bg-surface-container-low transition-colors font-label-sm">
+<img class="w-5 h-5" data-alt="The colorful Google 'G' logo on a clean white circular background, minimalist high-key tech aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSk0ZTGvqaMJ04S-Tco9ptAaEsrTUyR7o4PIRxhG2x-7HsB2-Gkq2ToKS0fXWGy5FJf0eZ1TkeCVBaXxYehkbSbnUjuMRnwetQOVtYMzKORFoclAhfYVFEKZIxcNSm-2FysYs7LIjrhedn-ei64dz11aziNsETJr4wecn7uIeYdOKalZUXWP4JTuwARR1mZ64R2grTuLTo4caPeIZ3lP-0zmhhxQFGb_Rh_gcK13-Zf_f4pkiYtI4S"/>
+                            Google
+                        </button>
+<button class="flex-grow flex items-center justify-center gap-sm p-md border border-outline-variant rounded-lg hover:bg-surface-container-low transition-colors font-label-sm">
+<img class="w-5 h-5" data-alt="The LinkedIn logo with its signature blue background and white letter 'in', professional corporate branding." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDINlNrD25XeHMXnI6X-8PQxaXkO1GC4zQplwmNL4OPFq5MRVVugLvMY7NlInNdBp7NYsHCwf-vlF8kS0LaZ7HEQZnjIzAGPA7ebP4wSU-1EJmEHbDpGyovwxl5mNzXeUgvyCG1CBb2a0smPpI3tR2fTleCAAxGxGRWLnn6BPQ4I4CNr4-5mP3Zf01faGtz-ORzwMSyPZRYcZag1_Qjbqx1Y1MtPyyGX4qNN1GVQCVCfesKWtNE-bBx"/>
+                            LinkedIn
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Simple Footer for transactional screen -->
+<footer class="w-full py-lg px-margin-desktop text-center">
+<p class="text-label-sm font-body-md text-outline">
+            © 2024 TalentBridge AI. All rights reserved. 
+            <span class="mx-xs">•</span>
+<a class="hover:text-primary transition-colors" href="#">Support</a>
+<span class="mx-xs">•</span>
+<a class="hover:text-primary transition-colors" href="#">Enterprise</a>
+</p>
+</footer>
+<script>
+        // Micro-interaction for role selection feedback
+        const roleCards = document.querySelectorAll('.role-card input');
+        roleCards.forEach(input => {
+            input.addEventListener('change', () => {
+                // Potential for haptic feedback or sound effects in a real app
+                console.log(`Role selected: ${input.value}`);
+            });
+        });
+
+        // Simple password toggle logic
+        const toggleBtn = document.querySelector('button .material-symbols-outlined:contains("visibility")');
+        if (toggleBtn) {
+            const passwordInput = document.getElementById('password');
+            toggleBtn.parentElement.addEventListener('click', () => {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    toggleBtn.textContent = 'visibility_off';
+                } else {
+                    passwordInput.type = 'password';
+                    toggleBtn.textContent = 'visibility';
+                }
+            });
+        }
+    </script>
+</body></html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TalentBridge | Final Decision</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .decision-gradient-hire {
+            background: linear-gradient(135deg, #006c49 0%, #4edea3 100%);
+        }
+        .decision-gradient-reject {
+            background: linear-gradient(135deg, #454651 0%, #142175 100%);
+        }
+        .bento-card {
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .bento-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.05);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#006c49",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-secondary-fixed-variant": "#005236",
+                        "on-background": "#0d1c2e",
+                        "on-primary-fixed": "#000d60",
+                        "secondary-container": "#6cf8bb",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f8f9ff",
+                        "primary-container": "#2e3a8c",
+                        "secondary-fixed-dim": "#4edea3",
+                        "tertiary": "#412600",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#5f3a00",
+                        "on-primary-fixed-variant": "#333f91",
+                        "error": "#ba1a1a",
+                        "surface-tint": "#4b57aa",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "surface-container-low": "#eff4ff",
+                        "surface": "#f8f9ff",
+                        "surface-container-high": "#dce9ff",
+                        "on-surface-variant": "#454651",
+                        "outline-variant": "#c6c5d3",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#142175",
+                        "primary-fixed": "#dfe0ff",
+                        "on-surface": "#0d1c2e",
+                        "on-primary-container": "#9ea9ff",
+                        "surface-variant": "#d5e3fc",
+                        "on-error-container": "#93000a",
+                        "background": "#f8f9ff",
+                        "inverse-surface": "#233144",
+                        "outline": "#767682",
+                        "on-tertiary-container": "#f29c06",
+                        "surface-container": "#e6eeff",
+                        "on-tertiary-fixed": "#2a1700",
+                        "primary-fixed-dim": "#bcc3ff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#00714d",
+                        "on-primary": "#ffffff",
+                        "inverse-primary": "#bcc3ff",
+                        "surface-container-highest": "#d5e3fc",
+                        "on-secondary-fixed": "#002113",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed": "#6ffbbe",
+                        "surface-dim": "#ccdbf3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "md": "16px",
+                        "margin-desktop": "40px",
+                        "sm": "12px",
+                        "gutter": "20px",
+                        "xl": "32px",
+                        "xs": "8px",
+                        "margin-mobile": "16px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "title-md": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface-container-low shadow-sm">
+<div class="flex items-center gap-xl">
+<span class="text-title-md font-title-md font-bold text-primary">TalentBridge</span>
+<div class="hidden md:flex items-center gap-lg">
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">Dashboard</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">Postings</a>
+<a class="text-primary border-b-2 border-primary pb-1 text-label-sm font-label-sm" href="#">Candidates</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-xs text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A high-quality professional corporate headshot of a recruitment manager in a bright, modern office setting. The person is smiling warmly, dressed in business casual attire. The background is softly blurred with hints of glass partitions and lush green office plants, maintaining a clean light-mode aesthetic with soft indigo highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkRZxpIrmLFCcWk5azSzuCUCx_hESoSA0-YcVJQ5kNfQBPI2FPUEe4JT8VZjCig6AruP8sN1Mh5UiBAPTxZd6CDWD-DdJv6TjzlkhTtVSmmrUY9gp6F0odGfBqm4CV1hlkWDAFwNp-NWalW4Reyat1QpC8USj2cbbepaRZcbDba09dXej5R1LUyf0c3m30hbpzCJsxugM0d-X02HqYg6anSL4jKU0CrhlbO22PMaJBGLkkS6nJtayE"/>
+</div>
+</div>
+</nav>
+<div class="flex h-screen pt-16">
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col h-full p-md space-y-xs w-64 bg-surface-container-low border-r border-outline-variant fixed">
+<div class="px-xs py-md">
+<h1 class="text-headline-lg font-headline-lg text-primary">Recruiter Workspace</h1>
+<p class="text-on-surface-variant text-body-md">Global Talent Hub</p>
+</div>
+<nav class="flex-grow space-y-xs">
+<button class="w-full flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-body-md">Dashboard</span>
+</button>
+<button class="w-full flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="work">work</span>
+<span class="text-body-md">Postings</span>
+</button>
+<button class="w-full flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container rounded-lg font-bold transition-all active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="text-body-md">Candidates</span>
+</button>
+<button class="w-full flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="text-body-md">Analytics</span>
+</button>
+<button class="w-full flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-body-md">Settings</span>
+</button>
+</nav>
+<button class="w-full bg-primary text-on-primary py-md rounded-xl font-bold flex items-center justify-center gap-sm mb-xl shadow-lg">
+<span class="material-symbols-outlined">add</span>
+                Post New Job
+            </button>
+<div class="pt-xl border-t border-outline-variant space-y-xs">
+<button class="w-full flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="text-body-md">Help</span>
+</button>
+<button class="w-full flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="text-body-md">Logout</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-grow lg:ml-64 p-margin-desktop bg-surface overflow-y-auto">
+<div class="max-w-5xl mx-auto space-y-lg">
+<!-- Candidate Header Summary Card -->
+<section class="relative overflow-hidden bg-white border border-outline-variant rounded-xl p-xl shadow-sm">
+<div class="absolute top-0 right-0 p-lg">
+<div class="flex items-center gap-xs px-md py-xs bg-secondary-container text-on-secondary-container rounded-full text-label-sm">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                            AI Match: 94%
+                        </div>
+</div>
+<div class="flex items-start gap-xl">
+<div class="w-24 h-24 rounded-2xl overflow-hidden border-4 border-surface-container">
+<img class="w-full h-full object-cover" data-alt="A close-up professional portrait of a tech candidate for a Senior Software Engineer position. The lighting is crisp and modern, focusing on a confident expression. The environment is a tech-focused creative studio with minimalist architecture and soft daylight. Colors emphasize soft teals and neutral grays, aligning with a premium recruiter interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAByF6iLog4WkgG1k3fRwTlYL14VLVbIx08gkzXvGMz4PJRy57lp5I8nYCoG50YMko-htAJ0MEKzD_cb3sGVAZnXTOTKQzJi2U9KAiRRW48HyzU9ah7KDPyNowu8uJmwx4IjGnFYj7Vy2HWJ7Pnc22IQFXjn4vMJKYpD1viHZQHYokgf0lHgsVCQDORPZ1-ROSXIeB-G-jexevVUB-05ZP2MN_EHnC3DwlEv4PHiZ2dWHg86wRLhDTH"/>
+</div>
+<div class="space-y-xs">
+<h2 class="text-headline-lg font-headline-lg text-on-surface">Elena Rodriguez</h2>
+<p class="text-title-md text-primary font-semibold">Senior Frontend Architect</p>
+<div class="flex gap-md text-on-surface-variant text-body-md">
+<span class="flex items-center gap-xs"><span class="material-symbols-outlined text-[18px]">location_on</span> San Francisco, CA</span>
+<span class="flex items-center gap-xs"><span class="material-symbols-outlined text-[18px]">mail</span> elena.r@techmail.com</span>
+<span class="flex items-center gap-xs"><span class="material-symbols-outlined text-[18px]">calendar_today</span> Applied 12 days ago</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Decision Data Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<!-- Score Summary -->
+<div class="bento-card bg-white border border-outline-variant rounded-xl p-lg flex flex-col justify-between">
+<div class="space-y-xs">
+<p class="text-label-sm text-outline uppercase tracking-wider">Overall Interview Score</p>
+<div class="flex items-baseline gap-xs">
+<span class="text-display-lg font-display-lg text-primary">4.8</span>
+<span class="text-title-md text-on-surface-variant">/ 5.0</span>
+</div>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden mt-md">
+<div class="h-full bg-primary" style="width: 96%"></div>
+</div>
+</div>
+<!-- Peer Reviews -->
+<div class="bento-card bg-white border border-outline-variant rounded-xl p-lg col-span-2">
+<div class="flex justify-between items-center mb-md">
+<p class="text-label-sm text-outline uppercase tracking-wider">Reviewer Consensus</p>
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-white bg-slate-200 overflow-hidden"><img class="w-full h-full object-cover" data-alt="Corporate headshot of a male technical lead with glasses, smiling professionally against a clean white background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmI4D046Uh3l3m6etZSWyLT31l6BQQZ3AMn9OyfB-XwHS6H5N-xIZeyNd1L7JIIRyTDLR5Q4WUNucD3pDBrEhNPVpOTMHZ0QoY_0b4sdw7Zbb6UrJJvH4tRXbWevM5LAOaoUH-GkWQJQ20eu_QKHaUWtsjsy4_XTKi-7Gr7B6cDMJa4t52h4wStxbZudGedWu4v-oprQazIo7kwqyyDp4XjlMHdX8E2sl0LSDHGcXoY21rhPcmn4_c"/></div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-slate-200 overflow-hidden"><img class="w-full h-full object-cover" data-alt="Corporate headshot of a female product manager with a professional blazer, neutral background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwPPMPzYVbjPbXGz4aQEc2odzrdHZw19XcO_dhN6O6SKRBVufi92wwsQmSvJs7PKksxJzpQs4xjEBrbK4nb1Dx97wqmZO7sNf3lqL56c5OyVRid77DHWZ7qViwix4u1hZdoRD0nje-81rT2y80zFPoCHOcYoej4ZqlhJU_NCo5OpOPweTlEviQc5ZSJyPXosc3VO32DABUDL1wzeF5v9c7iqzztwNQhdkY3deOq5DGqktbJHNQJ8JG"/></div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-slate-200 overflow-hidden"><img class="w-full h-full object-cover" data-alt="Corporate headshot of a senior designer, creative office background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXdU5Ri2KCJH8CyK2oSBaEgb1wRuUnur7nY5OGZwVJSc3ShoskVArko8RMpHTopI4aFuFuwcybEkwljC6LRtTLf1WG6YFMZ4TVVG1p0tUvAnYEO8GdyasbpiPEwXN7b5TlbFDHqHOYj6SwdN7mTmGrGD9HhPfYerr5U2K2sFPXQ74cvjkLjrEy8lD1oFfNFWutkSjmwptDDLUvXtSt1f7A-S3wrU07UlRmjH1souDimlYNczpirh_z"/></div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-primary text-on-primary flex items-center justify-center text-[10px] font-bold">+2</div>
+</div>
+</div>
+<div class="flex gap-md">
+<div class="flex-1 p-sm bg-secondary-container/20 rounded-lg border border-secondary/20">
+<p class="text-secondary font-bold text-label-sm mb-1">Strong Hire</p>
+<p class="text-on-surface-variant text-xs line-clamp-2">"Exceptional technical depth in React internals. Very collaborative approach..."</p>
+</div>
+<div class="flex-1 p-sm bg-secondary-container/20 rounded-lg border border-secondary/20">
+<p class="text-secondary font-bold text-label-sm mb-1">Hire</p>
+<p class="text-on-surface-variant text-xs line-clamp-2">"Clear communicator, fits the engineering culture perfectly. High potential..."</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Detailed Feedback Summary -->
+<div class="bg-white border border-outline-variant rounded-xl p-xl space-y-lg">
+<h3 class="text-title-md font-bold flex items-center gap-md">
+<span class="material-symbols-outlined text-primary">analytics</span>
+                        Final Evaluation Summary
+                    </h3>
+<div class="space-y-md">
+<div class="flex justify-between items-center p-md bg-surface-container-low rounded-lg border-l-4 border-secondary">
+<div>
+<h4 class="font-bold text-on-surface">Technical Competency</h4>
+<p class="text-body-md text-on-surface-variant">Expertise in TypeScript, Architecture, and Testing.</p>
+</div>
+<span class="text-secondary font-bold">5.0</span>
+</div>
+<div class="flex justify-between items-center p-md bg-surface-container-low rounded-lg border-l-4 border-secondary">
+<div>
+<h4 class="font-bold text-on-surface">Culture Fit</h4>
+<p class="text-body-md text-on-surface-variant">Values alignment, team-first mentality, and curiosity.</p>
+</div>
+<span class="text-secondary font-bold">4.5</span>
+</div>
+<div class="flex justify-between items-center p-md bg-surface-container-low rounded-lg border-l-4 border-on-tertiary-container">
+<div>
+<h4 class="font-bold text-on-surface">Leadership Potential</h4>
+<p class="text-body-md text-on-surface-variant">Mentorship ability and strategic thinking.</p>
+</div>
+<span class="text-on-tertiary-container font-bold">4.0</span>
+</div>
+</div>
+<div class="space-y-sm">
+<label class="block text-label-sm text-outline uppercase font-bold">Final Decision Notes</label>
+<textarea class="w-full h-32 p-md rounded-xl border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none font-body-md" id="decisionNotes" placeholder="Provide the final justification for this hire/reject decision. These notes will be visible to the leadership team."></textarea>
+<div class="flex items-center gap-xs text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-tertiary">spark</span>
+                            AI Assistant: "Elena's performance exceeds 92% of previous candidates for this role."
+                        </div>
+</div>
+</div>
+<!-- Decision Actions -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg pb-margin-desktop">
+<button class="group relative flex items-center justify-between p-lg rounded-2xl border-2 border-outline-variant hover:border-error hover:bg-error-container/10 transition-all duration-300" onclick="handleDecision('reject')">
+<div class="text-left">
+<p class="text-display-lg font-display-lg text-outline-variant group-hover:text-error transition-colors">Reject</p>
+<p class="text-body-md text-on-surface-variant">End candidacy & send automated feedback</p>
+</div>
+<span class="material-symbols-outlined text-display-lg text-outline-variant group-hover:text-error transition-all group-hover:scale-110">close</span>
+</button>
+<button class="group relative flex items-center justify-between p-lg rounded-2xl border-2 border-secondary bg-white hover:decision-gradient-hire transition-all duration-300 shadow-xl overflow-hidden" onclick="handleDecision('hire')">
+<div class="relative z-10 text-left">
+<p class="text-display-lg font-display-lg text-secondary group-hover:text-white transition-colors">Hire</p>
+<p class="text-body-md text-on-secondary-container group-hover:text-white/80">Move to offer stage & notify team</p>
+</div>
+<span class="relative z-10 material-symbols-outlined text-display-lg text-secondary group-hover:text-white transition-all group-hover:scale-110">check_circle</span>
+<div class="absolute inset-0 bg-secondary opacity-0 group-hover:opacity-10 transition-opacity"></div>
+</button>
+</div>
+</div>
+</main>
+</div>
+<!-- Success Modal -->
+<div class="fixed inset-0 z-[100] hidden items-center justify-center bg-inverse-surface/40 backdrop-blur-sm p-margin-mobile" id="decisionModal">
+<div class="bg-white rounded-2xl p-xl max-w-md w-full shadow-2xl scale-95 opacity-0 transition-all duration-300 transform" id="modalContent">
+<div class="text-center space-y-md">
+<div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-md" id="modalIconContainer">
+<span class="material-symbols-outlined text-display-lg text-white" id="modalIcon"></span>
+</div>
+<h2 class="text-headline-lg font-headline-lg" id="modalTitle"></h2>
+<p class="text-body-lg text-on-surface-variant" id="modalDescription"></p>
+<div class="flex gap-md pt-lg">
+<button class="flex-grow py-md border border-outline-variant rounded-xl font-bold hover:bg-surface-container transition-colors" onclick="closeModal()">Go to Dashboard</button>
+<button class="flex-grow py-md bg-primary text-on-primary rounded-xl font-bold shadow-lg shadow-primary/20" onclick="closeModal()">Next Candidate</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+        function handleDecision(type) {
+            const modal = document.getElementById('decisionModal');
+            const content = document.getElementById('modalContent');
+            const title = document.getElementById('modalTitle');
+            const desc = document.getElementById('modalDescription');
+            const icon = document.getElementById('modalIcon');
+            const iconContainer = document.getElementById('modalIconContainer');
+            const notes = document.getElementById('decisionNotes').value;
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+
+            if (type === 'hire') {
+                title.innerText = 'Hire Decision Logged';
+                desc.innerText = 'Elena Rodriguez has been moved to the Offer Stage. The recruitment team has been notified.';
+                icon.innerText = 'check_circle';
+                iconContainer.className = 'w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-md bg-secondary shadow-lg shadow-secondary/30';
+            } else {
+                title.innerText = 'Rejection Logged';
+                desc.innerText = 'Candidate application closed. An automated feedback email will be sent within 24 hours.';
+                icon.innerText = 'cancel';
+                iconContainer.className = 'w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-md bg-error shadow-lg shadow-error/30';
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('decisionModal');
+            const content = document.getElementById('modalContent');
+            
+            content.classList.add('scale-95', 'opacity-0');
+            content.classList.remove('scale-100', 'opacity-100');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+
+        // Active State Logic for Sidebar
+        document.querySelectorAll('aside nav button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('aside nav button').forEach(b => {
+                    b.classList.remove('bg-secondary-container', 'text-on-secondary-container', 'font-bold');
+                    b.classList.add('text-on-surface-variant', 'hover:bg-surface-container-high');
+                });
+                btn.classList.add('bg-secondary-container', 'text-on-secondary-container', 'font-bold');
+                btn.classList.remove('text-on-surface-variant', 'hover:bg-surface-container-high');
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Apply to TalentBridge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#006c49",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-secondary-fixed-variant": "#005236",
+                    "on-background": "#0d1c2e",
+                    "on-primary-fixed": "#000d60",
+                    "secondary-container": "#6cf8bb",
+                    "on-secondary": "#ffffff",
+                    "surface-bright": "#f8f9ff",
+                    "primary-container": "#2e3a8c",
+                    "secondary-fixed-dim": "#4edea3",
+                    "tertiary": "#412600",
+                    "error-container": "#ffdad6",
+                    "tertiary-container": "#5f3a00",
+                    "on-primary-fixed-variant": "#333f91",
+                    "error": "#ba1a1a",
+                    "surface-tint": "#4b57aa",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-container-low": "#eff4ff",
+                    "surface": "#f8f9ff",
+                    "surface-container-high": "#dce9ff",
+                    "on-surface-variant": "#454651",
+                    "outline-variant": "#c6c5d3",
+                    "on-tertiary": "#ffffff",
+                    "primary": "#142175",
+                    "primary-fixed": "#dfe0ff",
+                    "on-surface": "#0d1c2e",
+                    "on-primary-container": "#9ea9ff",
+                    "surface-variant": "#d5e3fc",
+                    "on-error-container": "#93000a",
+                    "background": "#f8f9ff",
+                    "inverse-surface": "#233144",
+                    "outline": "#767682",
+                    "on-tertiary-container": "#f29c06",
+                    "surface-container": "#e6eeff",
+                    "on-tertiary-fixed": "#2a1700",
+                    "primary-fixed-dim": "#bcc3ff",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#00714d",
+                    "on-primary": "#ffffff",
+                    "inverse-primary": "#bcc3ff",
+                    "surface-container-highest": "#d5e3fc",
+                    "on-secondary-fixed": "#002113",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#6ffbbe",
+                    "surface-dim": "#ccdbf3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "md": "16px",
+                    "margin-desktop": "40px",
+                    "sm": "12px",
+                    "gutter": "20px",
+                    "xl": "32px",
+                    "xs": "8px",
+                    "margin-mobile": "16px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "title-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .form-focus-ring:focus {
+            outline: none;
+            border-color: #142175;
+            box-shadow: 0 0 0 2px rgba(20, 33, 117, 0.1);
+        }
+        .drag-over {
+            border-color: #142175;
+            background-color: #eff4ff;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md selection:bg-primary-fixed-dim selection:text-primary">
+<!-- Header / TopAppBar (Shared Component Guided) -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface-container-low shadow-sm">
+<div class="flex items-center gap-xl">
+<span class="text-title-md font-title-md font-bold text-primary">TalentBridge</span>
+<nav class="hidden md:flex gap-lg">
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Postings</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Candidates</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-on-surface-variant p-xs hover:bg-surface-variant rounded-full transition-colors">notifications</button>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-outline-variant">
+<img class="w-full h-full object-cover" data-alt="Professional headshot of a recruitment manager in a bright office setting. The person has a friendly, welcoming expression and is wearing modern business casual attire. The photography style is clean, high-key, with soft natural light coming from a large window. The background is slightly blurred to emphasize the subject while suggesting a collaborative workplace environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFRC2by4TKAzrB56pAd-tT9R0-PzEcry9BFsE9I3jEbf6jMIWKyhFKh49_KoHQ8QEgkt3-se5X_nPfIQZJmWE2GK85t4EKqS1Fj4gjcsSfQQkUbuynOK-UCefGZB6FLr6W4jOzl1bWNyLwtuQaQMYkVIT5YyM5UBYOyYTWkxKvMNOUWBH8_FjCNn9HGhYZh3LIBIV7d7O-sGMRHwCSnyRYod8vx_NUTRmESSFjbbsmftyfTTJtz6cs"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="pt-24 pb-xl px-margin-mobile md:px-0 flex justify-center min-h-screen">
+<div class="max-w-3xl w-full">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-xs mb-md text-on-surface-variant">
+<a class="hover:text-primary transition-colors text-body-md" href="#">Job Postings</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<a class="hover:text-primary transition-colors text-body-md" href="#">Senior Product Designer</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-primary font-bold text-body-md">Application</span>
+</nav>
+<!-- Card Shell -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="p-lg md:p-xl space-y-xl">
+<!-- Form Header -->
+<div class="space-y-xs">
+<h1 class="text-headline-lg font-headline-lg text-primary">Apply for this position</h1>
+<p class="text-on-surface-variant text-body-lg">Please complete the form below. Our team reviews every application carefully.</p>
+</div>
+<!-- The Form -->
+<form class="space-y-lg" id="applicationForm">
+<!-- Personal Info Summary (Static/Contextual) -->
+<div class="bg-surface-container-low p-md rounded-lg flex items-center gap-md border border-outline-variant">
+<div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div>
+<h3 class="font-bold text-on-surface">Alex Thompson</h3>
+<p class="text-body-md text-on-surface-variant">alex.thompson@example.com</p>
+</div>
+<button class="ml-auto text-label-sm font-label-sm text-primary hover:underline" type="button">Edit Profile</button>
+</div>
+<!-- Drag and Drop Area -->
+<div class="space-y-xs">
+<label class="text-label-sm font-label-sm text-on-surface">Curriculum Vitae (CV)</label>
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-xl flex flex-col items-center justify-center gap-sm bg-surface transition-all cursor-pointer group hover:bg-surface-container-low" id="dropzone">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[32px]">picture_as_pdf</span>
+</div>
+<div class="text-center">
+<p class="font-bold text-on-surface">Click to upload or drag and drop</p>
+<p class="text-body-md text-on-surface-variant">PDF format preferred (max. 10MB)</p>
+</div>
+<input accept=".pdf" class="hidden" id="cvUpload" type="file"/>
+</div>
+<div class="hidden flex items-center gap-sm p-sm bg-secondary-container text-on-secondary-container rounded-lg" id="fileInfo">
+<span class="material-symbols-outlined">check_circle</span>
+<span class="text-label-sm font-label-sm" id="fileName">CV_Alex_Thompson.pdf</span>
+<button class="ml-auto material-symbols-outlined text-[20px]" id="removeFile" type="button">close</button>
+</div>
+</div>
+<!-- Form Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<!-- Years of Experience -->
+<div class="space-y-xs">
+<label class="text-label-sm font-label-sm text-on-surface" for="experience">Years of Experience</label>
+<input class="w-full px-md py-sm border border-outline-variant rounded-lg form-focus-ring bg-surface text-on-surface placeholder:text-outline" id="experience" min="0" name="experience" placeholder="e.g. 5" type="number"/>
+</div>
+<!-- Availability Date -->
+<div class="space-y-xs">
+<label class="text-label-sm font-label-sm text-on-surface" for="availability">Earliest Availability Date</label>
+<div class="relative">
+<input class="w-full px-md py-sm border border-outline-variant rounded-lg form-focus-ring bg-surface text-on-surface" id="availability" name="availability" type="date"/>
+</div>
+</div>
+<!-- Salary Expectation -->
+<div class="space-y-xs md:col-span-2">
+<label class="text-label-sm font-label-sm text-on-surface" for="salary">Salary Expectation (Annual, Gross)</label>
+<input class="w-full px-md py-sm border border-outline-variant rounded-lg form-focus-ring bg-surface text-on-surface placeholder:text-outline" id="salary" name="salary" placeholder="e.g. $85,000 - $95,000" type="text"/>
+</div>
+<!-- Cover Letter -->
+<div class="space-y-xs md:col-span-2">
+<div class="flex justify-between">
+<label class="text-label-sm font-label-sm text-on-surface" for="coverLetter">Cover Letter</label>
+<span class="text-label-sm text-on-surface-variant">Optional but recommended</span>
+</div>
+<textarea class="w-full px-md py-sm border border-outline-variant rounded-lg form-focus-ring bg-surface text-on-surface placeholder:text-outline resize-none" id="coverLetter" name="coverLetter" placeholder="Tell us why you're a great fit for this role..." rows="6"></textarea>
+</div>
+</div>
+<!-- Submit Section -->
+<div class="pt-md border-t border-outline-variant flex flex-col md:flex-row items-center justify-between gap-md">
+<div class="flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px] text-secondary">verified_user</span>
+<p class="text-body-md">Your data is stored securely and encrypted.</p>
+</div>
+<div class="flex gap-md w-full md:w-auto">
+<button class="flex-1 md:flex-none px-xl py-sm border border-primary text-primary font-bold rounded-lg hover:bg-surface-container-high transition-colors" type="button">Save Draft</button>
+<button class="flex-1 md:flex-none px-xl py-sm bg-primary text-on-primary font-bold rounded-lg shadow-sm hover:shadow-md transition-all active:scale-95" type="submit">Submit Application</button>
+</div>
+</div>
+</form>
+</div>
+</section>
+<!-- Bottom Disclaimer -->
+<footer class="mt-xl text-center pb-xl">
+<p class="text-body-md text-on-surface-variant italic">
+                    By submitting, you agree to TalentBridge's <a class="text-primary hover:underline" href="#">Applicant Privacy Policy</a> and <a class="text-primary hover:underline" href="#">Terms of Service</a>.
+                </p>
+</footer>
+</div>
+</main>
+<!-- Micro-interactions Script -->
+<script>
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('cvUpload');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileNameDisplay = document.getElementById('fileName');
+        const removeFileBtn = document.getElementById('removeFile');
+
+        // Drag and Drop Logic
+        dropzone.addEventListener('click', () => fileInput.click());
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropzone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                dropzone.classList.add('drag-over');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                dropzone.classList.remove('drag-over');
+            }, false);
+        });
+
+        dropzone.addEventListener('drop', (e) => {
+            const files = e.dataTransfer.files;
+            handleFiles(files);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            if (files.length > 0) {
+                const file = files[0];
+                if (file.type === 'application/pdf') {
+                    fileNameDisplay.textContent = file.name;
+                    fileInfo.classList.remove('hidden');
+                    dropzone.classList.add('hidden');
+                } else {
+                    alert('Please upload a PDF file.');
+                }
+            }
+        }
+
+        removeFileBtn.addEventListener('click', () => {
+            fileInput.value = '';
+            fileInfo.classList.add('hidden');
+            dropzone.classList.remove('hidden');
+        });
+
+        // Form Submit Simulation
+        document.getElementById('applicationForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            btn.innerHTML = '<span class="animate-spin material-symbols-outlined">progress_activity</span> Processing...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerHTML = 'Success!';
+                btn.classList.replace('bg-primary', 'bg-secondary');
+                setTimeout(() => {
+                    alert('Application submitted successfully! Redirecting to dashboard...');
+                    window.location.reload();
+                }, 1000);
+            }, 2000);
+        });
+    </script>
+</body></html>

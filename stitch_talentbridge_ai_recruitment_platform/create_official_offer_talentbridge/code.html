@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Create Offer - TalentBridge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#006c49",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-secondary-fixed-variant": "#005236",
+                    "on-background": "#0d1c2e",
+                    "on-primary-fixed": "#000d60",
+                    "secondary-container": "#6cf8bb",
+                    "on-secondary": "#ffffff",
+                    "surface-bright": "#f8f9ff",
+                    "primary-container": "#2e3a8c",
+                    "secondary-fixed-dim": "#4edea3",
+                    "tertiary": "#412600",
+                    "error-container": "#ffdad6",
+                    "tertiary-container": "#5f3a00",
+                    "on-primary-fixed-variant": "#333f91",
+                    "error": "#ba1a1a",
+                    "surface-tint": "#4b57aa",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-container-low": "#eff4ff",
+                    "surface": "#f8f9ff",
+                    "surface-container-high": "#dce9ff",
+                    "on-surface-variant": "#454651",
+                    "outline-variant": "#c6c5d3",
+                    "on-tertiary": "#ffffff",
+                    "primary": "#142175",
+                    "primary-fixed": "#dfe0ff",
+                    "on-surface": "#0d1c2e",
+                    "on-primary-container": "#9ea9ff",
+                    "surface-variant": "#d5e3fc",
+                    "on-error-container": "#93000a",
+                    "background": "#f8f9ff",
+                    "inverse-surface": "#233144",
+                    "outline": "#767682",
+                    "on-tertiary-container": "#f29c06",
+                    "surface-container": "#e6eeff",
+                    "on-tertiary-fixed": "#2a1700",
+                    "primary-fixed-dim": "#bcc3ff",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#00714d",
+                    "on-primary": "#ffffff",
+                    "inverse-primary": "#bcc3ff",
+                    "surface-container-highest": "#d5e3fc",
+                    "on-secondary-fixed": "#002113",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#6ffbbe",
+                    "surface-dim": "#ccdbf3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "md": "16px",
+                    "margin-desktop": "40px",
+                    "sm": "12px",
+                    "gutter": "20px",
+                    "xl": "32px",
+                    "xs": "8px",
+                    "margin-mobile": "16px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "title-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9ff; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .ai-shimmer {
+            background: linear-gradient(90deg, #142175, #4b57aa, #142175);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite linear;
+        }
+        @keyframes shimmer {
+            0% { background-position: 100% 0; }
+            100% { background-position: -100% 0; }
+        }
+        .offer-paper {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface-container-low shadow-sm">
+<div class="flex items-center gap-xl">
+<span class="text-title-md font-title-md font-bold text-primary">TalentBridge</span>
+<nav class="hidden md:flex gap-lg">
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">Dashboard</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">Postings</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">Candidates</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-on-surface-variant p-xs hover:bg-surface-variant rounded-full transition-colors">notifications</button>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container text-xs font-bold" title="User profile avatar">JD</div>
+</div>
+</header>
+<main class="pt-24 pb-16 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
+<!-- Breadcrumbs & Header -->
+<div class="mb-lg">
+<div class="flex items-center text-on-surface-variant text-label-sm font-label-sm gap-xs mb-xs">
+<span>Candidates</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span>Alex Rivers</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-primary">Create Offer</span>
+</div>
+<h1 class="text-headline-lg font-headline-lg text-primary">Finalize Job Offer</h1>
+<p class="text-body-md text-on-surface-variant">Review candidate details and generate a professional offer letter using AI assistance.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-xl items-start">
+<!-- Left: Form Controls (4 Columns) -->
+<aside class="lg:col-span-4 space-y-lg">
+<section class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant">
+<h2 class="text-title-md font-title-md mb-md flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary">payments</span>
+                        Compensation
+                    </h2>
+<div class="space-y-md">
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface mb-xs">Annual Salary (USD)</label>
+<div class="relative">
+<span class="absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant">$</span>
+<input class="w-full pl-xl pr-md py-sm bg-surface-container border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary rounded-lg text-body-md" type="number" value="145000"/>
+</div>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface mb-xs">Start Date</label>
+<input class="w-full px-md py-sm bg-surface-container border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary rounded-lg text-body-md" type="date" value="2024-11-01"/>
+</div>
+</div>
+</section>
+<section class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant">
+<h2 class="text-title-md font-title-md mb-md flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary">card_giftcard</span>
+                        Benefits &amp; Perks
+                    </h2>
+<div class="space-y-xs">
+<div class="flex items-center gap-sm p-sm bg-surface-container-low rounded-lg border border-outline-variant border-opacity-50">
+<input checked="" class="w-4 h-4 rounded text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-body-md">Health &amp; Dental Insurance</span>
+</div>
+<div class="flex items-center gap-sm p-sm bg-surface-container-low rounded-lg border border-outline-variant border-opacity-50">
+<input checked="" class="w-4 h-4 rounded text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-body-md">401(k) Matching (4%)</span>
+</div>
+<div class="flex items-center gap-sm p-sm bg-surface-container-low rounded-lg border border-outline-variant border-opacity-50">
+<input checked="" class="w-4 h-4 rounded text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-body-md">25 Days Paid Time Off</span>
+</div>
+<div class="flex items-center gap-sm p-sm bg-surface-container-low rounded-lg border border-outline-variant border-opacity-50">
+<input class="w-4 h-4 rounded text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-body-md">Remote Work Stipend</span>
+</div>
+</div>
+</section>
+<div class="flex flex-col gap-md">
+<button class="flex items-center justify-center gap-xs w-full py-md rounded-xl font-title-md text-white ai-shimmer shadow-lg hover:scale-[1.02] transition-transform duration-200" id="draft-ai">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                        ✨ Draft with AI
+                    </button>
+<p class="text-xs text-center text-on-surface-variant italic">AI will use candidate profile and salary details to draft a personalized letter.</p>
+</div>
+</aside>
+<!-- Right: Document Preview (8 Columns) -->
+<div class="lg:col-span-8 flex flex-col gap-lg">
+<div class="bg-surface-container-lowest offer-paper rounded-xl p-xl border border-outline-variant min-h-[600px] relative overflow-hidden">
+<!-- Subtle Watermark -->
+<div class="absolute top-0 right-0 p-lg opacity-5">
+<span class="text-display-lg font-display-lg rotate-12 block">CONFIDENTIAL</span>
+</div>
+<div class="mb-xl flex justify-between items-start" id="preview-header">
+<div>
+<div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white mb-md">
+<span class="material-symbols-outlined text-3xl">corporate_fare</span>
+</div>
+<h3 class="text-title-md font-bold text-on-surface">TalentBridge HR Department</h3>
+<p class="text-label-sm text-on-surface-variant">123 Talent Way, San Francisco, CA</p>
+</div>
+<div class="text-right">
+<p class="text-label-sm font-bold text-on-surface-variant">OFFER ID: #TB-2024-AR</p>
+<p class="text-label-sm text-on-surface-variant" id="current-date">October 24, 2024</p>
+</div>
+</div>
+<div class="text-body-lg text-on-surface space-y-md leading-relaxed" id="letter-content">
+<p>Dear Alex Rivers,</p>
+<p>We are absolutely thrilled to offer you the position of <strong>Senior Product Designer</strong> at TalentBridge. Your expertise in user-centric design and your innovative approach to complex problems impressed our entire team during the interview process.</p>
+<p>As discussed, we are pleased to offer you a starting annual salary of <strong>$145,000</strong>, paid semi-monthly. Your anticipated start date will be <strong>November 1, 2024</strong>.</p>
+<p>In addition to your base compensation, you will be eligible for our comprehensive benefits package, which includes premium health insurance, 401(k) matching, and a generous 25-day PTO policy to ensure a healthy work-life balance.</p>
+<p>We believe your vision aligns perfectly with our mission to bridge the gap between global talent and opportunity. We are excited about the prospect of you joining our growing team.</p>
+<p class="pt-lg">Sincerely,</p>
+<div class="pt-xs">
+<div class="w-32 h-12 border-b border-outline-variant mb-xs flex items-center justify-center italic text-on-surface-variant">Sarah Jenkins</div>
+<p class="font-bold text-on-surface">Sarah Jenkins</p>
+<p class="text-label-sm text-on-surface-variant">Head of People &amp; Culture</p>
+</div>
+</div>
+<!-- AI Suggestion Bubble -->
+<div class="hidden mt-xl p-md bg-primary-container text-on-primary-container rounded-lg border-l-4 border-primary flex gap-md items-center" id="ai-suggestion">
+<span class="material-symbols-outlined">lightbulb</span>
+<p class="text-body-md italic">AI Suggestion: Added a sentence about the candidate's specific impact on the "User Flow" during the case study interview to increase offer acceptance probability.</p>
+</div>
+</div>
+<!-- Action Bar -->
+<div class="flex items-center justify-between bg-surface-container p-md rounded-xl border border-outline-variant">
+<div class="flex gap-md">
+<button class="flex items-center gap-xs px-md py-sm bg-surface-container-lowest border border-outline-variant text-on-surface-variant rounded-lg hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">download</span>
+                            Download PDF
+                        </button>
+<button class="flex items-center gap-xs px-md py-sm bg-surface-container-lowest border border-outline-variant text-on-surface-variant rounded-lg hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">edit</span>
+                            Edit Manually
+                        </button>
+</div>
+<button class="flex items-center gap-xs px-xl py-md bg-primary text-white rounded-lg font-title-md hover:opacity-90 active:scale-95 duration-150 shadow-md">
+<span class="material-symbols-outlined">send</span>
+                        Approve &amp; Send Offer
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Side Navigation (Suppressed for transactional flow as per guidelines, but keeping structure for layout integrity) -->
+<div class="hidden lg:flex fixed left-0 top-16 h-[calc(100vh-64px)] w-64 bg-surface-container-low border-r border-outline-variant flex-col p-md space-y-xs z-40">
+<div class="mb-lg flex items-center gap-sm px-xs">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container">work</span>
+</div>
+<div>
+<p class="text-label-sm font-bold text-primary">Recruiter Workspace</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider">Global Talent Hub</p>
+</div>
+</div>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-body-md font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md p-md bg-secondary-container text-on-secondary-container rounded-lg font-bold scale-95" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-body-md font-body-md">Candidates</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">work</span>
+<span class="text-body-md font-body-md">Postings</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-body-md font-body-md">Analytics</span>
+</a>
+<div class="mt-auto pt-md border-t border-outline-variant">
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-body-md font-body-md">Settings</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-body-md font-body-md">Logout</span>
+</a>
+</div>
+</div>
+<script>
+        // Micro-interaction for the "Draft with AI" button
+        const draftBtn = document.getElementById('draft-ai');
+        const letterContent = document.getElementById('letter-content');
+        const aiSuggestion = document.getElementById('ai-suggestion');
+
+        draftBtn.addEventListener('click', () => {
+            // Simulate AI working
+            draftBtn.innerHTML = `<span class="material-symbols-outlined animate-spin">sync</span> Thinking...`;
+            draftBtn.classList.add('opacity-80');
+            
+            setTimeout(() => {
+                // Update text content with a "generated" effect
+                letterContent.style.opacity = '0.5';
+                setTimeout(() => {
+                    letterContent.style.opacity = '1';
+                    letterContent.innerHTML = `
+                        <p>Dear Alex Rivers,</p>
+                        <p>We are delighted to formally extend an offer to join TalentBridge as a <strong>Senior Product Designer</strong>. Based on your impressive portfolio and the strategic design thinking you demonstrated during our sessions, we are confident you will be a cornerstone of our design ecosystem.</p>
+                        <p>Your compensation package includes an annual base salary of <strong>$145,000</strong>, reflecting our commitment to attracting top-tier talent. Your starting date is set for <strong>November 1, 2024</strong>.</p>
+                        <p>As a TalentBridge employee, you will benefit from comprehensive health coverage, our robust 401(k) matching program, and a commitment to personal growth through our learning stipends. Your 25 days of annual leave are designed to ensure you remain as creative and energized as the day you start.</p>
+                        <p>We've specifically tailored this role to leverage your experience in accessibility—an area we identified as critical to our next product cycle. We can't wait to see the impact you'll make.</p>
+                        <p class="pt-lg">Best regards,</p>
+                        <div class="pt-xs">
+                             <div class="w-32 h-12 border-b border-outline-variant mb-xs flex items-center justify-center italic text-on-surface-variant">Sarah Jenkins</div>
+                             <p class="font-bold text-on-surface">Sarah Jenkins</p>
+                             <p class="text-label-sm text-on-surface-variant">Head of People & Culture</p>
+                        </div>
+                    `;
+                    aiSuggestion.classList.remove('hidden');
+                    draftBtn.innerHTML = `<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span> ✨ Draft with AI`;
+                    draftBtn.classList.remove('opacity-80');
+                }, 800);
+            }, 1500);
+        });
+
+        // Set current date in preview
+        const dateEl = document.getElementById('current-date');
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        dateEl.textContent = new Date().toLocaleDateString('en-US', options);
+    </script>
+</body></html>

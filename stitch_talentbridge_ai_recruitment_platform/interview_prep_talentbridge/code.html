@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Interview Prep | TalentBridge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .drag-ghost {
+            opacity: 0.4;
+            background: #e6eeff;
+        }
+        .ai-sparkle-border {
+            position: relative;
+        }
+        .ai-sparkle-border::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            background: linear-gradient(45deg, #142175, #6cf8bb, #142175);
+            z-index: -1;
+            border-radius: inherit;
+            opacity: 0.3;
+        }
+        @keyframes subtle-float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-4px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-animation {
+            animation: subtle-float 3s ease-in-out infinite;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#006c49",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-secondary-fixed-variant": "#005236",
+                        "on-background": "#0d1c2e",
+                        "on-primary-fixed": "#000d60",
+                        "secondary-container": "#6cf8bb",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f8f9ff",
+                        "primary-container": "#2e3a8c",
+                        "secondary-fixed-dim": "#4edea3",
+                        "tertiary": "#412600",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#5f3a00",
+                        "on-primary-fixed-variant": "#333f91",
+                        "error": "#ba1a1a",
+                        "surface-tint": "#4b57aa",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "surface-container-low": "#eff4ff",
+                        "surface": "#f8f9ff",
+                        "surface-container-high": "#dce9ff",
+                        "on-surface-variant": "#454651",
+                        "outline-variant": "#c6c5d3",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#142175",
+                        "primary-fixed": "#dfe0ff",
+                        "on-surface": "#0d1c2e",
+                        "on-primary-container": "#9ea9ff",
+                        "surface-variant": "#d5e3fc",
+                        "on-error-container": "#93000a",
+                        "background": "#f8f9ff",
+                        "inverse-surface": "#233144",
+                        "outline": "#767682",
+                        "on-tertiary-container": "#f29c06",
+                        "surface-container": "#e6eeff",
+                        "on-tertiary-fixed": "#2a1700",
+                        "primary-fixed-dim": "#bcc3ff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#00714d",
+                        "on-primary": "#ffffff",
+                        "inverse-primary": "#bcc3ff",
+                        "surface-container-highest": "#d5e3fc",
+                        "on-secondary-fixed": "#002113",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed": "#6ffbbe",
+                        "surface-dim": "#ccdbf3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "md": "16px",
+                        "margin-desktop": "40px",
+                        "sm": "12px",
+                        "gutter": "20px",
+                        "xl": "32px",
+                        "xs": "8px",
+                        "margin-mobile": "16px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "title-md": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<!-- Top Navigation Bar (Shared Component Anchor) -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface-container-low shadow-sm">
+<div class="flex items-center gap-xl">
+<span class="text-title-md font-title-md font-bold text-primary">TalentBridge</span>
+<nav class="hidden md:flex gap-lg items-center h-full">
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm px-xs" href="#">Dashboard</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm px-xs" href="#">Postings</a>
+<a class="text-primary border-b-2 border-primary pb-1 text-label-sm font-label-sm px-xs" href="#">Candidates</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-xs hover:bg-surface-variant transition-colors rounded-full">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a corporate recruiter, looking friendly and approachable. The background is a soft-focus modern office with warm, natural lighting. The image style is crisp, clean, and professional, aligning with a high-end corporate modern design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC70gNsFUaCKdSgb454eOcgP-6aFd56g21lvZOXYfhOlKALQ-QVd5_T4u8Nr4jrMumdUu2KTV0LNn9PF1RBxNHfablictvTuqp2wFxMmoTSujETA3WndBg4eNWr9RZq5UknVFenmiZiXbkLQh5fydogPGvu8epsqRkLxtyPWwXgiqJwETdikd7jnaF-N2qUGHVhYsIjoc27USEZvc9J9J63_kYi2jAbBzReaSQTB9LMPi_skPTYEKoZ"/>
+</div>
+</div>
+</header>
+<main class="pt-16 min-h-screen flex">
+<!-- Side Navigation (Shared Component Anchor) -->
+<aside class="hidden lg:flex flex-col h-[calc(100vh-64px)] w-64 fixed left-0 bg-surface-container-low border-r border-outline-variant p-md space-y-xs overflow-y-auto">
+<div class="pb-lg pt-sm">
+<div class="flex items-center gap-sm px-xs">
+<span class="material-symbols-outlined text-primary text-headline-lg" data-icon="recruiter_workspace">work</span>
+<div>
+<p class="text-title-md font-title-md text-primary leading-tight">Recruiter Workspace</p>
+<p class="text-label-sm text-outline leading-none">Global Talent Hub</p>
+</div>
+</div>
+</div>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-body-md font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="work">work</span>
+<span class="text-body-md font-body-md">Postings</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container rounded-lg font-bold transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="group" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="text-body-md font-body-md">Candidates</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="text-body-md font-body-md">Analytics</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-body-md font-body-md">Settings</span>
+</a>
+<div class="pt-xl flex-grow flex flex-col justify-end gap-xs">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="text-body-md font-body-md">Help</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="text-body-md font-body-md">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<section class="flex-1 lg:ml-64 p-margin-desktop bg-surface-bright">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-xs text-label-sm text-outline mb-md">
+<span>Candidates</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="chevron_right">chevron_right</span>
+<span>Eleanor Vance</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="chevron_right">chevron_right</span>
+<span class="text-primary font-bold">Interview Prep</span>
+</div>
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-md mb-xl">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-primary tracking-tight">Interview Prep: Senior Product Designer</h1>
+<p class="text-body-md text-on-surface-variant mt-base flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]" data-icon="person">person</span>
+                        Candidate: <span class="font-bold">Eleanor Vance</span>
+<span class="mx-xs opacity-30">|</span>
+<span class="material-symbols-outlined text-[18px] text-on-tertiary-container" data-icon="auto_awesome">auto_awesome</span>
+                        AI-Generated Prep Guide
+                    </p>
+</div>
+<button class="bg-primary text-on-primary px-lg py-md rounded-lg font-bold flex items-center gap-sm shadow-sm hover:opacity-90 transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="save">save</span>
+                    Save Prep Guide
+                </button>
+</div>
+<!-- Main Workspace: Asymmetric Layout -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-lg">
+<!-- Left: Question List (8 Columns) -->
+<div class="xl:col-span-8 space-y-md" id="question-container">
+<!-- AI Insight Banner -->
+<div class="bg-surface-container-low border border-outline-variant p-md rounded-xl flex items-start gap-md mb-lg">
+<div class="bg-primary-container p-sm rounded-lg text-on-primary-container">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+</div>
+<div>
+<h3 class="text-title-md font-title-md text-primary">AI Strategy Overview</h3>
+<p class="text-body-md text-on-surface-variant">Based on Eleanor's portfolio and recent case study, she excels in visual systems but has limited documentation on cross-functional conflict resolution. These questions focus on bridging that specific insight gap.</p>
+</div>
+</div>
+<!-- Question Card 1 -->
+<div class="group bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex gap-md items-start hover:border-primary transition-all shadow-sm">
+<div class="flex flex-col items-center gap-xs text-outline opacity-40 group-hover:opacity-100 cursor-grab">
+<span class="material-symbols-outlined" data-icon="drag_indicator">drag_indicator</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-xs">
+<span class="bg-surface-container text-primary text-label-sm font-bold px-sm py-base rounded-full uppercase tracking-wider">Experience Gap</span>
+<div class="flex gap-xs">
+<button class="p-xs hover:bg-surface-container-high rounded-md text-outline"><span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span></button>
+<button class="p-xs hover:bg-error-container hover:text-error rounded-md text-outline"><span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span></button>
+</div>
+</div>
+<h4 class="text-title-md font-title-md text-on-surface mb-md leading-snug">"Can you describe a time you had to defend a design decision against a stakeholder who prioritized speed over user experience?"</h4>
+<div class="mt-lg border-t border-outline-variant pt-md xl:hidden">
+<p class="text-label-sm font-bold text-secondary uppercase mb-xs flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="info">info</span>
+                                    What to listen for
+                                </p>
+<p class="text-body-md text-on-surface-variant italic">Listen for her ability to use data or research to back her claim rather than purely aesthetic preferences.</p>
+</div>
+</div>
+</div>
+<!-- Question Card 2 -->
+<div class="group bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex gap-md items-start hover:border-primary transition-all shadow-sm">
+<div class="flex flex-col items-center gap-xs text-outline opacity-40 group-hover:opacity-100 cursor-grab">
+<span class="material-symbols-outlined" data-icon="drag_indicator">drag_indicator</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-xs">
+<span class="bg-surface-container text-primary text-label-sm font-bold px-sm py-base rounded-full uppercase tracking-wider">Core Competency</span>
+<div class="flex gap-xs">
+<button class="p-xs hover:bg-surface-container-high rounded-md text-outline"><span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span></button>
+<button class="p-xs hover:bg-error-container hover:text-error rounded-md text-outline"><span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span></button>
+</div>
+</div>
+<h4 class="text-title-md font-title-md text-on-surface mb-md leading-snug">"Eleanor, your portfolio highlights a robust design system. How would you approach scaling this system for a platform with 5+ distinct user roles?"</h4>
+<div class="mt-lg border-t border-outline-variant pt-md xl:hidden">
+<p class="text-label-sm font-bold text-secondary uppercase mb-xs flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="info">info</span>
+                                    What to listen for
+                                </p>
+<p class="text-body-md text-on-surface-variant italic">She should mention tokenization, component hierarchy, and how she facilitates adoption across multiple teams.</p>
+</div>
+</div>
+</div>
+<!-- Question Card 3 -->
+<div class="group bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex gap-md items-start hover:border-primary transition-all shadow-sm">
+<div class="flex flex-col items-center gap-xs text-outline opacity-40 group-hover:opacity-100 cursor-grab">
+<span class="material-symbols-outlined" data-icon="drag_indicator">drag_indicator</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-xs">
+<span class="bg-surface-container text-primary text-label-sm font-bold px-sm py-base rounded-full uppercase tracking-wider">Cultural Add</span>
+<div class="flex gap-xs">
+<button class="p-xs hover:bg-surface-container-high rounded-md text-outline"><span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span></button>
+<button class="p-xs hover:bg-error-container hover:text-error rounded-md text-outline"><span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span></button>
+</div>
+</div>
+<h4 class="text-title-md font-title-md text-on-surface mb-md leading-snug">"Tell me about a time you mentored a junior designer. What was the specific feedback you gave that led to their growth?"</h4>
+<div class="mt-lg border-t border-outline-variant pt-md xl:hidden">
+<p class="text-label-sm font-bold text-secondary uppercase mb-xs flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="info">info</span>
+                                    What to listen for
+                                </p>
+<p class="text-body-md text-on-surface-variant italic">Look for empathy combined with actionable critique. Avoid candidates who only 'check over' work without teaching.</p>
+</div>
+</div>
+</div>
+<!-- Add New Question Placeholder -->
+<button class="w-full border-2 border-dashed border-outline-variant rounded-xl p-lg flex items-center justify-center gap-sm text-outline hover:border-primary hover:text-primary transition-all group">
+<span class="material-symbols-outlined group-hover:scale-125 transition-transform" data-icon="add_circle">add_circle</span>
+<span class="font-bold">Add Custom Question</span>
+</button>
+</div>
+<!-- Right: "What to listen for" Fixed Sidebars (4 Columns) -->
+<div class="hidden xl:block xl:col-span-4 relative">
+<div class="sticky top-24 space-y-md">
+<div class="p-lg bg-surface-container-high rounded-xl border border-outline-variant shadow-sm ai-sparkle-border">
+<div class="flex items-center gap-xs mb-md">
+<span class="material-symbols-outlined text-secondary text-[24px]" data-icon="tips_and_updates">tips_and_updates</span>
+<h5 class="text-label-sm font-bold text-secondary uppercase tracking-widest">Interviewer Notes</h5>
+</div>
+<div class="space-y-xl">
+<!-- Guide 1 -->
+<div class="relative pl-md border-l-4 border-primary">
+<p class="text-label-sm font-bold text-primary mb-xs">Q1 Guide:</p>
+<p class="text-body-md text-on-surface-variant leading-relaxed">Listen for her ability to use data or research to back her claim rather than purely aesthetic preferences. Watch for "we" vs "I" pronouns to gauge collaboration.</p>
+</div>
+<!-- Guide 2 -->
+<div class="relative pl-md border-l-4 border-secondary">
+<p class="text-label-sm font-bold text-secondary mb-xs">Q2 Guide:</p>
+<p class="text-body-md text-on-surface-variant leading-relaxed">She should mention tokenization, component hierarchy, and how she facilitates adoption across multiple teams. Is she thinking about the developers?</p>
+</div>
+<!-- Guide 3 -->
+<div class="relative pl-md border-l-4 border-tertiary-container">
+<p class="text-label-sm font-bold text-tertiary mb-xs">Q3 Guide:</p>
+<p class="text-body-md text-on-surface-variant leading-relaxed">Look for empathy combined with actionable critique. Avoid candidates who only 'check over' work without teaching. Mentorship is key for this senior role.</p>
+</div>
+</div>
+<div class="mt-xl pt-lg border-t border-outline-variant">
+<button class="w-full text-secondary text-label-sm font-bold flex items-center justify-center gap-xs hover:underline">
+<span class="material-symbols-outlined text-[18px]" data-icon="refresh">refresh</span>
+                                    Regenerate AI Insights
+                                </button>
+</div>
+</div>
+<!-- Candidate Quick Summary -->
+<div class="bg-inverse-surface text-on-primary-fixed p-lg rounded-xl shadow-lg float-animation">
+<div class="flex items-center gap-md mb-md">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary-fixed-dim">
+<img class="w-full h-full object-cover" data-alt="A detailed headshot of Eleanor Vance, a female designer with a thoughtful and focused expression. Soft indoor lighting, minimal background clutter, maintaining a high-fidelity and modern corporate look." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-d87WUK37LDU1LVhoy0SFln5ZvMUFTh8BTBII-Dx1Heo4gVwbkNxBdcDuepKJz6e6YMlDyJHWEHBl5bZ14pVHRvJIqw0N3Jxz41a8AeQbS9xb_ya16QuH3wMByp_YSUWN7qZ_KPkp_vgX1BR1qAiJDnC6wGJbrJSuYdGFUM-FkTqvA_Zv9YWk1xnRMpkp59w9nQTOUEK7kHKHDQ5UHlaWAxtcPyS4X5ZSdiAyuQatko0sf512FLDV"/>
+</div>
+<div>
+<h6 class="text-title-md font-title-md leading-none">Eleanor Vance</h6>
+<p class="text-label-sm text-outline-variant">Match Score: 94%</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-sm">
+<div class="bg-surface-variant/10 p-sm rounded-lg">
+<p class="text-[10px] uppercase font-bold text-outline-variant opacity-70">Focus</p>
+<p class="text-body-md">Systems Design</p>
+</div>
+<div class="bg-surface-variant/10 p-sm rounded-lg">
+<p class="text-[10px] uppercase font-bold text-outline-variant opacity-70">Exp.</p>
+<p class="text-body-md">8 Years</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Success Toast (Hidden by default) -->
+<div class="fixed bottom-margin-desktop right-margin-desktop bg-inverse-surface text-inverse-on-surface px-lg py-md rounded-lg shadow-2xl flex items-center gap-md transform translate-y-24 opacity-0 transition-all duration-300 z-[100]" id="save-toast">
+<span class="material-symbols-outlined text-secondary-fixed" data-icon="check_circle">check_circle</span>
+<span class="text-body-md font-bold">Interview Prep Saved Successfully</span>
+</div>
+<script>
+        // Micro-interactions
+        document.querySelector('button.bg-primary').addEventListener('click', function() {
+            const toast = document.getElementById('save-toast');
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3000);
+        });
+
+        // Simple Delete Logic for UI demo
+        document.querySelectorAll('[data-icon="delete"]').forEach(btn => {
+            btn.closest('button').addEventListener('click', function() {
+                const card = this.closest('.group');
+                card.style.transform = 'scale(0.95)';
+                card.style.opacity = '0';
+                setTimeout(() => card.remove(), 200);
+            });
+        });
+
+        // Toggle hover states for "What to listen for" connection
+        const questions = document.querySelectorAll('#question-container > .group');
+        const guides = document.querySelectorAll('.xl\\:col-span-4 .space-y-xl > div');
+
+        questions.forEach((q, idx) => {
+            q.addEventListener('mouseenter', () => {
+                if(guides[idx]) guides[idx].classList.add('scale-105', 'shadow-md', 'bg-white');
+            });
+            q.addEventListener('mouseleave', () => {
+                if(guides[idx]) guides[idx].classList.remove('scale-105', 'shadow-md', 'bg-white');
+            });
+        });
+    </script>
+</body></html>

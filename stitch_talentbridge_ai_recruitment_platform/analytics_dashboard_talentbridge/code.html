@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TalentBridge | Analytics Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#006c49",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-secondary-fixed-variant": "#005236",
+                    "on-background": "#0d1c2e",
+                    "on-primary-fixed": "#000d60",
+                    "secondary-container": "#6cf8bb",
+                    "on-secondary": "#ffffff",
+                    "surface-bright": "#f8f9ff",
+                    "primary-container": "#2e3a8c",
+                    "secondary-fixed-dim": "#4edea3",
+                    "tertiary": "#412600",
+                    "error-container": "#ffdad6",
+                    "tertiary-container": "#5f3a00",
+                    "on-primary-fixed-variant": "#333f91",
+                    "error": "#ba1a1a",
+                    "surface-tint": "#4b57aa",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-container-low": "#eff4ff",
+                    "surface": "#f8f9ff",
+                    "surface-container-high": "#dce9ff",
+                    "on-surface-variant": "#454651",
+                    "outline-variant": "#c6c5d3",
+                    "on-tertiary": "#ffffff",
+                    "primary": "#142175",
+                    "primary-fixed": "#dfe0ff",
+                    "on-surface": "#0d1c2e",
+                    "on-primary-container": "#9ea9ff",
+                    "surface-variant": "#d5e3fc",
+                    "on-error-container": "#93000a",
+                    "background": "#f8f9ff",
+                    "inverse-surface": "#233144",
+                    "outline": "#767682",
+                    "on-tertiary-container": "#f29c06",
+                    "surface-container": "#e6eeff",
+                    "on-tertiary-fixed": "#2a1700",
+                    "primary-fixed-dim": "#bcc3ff",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#00714d",
+                    "on-primary": "#ffffff",
+                    "inverse-primary": "#bcc3ff",
+                    "surface-container-highest": "#d5e3fc",
+                    "on-secondary-fixed": "#002113",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#6ffbbe",
+                    "surface-dim": "#ccdbf3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "md": "16px",
+                    "margin-desktop": "40px",
+                    "sm": "12px",
+                    "gutter": "20px",
+                    "xl": "32px",
+                    "xs": "8px",
+                    "margin-mobile": "16px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "title-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .chart-container { position: relative; }
+        .bar-grow { transition: height 1s ease-out; }
+        .funnel-step { clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 15% 100%); }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex overflow-hidden">
+<!-- SideNavBar Component -->
+<aside class="hidden lg:flex flex-col h-full w-64 p-md space-y-xs bg-surface-container-low border-r border-outline-variant fixed left-0 z-40">
+<div class="flex items-center gap-md px-xs mb-lg">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">badge</span>
+</div>
+<div>
+<h1 class="text-headline-lg font-headline-lg text-primary tracking-tight">TalentBridge</h1>
+<p class="text-label-sm font-label-sm text-outline">Recruiter Workspace</p>
+</div>
+</div>
+<nav class="flex-1 space-y-xs overflow-y-auto">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-body-md font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="work">work</span>
+<span class="text-body-md font-body-md">Postings</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="text-body-md font-body-md">Candidates</span>
+</a>
+<!-- Active State: Analytics -->
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container rounded-lg font-bold scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="analytics" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="text-body-md font-body-md">Analytics</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-body-md font-body-md">Settings</span>
+</a>
+</nav>
+<div class="pt-lg border-t border-outline-variant space-y-xs">
+<button class="w-full bg-primary text-on-primary py-sm rounded-xl font-bold flex items-center justify-center gap-xs hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-body-md">add</span>
+                Post New Job
+            </button>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="text-body-md font-body-md">Help</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="text-body-md font-body-md">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Shell -->
+<main class="flex-1 lg:ml-64 min-h-screen overflow-y-auto bg-surface-bright pb-xl">
+<!-- TopAppBar Component -->
+<header class="sticky top-0 w-full z-30 flex justify-between items-center px-margin-desktop h-16 bg-surface-container-low shadow-sm border-none">
+<div class="flex items-center gap-lg">
+<h2 class="text-title-md font-title-md font-bold text-primary">Analytics Engine</h2>
+<div class="hidden md:flex items-center bg-surface-container-highest px-md py-xs rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-outline text-body-md" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md w-64 placeholder:text-outline-variant" placeholder="Search analytics..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-xs rounded-full hover:bg-surface-variant transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="h-8 w-px bg-outline-variant mx-xs"></div>
+<div class="flex items-center gap-sm">
+<div class="text-right hidden sm:block">
+<p class="text-label-sm font-label-sm text-on-surface font-bold">Alex Chen</p>
+<p class="text-[10px] text-outline uppercase tracking-wider">Sr. Recruiter</p>
+</div>
+<img class="w-10 h-10 rounded-full border-2 border-primary-fixed" data-alt="A professional headshot of a recruitment manager in a modern office, soft bokeh background with glass partitions, wearing a dark blazer, professional warm lighting, corporate modern photography style, sharp focus on eyes." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkqiuMhm6uGe7x3i5ELhFeH6NE30vOYGh---ksZL3wz--rZ_zcmsDaSp_0boRoMA1Pv9FwblaQ39dHvhV_w-r2yjZllFehgqswMihccmZw3b551zw6fvYTaWCYRC5L7eBgvaOY46RFc-wRvSltG9PYdZzGVX-ad9fAxU6vjQQOBF4F09UOrSsMgSHbJKBfNdREXOktYk0JMqjNCfmrlxX5DEwe1uxAOfHIiIiwbTbPKXB_CdgNUWlk"/>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="px-margin-desktop pt-lg">
+<!-- Page Header & Global Controls -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-xl gap-md">
+<div>
+<h3 class="text-headline-lg font-headline-lg text-on-background">Recruitment Insights</h3>
+<p class="text-body-lg text-on-surface-variant">Real-time performance metrics for Q3 2024 hiring cycle.</p>
+</div>
+<div class="flex items-center gap-sm bg-surface-container p-xs rounded-lg border border-outline-variant">
+<button class="px-md py-xs bg-surface-container-lowest shadow-sm rounded-md text-label-sm font-label-sm text-primary">Last 30 Days</button>
+<button class="px-md py-xs hover:bg-surface-container-highest rounded-md text-label-sm font-label-sm text-on-surface-variant transition-colors">Last Quarter</button>
+<button class="px-md py-xs hover:bg-surface-container-highest rounded-md text-label-sm font-label-sm text-on-surface-variant transition-colors">Year to Date</button>
+<button class="p-xs text-on-surface-variant"><span class="material-symbols-outlined text-body-md" data-icon="filter_list">filter_list</span></button>
+</div>
+</div>
+<!-- Bento Grid of Analytics -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-lg">
+<!-- 1. Time-to-hire by role (Bar Chart) -->
+<section class="md:col-span-7 bg-surface-container-lowest rounded-xl border border-outline-variant p-lg shadow-sm">
+<div class="flex justify-between items-center mb-lg">
+<div>
+<h4 class="text-title-md font-title-md text-on-surface">Time-to-Hire by Role</h4>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Average days from posting to signed offer</p>
+</div>
+<div class="text-secondary flex items-center gap-xs">
+<span class="material-symbols-outlined text-body-md" data-icon="trending_down">trending_down</span>
+<span class="text-label-sm font-label-sm font-bold">-4.2 days</span>
+</div>
+</div>
+<div class="flex items-end justify-between h-64 px-md gap-md">
+<div class="flex-1 flex flex-col items-center gap-sm group">
+<div class="w-full bg-primary-fixed-dim rounded-t-lg bar-grow hover:bg-primary transition-colors cursor-pointer relative" style="height: 75%;">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-xs py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">42 days</div>
+</div>
+<span class="text-[10px] text-outline font-bold uppercase tracking-tighter">Eng</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-sm group">
+<div class="w-full bg-primary-fixed-dim rounded-t-lg bar-grow hover:bg-primary transition-colors cursor-pointer relative" style="height: 45%;">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-xs py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">28 days</div>
+</div>
+<span class="text-[10px] text-outline font-bold uppercase tracking-tighter">Product</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-sm group">
+<div class="w-full bg-primary-fixed-dim rounded-t-lg bar-grow hover:bg-primary transition-colors cursor-pointer relative" style="height: 90%;">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-xs py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">56 days</div>
+</div>
+<span class="text-[10px] text-outline font-bold uppercase tracking-tighter">Sales</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-sm group">
+<div class="w-full bg-primary-fixed-dim rounded-t-lg bar-grow hover:bg-primary transition-colors cursor-pointer relative" style="height: 30%;">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-xs py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">18 days</div>
+</div>
+<span class="text-[10px] text-outline font-bold uppercase tracking-tighter">Support</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-sm group">
+<div class="w-full bg-primary-fixed-dim rounded-t-lg bar-grow hover:bg-primary transition-colors cursor-pointer relative" style="height: 60%;">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-xs py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">35 days</div>
+</div>
+<span class="text-[10px] text-outline font-bold uppercase tracking-tighter">Marketing</span>
+</div>
+</div>
+</section>
+<!-- 2. Pipeline Funnel (Funnel Chart) -->
+<section class="md:col-span-5 bg-surface-container-lowest rounded-xl border border-outline-variant p-lg shadow-sm flex flex-col">
+<div class="mb-lg">
+<h4 class="text-title-md font-title-md text-on-surface">Pipeline Velocity</h4>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Candidate conversion through stages</p>
+</div>
+<div class="flex-1 flex flex-col gap-xs py-md">
+<!-- Application -->
+<div class="flex items-center gap-md">
+<div class="flex-1 bg-surface-container-high h-12 flex items-center justify-center relative funnel-step overflow-hidden">
+<div class="absolute inset-0 bg-primary opacity-10"></div>
+<span class="text-label-sm font-bold text-primary z-10">Applications (2,450)</span>
+</div>
+<span class="w-12 text-[10px] text-outline font-bold">100%</span>
+</div>
+<!-- Screen -->
+<div class="flex items-center gap-md px-[5%]">
+<div class="flex-1 bg-surface-container-high h-12 flex items-center justify-center relative funnel-step overflow-hidden">
+<div class="absolute inset-0 bg-primary opacity-20"></div>
+<span class="text-label-sm font-bold text-primary z-10">Screening (840)</span>
+</div>
+<span class="w-12 text-[10px] text-outline font-bold">34%</span>
+</div>
+<!-- Interview -->
+<div class="flex items-center gap-md px-[10%]">
+<div class="flex-1 bg-surface-container-high h-12 flex items-center justify-center relative funnel-step overflow-hidden">
+<div class="absolute inset-0 bg-primary opacity-40"></div>
+<span class="text-label-sm font-bold text-primary z-10">Interviews (210)</span>
+</div>
+<span class="w-12 text-[10px] text-outline font-bold">25%</span>
+</div>
+<!-- Offer -->
+<div class="flex items-center gap-md px-[15%]">
+<div class="flex-1 bg-surface-container-high h-12 flex items-center justify-center relative funnel-step overflow-hidden">
+<div class="absolute inset-0 bg-primary opacity-60"></div>
+<span class="text-label-sm font-bold text-white z-10">Offers (45)</span>
+</div>
+<span class="w-12 text-[10px] text-outline font-bold">21%</span>
+</div>
+</div>
+</section>
+<!-- 3. Offer Acceptance Rate (Donut Chart) -->
+<section class="md:col-span-4 bg-surface-container-lowest rounded-xl border border-outline-variant p-lg shadow-sm">
+<h4 class="text-title-md font-title-md text-on-surface mb-xs">Offer Acceptance</h4>
+<p class="text-label-sm font-label-sm text-on-surface-variant mb-xl">Win rate vs. competition</p>
+<div class="relative flex items-center justify-center py-md">
+<svg class="w-48 h-48 transform -rotate-90" viewbox="0 0 36 36">
+<circle class="stroke-surface-container-high" cx="18" cy="18" fill="none" r="16" stroke-width="3"></circle>
+<circle class="stroke-secondary" cx="18" cy="18" fill="none" r="16" stroke-dasharray="82, 100" stroke-linecap="round" stroke-width="3"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-display-lg font-display-lg text-on-surface">82%</span>
+<span class="text-label-sm text-secondary font-bold">+5% YoY</span>
+</div>
+</div>
+<div class="mt-xl space-y-md">
+<div class="flex justify-between items-center text-body-md">
+<div class="flex items-center gap-sm">
+<div class="w-3 h-3 rounded-full bg-secondary"></div>
+<span class="text-on-surface-variant">Accepted</span>
+</div>
+<span class="font-bold text-on-surface">37</span>
+</div>
+<div class="flex justify-between items-center text-body-md">
+<div class="flex items-center gap-sm">
+<div class="w-3 h-3 rounded-full bg-surface-container-high"></div>
+<span class="text-on-surface-variant">Declined</span>
+</div>
+<span class="font-bold text-on-surface">8</span>
+</div>
+</div>
+</section>
+<!-- 4. Hiring Effectiveness by Dept (Bento Table/Bar Chart Hybrid) -->
+<section class="md:col-span-8 bg-surface-container-lowest rounded-xl border border-outline-variant p-lg shadow-sm">
+<div class="flex justify-between items-center mb-lg">
+<div>
+<h4 class="text-title-md font-title-md text-on-surface">Effectiveness by Dept</h4>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Hiring quality score vs. retention</p>
+</div>
+<button class="text-primary text-label-sm font-bold flex items-center gap-xs">
+                            Full Report <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<div class="space-y-lg overflow-x-auto">
+<div class="min-w-[500px]">
+<!-- Row: Engineering -->
+<div class="flex items-center gap-xl mb-md group">
+<div class="w-32 text-body-md font-bold text-on-surface">Engineering</div>
+<div class="flex-1 bg-surface-container rounded-full h-4 relative overflow-hidden">
+<div class="absolute top-0 left-0 bg-primary h-full rounded-full transition-all duration-1000 w-[88%]" style="width: 88%"></div>
+</div>
+<div class="w-16 text-right text-label-sm font-bold text-on-surface">88%</div>
+<div class="w-24">
+<span class="px-xs py-[2px] bg-secondary-container text-on-secondary-container text-[10px] font-bold rounded">Optimal</span>
+</div>
+</div>
+<!-- Row: Sales -->
+<div class="flex items-center gap-xl mb-md group">
+<div class="w-32 text-body-md font-bold text-on-surface">Sales</div>
+<div class="flex-1 bg-surface-container rounded-full h-4 relative overflow-hidden">
+<div class="absolute top-0 left-0 bg-tertiary-container h-full rounded-full transition-all duration-1000 w-[62%]" style="width: 62%"></div>
+</div>
+<div class="w-16 text-right text-label-sm font-bold text-on-surface">62%</div>
+<div class="w-24">
+<span class="px-xs py-[2px] bg-tertiary-fixed text-on-tertiary-fixed-variant text-[10px] font-bold rounded">Critical</span>
+</div>
+</div>
+<!-- Row: Design -->
+<div class="flex items-center gap-xl mb-md group">
+<div class="w-32 text-body-md font-bold text-on-surface">Design</div>
+<div class="flex-1 bg-surface-container rounded-full h-4 relative overflow-hidden">
+<div class="absolute top-0 left-0 bg-primary h-full rounded-full transition-all duration-1000 w-[94%]" style="width: 94%"></div>
+</div>
+<div class="w-16 text-right text-label-sm font-bold text-on-surface">94%</div>
+<div class="w-24">
+<span class="px-xs py-[2px] bg-secondary-container text-on-secondary-container text-[10px] font-bold rounded">Optimal</span>
+</div>
+</div>
+<!-- Row: Marketing -->
+<div class="flex items-center gap-xl mb-md group">
+<div class="w-32 text-body-md font-bold text-on-surface">Marketing</div>
+<div class="flex-1 bg-surface-container rounded-full h-4 relative overflow-hidden">
+<div class="absolute top-0 left-0 bg-primary h-full rounded-full transition-all duration-1000 w-[78%]" style="width: 78%"></div>
+</div>
+<div class="w-16 text-right text-label-sm font-bold text-on-surface">78%</div>
+<div class="w-24">
+<span class="px-xs py-[2px] bg-surface-container-high text-on-surface-variant text-[10px] font-bold rounded">Stable</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- AI Insight Card (Full Width) -->
+<section class="md:col-span-12 relative overflow-hidden bg-primary p-xl rounded-xl text-on-primary">
+
+<div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-xl">
+<div class="flex items-start gap-lg">
+<div class="p-md bg-white/10 backdrop-blur-md rounded-xl border border-white/20">
+<span class="material-symbols-outlined text-headline-lg" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<div>
+<h4 class="text-title-md font-title-md">AI Optimization Recommendation</h4>
+<p class="text-body-md max-w-2xl opacity-90">Our analysis shows a significant drop-off in the "Screening" phase for Technical roles. Automating technical assessment scheduling could reduce your time-to-hire by an estimated <span class="font-bold underline">5.5 days</span>.</p>
+</div>
+</div>
+<button class="whitespace-nowrap px-lg py-md bg-white text-primary font-bold rounded-xl hover:bg-primary-fixed-dim transition-colors">Apply Strategy</button>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- Mobile Navigation (Responsive Anchor) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-low shadow-[0_-2px_10px_rgba(0,0,0,0.05)] h-16 flex items-center justify-around z-50">
+<a class="flex flex-col items-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] font-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center text-primary border-t-2 border-primary pt-1" href="#">
+<span class="material-symbols-outlined" data-icon="analytics" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="text-[10px] font-label-sm font-bold">Analytics</span>
+</a>
+<button class="bg-primary text-on-primary p-xs rounded-full -translate-y-4 shadow-lg">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+<a class="flex flex-col items-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="text-[10px] font-label-sm">Talent</span>
+</a>
+<a class="flex flex-col items-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-[10px] font-label-sm">Settings</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for bar charts
+        document.querySelectorAll('.bar-grow').forEach(bar => {
+            const finalHeight = bar.style.height;
+            bar.style.height = '0';
+            setTimeout(() => {
+                bar.style.height = finalHeight;
+            }, 300);
+        });
+
+        // Toggle active navigation classes for interactivity (demonstration)
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (link.getAttribute('href') === '#') e.preventDefault();
+            });
+        });
+    </script>
+</body></html>

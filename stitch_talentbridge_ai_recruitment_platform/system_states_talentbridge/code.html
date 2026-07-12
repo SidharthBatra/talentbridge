@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TalentBridge | UI Feedback States</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .skeleton {
+            background: linear-gradient(90deg, #e6eeff 25%, #dce9ff 50%, #e6eeff 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .error-shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#006c49",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-secondary-fixed-variant": "#005236",
+                        "on-background": "#0d1c2e",
+                        "on-primary-fixed": "#000d60",
+                        "secondary-container": "#6cf8bb",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f8f9ff",
+                        "primary-container": "#2e3a8c",
+                        "secondary-fixed-dim": "#4edea3",
+                        "tertiary": "#412600",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#5f3a00",
+                        "on-primary-fixed-variant": "#333f91",
+                        "error": "#ba1a1a",
+                        "surface-tint": "#4b57aa",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "surface-container-low": "#eff4ff",
+                        "surface": "#f8f9ff",
+                        "surface-container-high": "#dce9ff",
+                        "on-surface-variant": "#454651",
+                        "outline-variant": "#c6c5d3",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#142175",
+                        "primary-fixed": "#dfe0ff",
+                        "on-surface": "#0d1c2e",
+                        "on-primary-container": "#9ea9ff",
+                        "surface-variant": "#d5e3fc",
+                        "on-error-container": "#93000a",
+                        "background": "#f8f9ff",
+                        "inverse-surface": "#233144",
+                        "outline": "#767682",
+                        "on-tertiary-container": "#f29c06",
+                        "surface-container": "#e6eeff",
+                        "on-tertiary-fixed": "#2a1700",
+                        "primary-fixed-dim": "#bcc3ff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#00714d",
+                        "on-primary": "#ffffff",
+                        "inverse-primary": "#bcc3ff",
+                        "surface-container-highest": "#d5e3fc",
+                        "on-secondary-fixed": "#002113",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed": "#6ffbbe",
+                        "surface-dim": "#ccdbf3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "md": "16px",
+                        "margin-desktop": "40px",
+                        "sm": "12px",
+                        "gutter": "20px",
+                        "xl": "32px",
+                        "xs": "8px",
+                        "margin-mobile": "16px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "title-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface-container-low shadow-sm">
+<div class="flex items-center gap-xl">
+<span class="text-title-md font-title-md font-bold text-primary">TalentBridge</span>
+<nav class="hidden md:flex gap-lg items-center h-full">
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">Dashboard</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">Postings</a>
+<a class="text-primary border-b-2 border-primary pb-1 text-label-sm font-label-sm" href="#">Candidates</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-xs rounded-full hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional close-up studio portrait of a corporate executive for a profile avatar. The lighting is soft and cinematic, with a clean, light-mode office background in soft focus. The aesthetic is modern and high-end, utilizing a palette of soft blues and whites to match a sophisticated recruitment platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXRdsaZy5_cNL7-Vm3jISSUiqFKgdnVb7SldNQNXASPzirqs7pQZS2FxMGoUTZJAnEIUBLWwTs_4Hzmz42YJEhQG80bep0tX_WCS_fByGq6E5uM6QfAb4WfzM1tBU0Pbd6rNsCwtjEWJRj5jrzTx045ZGW9O1oU_khnBkSz4iCe4Qoh8-t7lYzi_-qOKFuBtKc__ew-_gJMxzjorlK6zHl_5yeMwGh8mu5_mHbKsFtmZYO-Qjh8SV1"/>
+</div>
+</div>
+</header>
+<!-- Sidebar (Shared Component Anchor) -->
+<aside class="hidden lg:flex fixed left-0 top-16 h-[calc(100vh-64px)] w-64 flex-col p-md space-y-xs bg-surface-container-low border-r border-outline-variant">
+<div class="mb-lg px-xs">
+<h2 class="text-title-md font-title-md text-primary">Recruiter Workspace</h2>
+<p class="text-label-sm font-label-sm text-outline">Global Talent Hub</p>
+</div>
+<div class="space-y-1">
+<a class="flex items-center gap-md p-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-body-md font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md p-sm bg-secondary-container text-on-secondary-container rounded-lg font-bold scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-body-md font-body-md">Candidates</span>
+</a>
+<a class="flex items-center gap-md p-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">work</span>
+<span class="text-body-md font-body-md">Postings</span>
+</a>
+<a class="flex items-center gap-md p-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-body-md font-body-md">Analytics</span>
+</a>
+<a class="flex items-center gap-md p-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-body-md font-body-md">Settings</span>
+</a>
+</div>
+<div class="mt-auto pt-lg border-t border-outline-variant">
+<button class="w-full py-sm px-md bg-primary text-on-primary rounded-lg font-bold hover:opacity-90 transition-opacity mb-md">
+                Post New Job
+            </button>
+<a class="flex items-center gap-md p-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="text-body-md">Help</span>
+</a>
+<a class="flex items-center gap-md p-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-body-md">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="lg:ml-64 pt-24 px-margin-mobile md:px-margin-desktop pb-xl min-h-screen bg-background">
+<header class="mb-xl">
+<h1 class="text-headline-lg font-headline-lg text-on-background">System Feedback States</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant max-w-2xl">This interface demonstrates the standardized visual patterns for loading, empty, and error states within the TalentBridge ecosystem.</p>
+</header>
+<!-- States Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-xl">
+<!-- Section 1: Loading State (Skeletons) -->
+<section class="bg-surface-container-lowest p-xl rounded-xl border border-outline-variant shadow-sm flex flex-col gap-lg">
+<div class="flex justify-between items-center">
+<h3 class="text-title-md font-title-md text-primary flex items-center gap-xs">
+<span class="material-symbols-outlined">pending</span>
+                        Loading State
+                    </h3>
+<span class="px-sm py-xs bg-surface-container text-on-surface-variant text-label-sm font-label-sm rounded-full">Skeleton UI</span>
+</div>
+<div class="space-y-md">
+<!-- Skeleton Card 1 -->
+<div class="p-md border border-outline-variant rounded-lg flex gap-md items-start">
+<div class="w-12 h-12 rounded-lg skeleton shrink-0"></div>
+<div class="flex-1 space-y-xs">
+<div class="h-5 w-1/3 skeleton rounded"></div>
+<div class="h-4 w-1/2 skeleton rounded"></div>
+<div class="pt-sm flex gap-xs">
+<div class="h-6 w-16 skeleton rounded-full"></div>
+<div class="h-6 w-20 skeleton rounded-full"></div>
+</div>
+</div>
+<div class="w-24 h-8 skeleton rounded-lg"></div>
+</div>
+<!-- Skeleton Card 2 -->
+<div class="p-md border border-outline-variant rounded-lg flex gap-md items-start">
+<div class="w-12 h-12 rounded-lg skeleton shrink-0"></div>
+<div class="flex-1 space-y-xs">
+<div class="h-5 w-1/4 skeleton rounded"></div>
+<div class="h-4 w-2/3 skeleton rounded"></div>
+<div class="pt-sm flex gap-xs">
+<div class="h-6 w-14 skeleton rounded-full"></div>
+<div class="h-6 w-14 skeleton rounded-full"></div>
+</div>
+</div>
+<div class="w-24 h-8 skeleton rounded-lg"></div>
+</div>
+<!-- Skeleton Card 3 -->
+<div class="p-md border border-outline-variant rounded-lg flex gap-md items-start">
+<div class="w-12 h-12 rounded-lg skeleton shrink-0"></div>
+<div class="flex-1 space-y-xs">
+<div class="h-5 w-2/5 skeleton rounded"></div>
+<div class="h-4 w-1/3 skeleton rounded"></div>
+</div>
+<div class="w-24 h-8 skeleton rounded-lg"></div>
+</div>
+</div>
+</section>
+<!-- Section 2: Empty State -->
+<section class="bg-surface-container-lowest p-xl rounded-xl border border-outline-variant shadow-sm flex flex-col items-center justify-center text-center min-h-[400px]">
+<div class="mb-lg w-full max-w-xs aspect-square flex items-center justify-center bg-surface-container rounded-full relative overflow-hidden group">
+<div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary to-transparent"></div>
+<div class="relative z-10 p-xl flex flex-col items-center">
+<span class="material-symbols-outlined text-[80px] text-primary/30 mb-md" style="font-variation-settings: 'wght' 200;">person_search</span>
+<div class="absolute -right-4 top-1/4 bg-white p-sm rounded-xl shadow-lg border border-outline-variant rotate-12 transition-transform group-hover:rotate-0">
+<span class="material-symbols-outlined text-secondary">check_circle</span>
+</div>
+<div class="absolute -left-2 bottom-1/4 bg-white p-sm rounded-xl shadow-lg border border-outline-variant -rotate-12 transition-transform group-hover:rotate-0">
+<span class="material-symbols-outlined text-primary">mail</span>
+</div>
+</div>
+</div>
+<h3 class="text-headline-lg font-headline-lg text-on-background mb-xs">No applications yet</h3>
+<p class="text-body-lg font-body-lg text-on-surface-variant max-w-sm mb-xl">
+                    When candidates apply to your job postings, they'll appear here for your review and AI screening.
+                </p>
+<div class="flex gap-md">
+<button class="px-xl py-md bg-primary text-on-primary rounded-lg font-bold hover:shadow-lg transition-all flex items-center gap-xs">
+<span class="material-symbols-outlined">share</span>
+                        Share Job Link
+                    </button>
+<button class="px-xl py-md bg-white border border-primary text-primary rounded-lg font-bold hover:bg-surface-container transition-all">
+                        View Postings
+                    </button>
+</div>
+</section>
+<!-- Section 3: Error State -->
+<section class="bg-surface-container-lowest p-xl rounded-xl border border-outline-variant shadow-sm flex flex-col gap-lg xl:col-span-2">
+<div class="flex justify-between items-center mb-md">
+<h3 class="text-title-md font-title-md text-error flex items-center gap-xs">
+<span class="material-symbols-outlined">report</span>
+                        Error States
+                    </h3>
+<span class="px-sm py-xs bg-error-container text-on-error-container text-label-sm font-label-sm rounded-full">System Alerts</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<!-- Global Alert Error -->
+<div class="p-xl bg-error-container/30 border-l-4 border-error rounded-r-xl flex items-start gap-lg error-shake">
+<div class="w-12 h-12 bg-error rounded-full flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-error">sync_problem</span>
+</div>
+<div class="flex-1">
+<h4 class="text-title-md font-title-md text-on-error-container mb-xs">Connection Interrupted</h4>
+<p class="text-body-md text-on-surface-variant mb-lg">
+                                We're having trouble syncing your latest candidate data. Please check your internet connection or try again in a few minutes.
+                            </p>
+<div class="flex gap-md">
+<button class="px-md py-xs bg-error text-on-error rounded-lg text-label-sm font-label-sm hover:opacity-90">
+                                    Retry Connection
+                                </button>
+<button class="px-md py-xs text-on-error-container text-label-sm font-label-sm hover:underline">
+                                    System Status
+                                </button>
+</div>
+</div>
+</div>
+<!-- Inline Field Error -->
+<div class="p-xl bg-surface-container rounded-xl border border-outline-variant flex flex-col gap-md">
+<h4 class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Form Validation Example</h4>
+<div class="space-y-xs">
+<label class="text-label-sm font-label-sm text-on-surface">Candidate Email</label>
+<div class="relative">
+<input class="w-full bg-white border-2 border-error rounded-lg px-md py-sm text-on-surface focus:outline-none pr-10" type="text" value="invalid-email@format"/>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-error">error</span>
+</div>
+<p class="text-label-sm font-label-sm text-error flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">info</span>
+                                Please enter a valid email address (e.g., name@company.com)
+                            </p>
+</div>
+<div class="mt-auto">
+<button class="w-full py-sm bg-outline text-on-surface-variant/50 cursor-not-allowed rounded-lg font-bold" disabled="">
+                                Update Candidate
+                            </button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Role Specific Tonal Environments (Visual Guidance) -->
+<div class="mt-xl grid grid-cols-1 md:grid-cols-3 gap-md">
+<div class="p-md rounded-lg bg-primary-container/10 border border-primary/20 flex flex-col gap-xs">
+<span class="text-label-sm font-label-sm text-primary">Recruiter Context</span>
+<p class="text-xs text-on-surface-variant">Indigo tones for professional workspace.</p>
+</div>
+<div class="p-md rounded-lg bg-secondary-container/10 border border-secondary/20 flex flex-col gap-xs">
+<span class="text-label-sm font-label-sm text-secondary">Candidate Context</span>
+<p class="text-xs text-on-surface-variant">Emerald tones for growth & opportunity.</p>
+</div>
+<div class="p-md rounded-lg bg-tertiary-container/10 border border-tertiary-container/20 flex flex-col gap-xs">
+<span class="text-label-sm font-label-sm text-on-tertiary-container">AI Insight Context</span>
+<p class="text-xs text-on-surface-variant">Amber tones for supportive intelligence.</p>
+</div>
+</div>
+</main>
+<!-- Bottom Nav for Mobile -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-low flex justify-around items-center h-16 z-50 px-md">
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-sm font-label-sm">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="text-label-sm font-label-sm">Candidates</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">work</span>
+<span class="text-label-sm font-label-sm">Jobs</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-label-sm font-label-sm">Settings</span>
+</button>
+</nav>
+<script>
+        // Micro-interaction: Mocking a "Retry" loading state on the error card
+        document.querySelector('.bg-error')?.addEventListener('click', function() {
+            const btn = this;
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = `<span class="material-symbols-outlined animate-spin">sync</span> Retrying...`;
+            btn.classList.add('opacity-70', 'pointer-events-none');
+            
+            setTimeout(() => {
+                btn.innerHTML = originalContent;
+                btn.classList.remove('opacity-70', 'pointer-events-none');
+                alert('Connection restablished successfully.');
+            }, 2000);
+        });
+
+        // Toggle Sidebar scale for interaction simulation
+        const sideLinks = document.querySelectorAll('aside a');
+        sideLinks.forEach(link => {
+            link.addEventListener('mousedown', () => link.style.transform = 'scale(0.95)');
+            link.addEventListener('mouseup', () => link.style.transform = 'scale(1)');
+            link.addEventListener('mouseleave', () => link.style.transform = 'scale(1)');
+        });
+    </script>
+</body></html>
