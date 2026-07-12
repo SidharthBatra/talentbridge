@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TalentBridge | Interview Scheduling</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#006c49",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-secondary-fixed-variant": "#005236",
+                    "on-background": "#0d1c2e",
+                    "on-primary-fixed": "#000d60",
+                    "secondary-container": "#6cf8bb",
+                    "on-secondary": "#ffffff",
+                    "surface-bright": "#f8f9ff",
+                    "primary-container": "#2e3a8c",
+                    "secondary-fixed-dim": "#4edea3",
+                    "tertiary": "#412600",
+                    "error-container": "#ffdad6",
+                    "tertiary-container": "#5f3a00",
+                    "on-primary-fixed-variant": "#333f91",
+                    "error": "#ba1a1a",
+                    "surface-tint": "#4b57aa",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-container-low": "#eff4ff",
+                    "surface": "#f8f9ff",
+                    "surface-container-high": "#dce9ff",
+                    "on-surface-variant": "#454651",
+                    "outline-variant": "#c6c5d3",
+                    "on-tertiary": "#ffffff",
+                    "primary": "#142175",
+                    "primary-fixed": "#dfe0ff",
+                    "on-surface": "#0d1c2e",
+                    "on-primary-container": "#9ea9ff",
+                    "surface-variant": "#d5e3fc",
+                    "on-error-container": "#93000a",
+                    "background": "#f8f9ff",
+                    "inverse-surface": "#233144",
+                    "outline": "#767682",
+                    "on-tertiary-container": "#f29c06",
+                    "surface-container": "#e6eeff",
+                    "on-tertiary-fixed": "#2a1700",
+                    "primary-fixed-dim": "#bcc3ff",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#00714d",
+                    "on-primary": "#ffffff",
+                    "inverse-primary": "#bcc3ff",
+                    "surface-container-highest": "#d5e3fc",
+                    "on-secondary-fixed": "#002113",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#6ffbbe",
+                    "surface-dim": "#ccdbf3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "md": "16px",
+                    "margin-desktop": "40px",
+                    "sm": "12px",
+                    "gutter": "20px",
+                    "xl": "32px",
+                    "xs": "8px",
+                    "margin-mobile": "16px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "title-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #c6c5d3; border-radius: 10px; }
+        .active-tab-glow {
+            position: relative;
+        }
+        .active-tab-glow::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: currentColor;
+            box-shadow: 0 0 8px currentColor;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface-container-low shadow-sm">
+<div class="flex items-center gap-xl">
+<span class="text-title-md font-title-md font-bold text-primary">TalentBridge</span>
+<div class="hidden md:flex gap-lg">
+<a class="text-label-sm font-label-sm text-primary border-b-2 border-primary pb-1" href="#">Dashboard</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Postings</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Candidates</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-xs rounded-full hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-fixed overflow-hidden border border-outline-variant">
+<img class="w-full h-8 object-cover" data-alt="A professional business headshot of a corporate recruiter, looking friendly and approachable. The lighting is soft and natural, emphasizing a bright and modern office atmosphere with a clean, high-contrast white background and deep indigo accents consistent with a high-end recruitment platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDM44TGM3n8De7PkZVAxVXjx1vkTbw4u8RjCjrOWuwDmJHOLWwEp_rQk-htGPyl-8Lc-JYAj9UeHqW7Y7bScnUD-Ra5SIWdVC_0kljgeJqgQr93d-klF42rKKWfJ4Sk9vGnp87TAmtSpN4V6bqBLL8F7iuKGFImlNa4o7Wbn8_kvz9pNoHvuqslrPQBdqyGF86d5t3TktcFF15UTpj2gdVG9xgJ5GkmMPnHf_ttvhC9E_Gfv8MU89pV"/>
+</div>
+</div>
+</nav>
+<div class="flex pt-16 h-screen overflow-hidden">
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col h-full w-64 p-md space-y-xs bg-surface-container-low border-r border-outline-variant">
+<div class="px-xs py-md">
+<div class="flex items-center gap-sm mb-base">
+<span class="material-symbols-outlined text-primary text-[32px]">hub</span>
+<h2 class="text-title-md font-title-md text-primary">Recruiter Workspace</h2>
+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant px-1">Global Talent Hub</p>
+</div>
+<nav class="flex-1 space-y-xs">
+<a class="flex items-center gap-sm px-md py-sm bg-secondary-container text-on-secondary-container rounded-lg font-bold transition-transform active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-body-md font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">work</span>
+<span class="text-body-md font-body-md">Postings</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-body-md font-body-md">Candidates</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-body-md font-body-md">Analytics</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-body-md font-body-md">Settings</span>
+</a>
+</nav>
+<button class="w-full bg-primary text-on-primary py-md rounded-xl font-bold flex items-center justify-center gap-sm shadow-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">add</span>
+                Post New Job
+            </button>
+<div class="pt-md border-t border-outline-variant flex flex-col gap-xs">
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-container-high rounded-lg" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="text-label-sm">Help</span>
+</a>
+<a class="flex items-center gap-sm px-md py-xs text-on-surface-variant hover:bg-surface-container-high rounded-lg" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-label-sm">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto custom-scrollbar bg-background">
+<div class="max-w-5xl mx-auto px-margin-desktop py-xl">
+<!-- Header / Context -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-lg mb-xl">
+<div>
+<nav class="flex items-center gap-xs text-label-sm font-label-sm text-on-surface-variant mb-xs">
+<span>Candidates</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span>Sarah Jenkins</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-bold">Interview Scheduling</span>
+</nav>
+<h1 class="text-headline-lg font-headline-lg text-on-surface">Select Interview Slot</h1>
+<p class="text-body-md font-body-md text-on-surface-variant mt-xs">Sarah has proposed the following times for the <span class="font-bold text-primary">Senior Product Designer</span> technical interview.</p>
+</div>
+<div class="flex items-center gap-sm bg-surface-container-high p-sm rounded-xl border border-outline-variant">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary-fixed">
+<img class="w-full h-full object-cover" data-alt="A portrait of a young female professional candidate in her late 20s, wearing business casual attire. She has a confident smile and is positioned in a modern, brightly lit home office environment. The image uses a clean, light-mode color palette with subtle teal and indigo accents to match the corporate recruitment theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzagqQbay1nc15brcaLzj6lSQFNDor5lowaDvZnxmFjvpckQUozDecthEaN08-KijSa12Hwhqq8y8A6gtRjReC0VLjmpVoCF7ndPz3gKjd8H-0kOQpzRdpO-gCC1i0Gu1rfv_9OdZf1TCJF6JBipW29WjtFFM1aF-FguSq6CAMDgXTlQxHbWG4mgzuW2IHTFp67URff2Z0f0xatOQTQAIPwXR-mOviSqEnK4659cJJiZ11I4OnswcJ"/>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-primary">CANDIDATE</p>
+<p class="text-title-md font-title-md">Sarah Jenkins</p>
+</div>
+</div>
+</div>
+<!-- Scheduling Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+<!-- Calendar-like Selectable Slots -->
+<div class="lg:col-span-8 space-y-md">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="p-lg bg-surface-container border-b border-outline-variant flex justify-between items-center">
+<h3 class="text-title-md font-title-md flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">calendar_month</span>
+                                    Proposed Times (Next Week)
+                                </h3>
+<div class="flex gap-xs">
+<button class="p-xs hover:bg-surface-variant rounded-full transition-colors"><span class="material-symbols-outlined">chevron_left</span></button>
+<button class="p-xs hover:bg-surface-variant rounded-full transition-colors"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+<div class="p-lg grid grid-cols-1 md:grid-cols-2 gap-md" id="slot-container">
+<!-- Slot Card 1 -->
+<button class="group text-left p-lg rounded-xl border border-outline-variant bg-surface hover:border-primary hover:shadow-md transition-all duration-200 relative overflow-hidden" onclick="selectSlot(this)">
+<div class="absolute top-0 left-0 w-2 h-full bg-secondary opacity-0 group-[.selected]:opacity-100 transition-opacity"></div>
+<div class="flex justify-between items-start mb-sm">
+<div class="bg-primary-fixed text-primary px-sm py-xs rounded-lg text-label-sm font-label-sm">MONDAY</div>
+<span class="material-symbols-outlined text-secondary opacity-0 group-[.selected]:opacity-100" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h4 class="text-headline-lg-mobile font-bold text-on-surface">Oct 23, 2023</h4>
+<div class="mt-md space-y-xs">
+<div class="flex items-center gap-sm text-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+                                            10:00 AM — 11:30 AM (EST)
+                                        </div>
+<div class="flex items-center gap-sm text-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">videocam</span>
+                                            Google Meet
+                                        </div>
+</div>
+</button>
+<!-- Slot Card 2 -->
+<button class="group text-left p-lg rounded-xl border border-outline-variant bg-surface hover:border-primary hover:shadow-md transition-all duration-200 relative overflow-hidden" onclick="selectSlot(this)">
+<div class="absolute top-0 left-0 w-2 h-full bg-secondary opacity-0 group-[.selected]:opacity-100 transition-opacity"></div>
+<div class="flex justify-between items-start mb-sm">
+<div class="bg-primary-fixed text-primary px-sm py-xs rounded-lg text-label-sm font-label-sm">TUESDAY</div>
+<span class="material-symbols-outlined text-secondary opacity-0 group-[.selected]:opacity-100" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h4 class="text-headline-lg-mobile font-bold text-on-surface">Oct 24, 2023</h4>
+<div class="mt-md space-y-xs">
+<div class="flex items-center gap-sm text-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+                                            02:00 PM — 03:30 PM (EST)
+                                        </div>
+<div class="flex items-center gap-sm text-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">videocam</span>
+                                            Google Meet
+                                        </div>
+</div>
+</button>
+<!-- Slot Card 3 -->
+<button class="group text-left p-lg rounded-xl border border-outline-variant bg-surface hover:border-primary hover:shadow-md transition-all duration-200 relative overflow-hidden" onclick="selectSlot(this)">
+<div class="absolute top-0 left-0 w-2 h-full bg-secondary opacity-0 group-[.selected]:opacity-100 transition-opacity"></div>
+<div class="flex justify-between items-start mb-sm">
+<div class="bg-primary-fixed text-primary px-sm py-xs rounded-lg text-label-sm font-label-sm">THURSDAY</div>
+<span class="material-symbols-outlined text-secondary opacity-0 group-[.selected]:opacity-100" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h4 class="text-headline-lg-mobile font-bold text-on-surface">Oct 26, 2023</h4>
+<div class="mt-md space-y-xs">
+<div class="flex items-center gap-sm text-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+                                            09:00 AM — 10:30 AM (EST)
+                                        </div>
+<div class="flex items-center gap-sm text-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">videocam</span>
+                                            Google Meet
+                                        </div>
+</div>
+</button>
+<!-- Slot Card 4 -->
+<button class="group text-left p-lg rounded-xl border border-outline-variant bg-surface hover:border-primary hover:shadow-md transition-all duration-200 relative overflow-hidden" onclick="selectSlot(this)">
+<div class="absolute top-0 left-0 w-2 h-full bg-secondary opacity-0 group-[.selected]:opacity-100 transition-opacity"></div>
+<div class="flex justify-between items-start mb-sm">
+<div class="bg-primary-fixed text-primary px-sm py-xs rounded-lg text-label-sm font-label-sm">FRIDAY</div>
+<span class="material-symbols-outlined text-secondary opacity-0 group-[.selected]:opacity-100" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h4 class="text-headline-lg-mobile font-bold text-on-surface">Oct 27, 2023</h4>
+<div class="mt-md space-y-xs">
+<div class="flex items-center gap-sm text-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+                                            04:30 PM — 06:00 PM (EST)
+                                        </div>
+<div class="flex items-center gap-sm text-body-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">videocam</span>
+                                            Google Meet
+                                        </div>
+</div>
+</button>
+</div>
+</div>
+<!-- AI Assisted Alternate Request -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm">
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-on-tertiary-container">auto_awesome</span>
+<h3 class="text-title-md font-title-md text-on-surface">Request Alternative</h3>
+</div>
+<p class="text-body-md text-on-surface-variant mb-md">Don't see a time that works? Request a different slot and let Sarah know your preference.</p>
+<div class="relative">
+<textarea class="w-full h-24 p-md rounded-xl border border-outline focus:border-primary focus:ring-1 focus:ring-primary bg-surface transition-all resize-none font-body-md" id="alt-request" placeholder="e.g., I'm available anytime Wednesday afternoon after 2 PM..."></textarea>
+<div class="absolute bottom-3 right-3 flex gap-xs">
+<button class="bg-surface-container-high text-on-surface-variant text-label-sm px-sm py-base rounded-full hover:bg-outline-variant transition-colors">Clear</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Actions & Insights Column -->
+<div class="lg:col-span-4 space-y-lg">
+<!-- AI Insight Badge -->
+<div class="bg-primary-container p-lg rounded-xl text-on-primary shadow-sm relative overflow-hidden group">
+<div class="relative z-10">
+<div class="flex items-center gap-xs mb-sm">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="text-label-sm font-label-sm uppercase tracking-wider">AI Suggestion</span>
+</div>
+<p class="text-body-md font-bold mb-xs">Recommended: Monday, 10:00 AM</p>
+<p class="text-label-sm opacity-80">This slot has no overlaps with your current interview schedule and matches Sarah's peak activity time.</p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-[120px]">smart_toy</span>
+</div>
+</div>
+<!-- Finalize Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm">
+<h3 class="text-title-md font-title-md mb-md">Confirm Schedule</h3>
+<div class="mb-lg p-md bg-surface-container rounded-lg border-l-4 border-outline-variant" id="selection-summary">
+<p class="text-body-md text-on-surface-variant italic">Please select a time slot from the list...</p>
+</div>
+<div class="space-y-sm">
+<button class="w-full bg-primary text-on-primary py-md rounded-xl font-bold flex items-center justify-center gap-sm disabled:opacity-30 disabled:cursor-not-allowed hover:opacity-90 transition-opacity" disabled="" id="confirm-btn">
+                                    Confirm Slot
+                                    <span class="material-symbols-outlined">send</span>
+</button>
+<button class="w-full bg-surface border border-primary text-primary py-md rounded-xl font-bold flex items-center justify-center gap-sm disabled:opacity-30 disabled:cursor-not-allowed hover:bg-surface-container-high transition-colors" disabled="" id="request-btn">
+                                    Request Alternative
+                                    <span class="material-symbols-outlined">edit_calendar</span>
+</button>
+</div>
+<p class="text-[10px] text-center text-on-surface-variant mt-md">Confirming will automatically send an invite and update both calendars.</p>
+</div>
+<!-- Mini Map / Location Insight -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="h-32 bg-surface-variant flex items-center justify-center overflow-hidden">
+<div class="w-full h-full bg-cover bg-center" data-location="New York, NY" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDXCSWTP0fSxly1ZWDzECWItKDtQkhUNIb7I1DO8OAU3oRvI6C7nyeQYBumh9tx7CrbyPgp6SHmR4vNMvv7pU_HMwy6paxmae5roIQwnXrGm_sbmvNTy-Ws1tHYI4qcJiDj7lGxgEU54tus86qXGcmH4mtOKAwXiZkybdyaxb9tNQkGA09zoVttPv2Dh5k6pIaESGtbBRvgL87qXqPXidGRRD3gGJdKjcZukTdczCLykWx-wvoXn6cr')"></div>
+</div>
+<div class="p-md">
+<div class="flex items-center gap-sm mb-xs">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">location_on</span>
+<span class="text-body-md font-bold">Timezone Match</span>
+</div>
+<p class="text-label-sm text-on-surface-variant">Both participants are in EST. Perfect sync for coordination.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- History / Footer Info -->
+<div class="mt-xl border-t border-outline-variant pt-lg flex flex-col md:flex-row justify-between items-center text-on-surface-variant gap-md">
+<div class="flex items-center gap-md">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-primary-fixed flex items-center justify-center text-[10px] font-bold">JD</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-secondary-fixed flex items-center justify-center text-[10px] font-bold">AM</div>
+</div>
+<p class="text-label-sm">Recruiting Team: Josh D., Anna M.</p>
+</div>
+<div class="flex gap-lg">
+<button class="text-label-sm hover:text-primary transition-colors">Cancel Request</button>
+<button class="text-label-sm hover:text-primary transition-colors">Candidate Profile</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Micro-interactions Script -->
+<script>
+        function selectSlot(element) {
+            // Clear previous selections
+            const slots = document.querySelectorAll('#slot-container button');
+            slots.forEach(s => s.classList.remove('selected', 'border-primary', 'bg-surface-container-high', 'ring-2', 'ring-primary'));
+            
+            // Set active state
+            element.classList.add('selected', 'border-primary', 'bg-surface-container-high', 'ring-2', 'ring-primary');
+            
+            // Update summary
+            const date = element.querySelector('h4').innerText;
+            const time = element.querySelector('.text-on-surface-variant').innerText;
+            const day = element.querySelector('.text-label-sm').innerText;
+            
+            const summary = document.getElementById('selection-summary');
+            summary.innerHTML = `
+                <div class="flex items-center gap-sm">
+                    <div class="w-2 h-12 bg-primary rounded-full"></div>
+                    <div>
+                        <p class="text-label-sm font-bold text-primary">${day} SELECTED</p>
+                        <p class="text-body-md font-bold">${date}</p>
+                        <p class="text-label-sm text-on-surface-variant">${time}</p>
+                    </div>
+                </div>
+            `;
+            summary.classList.remove('border-outline-variant');
+            summary.classList.add('border-primary');
+
+            // Enable Confirm Button
+            document.getElementById('confirm-btn').disabled = false;
+        }
+
+        // Alternative Request Logic
+        const altTextarea = document.getElementById('alt-request');
+        const requestBtn = document.getElementById('request-btn');
+        
+        altTextarea.addEventListener('input', (e) => {
+            if (e.target.value.trim().length > 5) {
+                requestBtn.disabled = false;
+            } else {
+                requestBtn.disabled = true;
+            }
+        });
+    </script>
+</body></html>

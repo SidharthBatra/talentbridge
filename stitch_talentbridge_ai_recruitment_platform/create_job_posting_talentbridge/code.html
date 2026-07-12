@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Create Job Posting - TalentBridge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#006c49",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-secondary-fixed-variant": "#005236",
+                        "on-background": "#0d1c2e",
+                        "on-primary-fixed": "#000d60",
+                        "secondary-container": "#6cf8bb",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f8f9ff",
+                        "primary-container": "#2e3a8c",
+                        "secondary-fixed-dim": "#4edea3",
+                        "tertiary": "#412600",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#5f3a00",
+                        "on-primary-fixed-variant": "#333f91",
+                        "error": "#ba1a1a",
+                        "surface-tint": "#4b57aa",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "surface-container-low": "#eff4ff",
+                        "surface": "#f8f9ff",
+                        "surface-container-high": "#dce9ff",
+                        "on-surface-variant": "#454651",
+                        "outline-variant": "#c6c5d3",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#142175",
+                        "primary-fixed": "#dfe0ff",
+                        "on-surface": "#0d1c2e",
+                        "on-primary-container": "#9ea9ff",
+                        "surface-variant": "#d5e3fc",
+                        "on-error-container": "#93000a",
+                        "background": "#f8f9ff",
+                        "inverse-surface": "#233144",
+                        "outline": "#767682",
+                        "on-tertiary-container": "#f29c06",
+                        "surface-container": "#e6eeff",
+                        "on-tertiary-fixed": "#2a1700",
+                        "primary-fixed-dim": "#bcc3ff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#00714d",
+                        "on-primary": "#ffffff",
+                        "inverse-primary": "#bcc3ff",
+                        "surface-container-highest": "#d5e3fc",
+                        "on-secondary-fixed": "#002113",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed": "#6ffbbe",
+                        "surface-dim": "#ccdbf3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "md": "16px",
+                        "margin-desktop": "40px",
+                        "sm": "12px",
+                        "gutter": "20px",
+                        "xl": "32px",
+                        "xs": "8px",
+                        "margin-mobile": "16px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "title-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .ai-sparkle-btn {
+            background: linear-gradient(135deg, #142175 0%, #333f91 100%);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .ai-sparkle-btn:hover {
+            box-shadow: 0 0 20px rgba(51, 63, 145, 0.4);
+            transform: translateY(-1px);
+        }
+        .form-card {
+            border: 1px solid #e2e8f0; /* Slate-200 equivalent */
+            background-color: #ffffff;
+            transition: box-shadow 0.2s ease;
+        }
+        .form-card:focus-within {
+            box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #142175 !important;
+            ring: 0 !important;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c6c5d3;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-md overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface-container-low shadow-sm">
+<div class="flex items-center gap-xl">
+<h1 class="text-title-md font-title-md font-bold text-primary">TalentBridge</h1>
+<nav class="hidden md:flex items-center gap-lg">
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">Dashboard</a>
+<a class="text-primary border-b-2 border-primary pb-1 text-label-sm font-label-sm" href="#">Postings</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">Candidates</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-outline">search</span>
+<input class="bg-surface-container border-none rounded-full pl-10 pr-4 py-2 text-body-md w-64 focus:ring-2 focus:ring-primary/20" placeholder="Search postings..." type="text"/>
+</div>
+<button class="p-2 rounded-full hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a corporate recruiter in their 30s, wearing business casual attire, set against a blurred office background with warm lighting and a soft bokeh effect. The overall aesthetic is clean, professional, and trustworthy, matching the corporate modern style of the recruiter workspace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8DfLFKAGMnRlxfCCIA6lGov31ySVnaSvCfi8_RwTn3TeFgM6VA6uxOb2KheHL_PtR7zq7L1zNAvkYXC2XihuQ2W6nTvVJkWPHojVUnXydN6AtIkRFA5WvCR7jSAsT5Ax_im_ahyjGynLBafMflj9LNSW9G5SGZZZ25_5bOEJ8wUEOdVqY_NBnX5Y47KHCoV5RYGHbDi2oO9fxHDpt7QDeV8FMJO1DSnhH_SpUeoD6xnHzuZk0iUMq"/>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-20 px-margin-desktop max-w-7xl mx-auto flex flex-col lg:flex-row gap-xl">
+<!-- Sidebar Navigation (Responsive Cluster) -->
+<aside class="hidden lg:flex flex-col h-fit w-64 sticky top-24 p-md space-y-xs bg-surface-container-low border-r border-outline-variant rounded-xl">
+<div class="mb-lg px-2">
+<h2 class="text-headline-lg font-headline-lg text-primary">Recruiter Workspace</h2>
+<p class="text-body-md text-on-surface-variant">Global Talent Hub</p>
+</div>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md p-md bg-secondary-container text-on-secondary-container rounded-lg font-bold scale-95 transition-all" href="#">
+<span class="material-symbols-outlined">work</span>
+<span class="font-body-md">Postings</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-md">Candidates</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-body-md">Analytics</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+<hr class="border-outline-variant my-md"/>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-body-md">Help</span>
+</a>
+</aside>
+<!-- Main Form Canvas -->
+<section class="flex-1">
+<div class="flex justify-between items-center mb-xl">
+<div>
+<h2 class="text-headline-lg font-headline-lg text-primary">Create New Job Posting</h2>
+<p class="text-body-lg text-on-surface-variant mt-1">Fill in the details to reach your next high-impact team member.</p>
+</div>
+<div class="flex gap-md">
+<button class="px-xl py-2 border border-primary text-primary rounded-lg font-bold hover:bg-surface-container-high transition-colors">Save as Draft</button>
+<button class="px-xl py-2 bg-primary text-on-primary rounded-lg font-bold hover:opacity-90 active:scale-95 transition-all">Publish Posting</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<!-- Left Column: Primary Details -->
+<div class="md:col-span-2 space-y-lg">
+<div class="form-card rounded-xl p-lg space-y-lg shadow-sm">
+<h3 class="text-title-md font-title-md text-primary flex items-center gap-2">
+<span class="material-symbols-outlined">info</span>
+                            Job Fundamentals
+                        </h3>
+<div class="space-y-md">
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-xs">JOB TITLE</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg p-md text-body-lg focus:border-primary transition-all" placeholder="e.g. Senior Full Stack Engineer" type="text"/>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-lg">
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-xs">DEPARTMENT</label>
+<select class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg p-md text-body-lg appearance-none">
+<option>Engineering</option>
+<option>Design</option>
+<option>Product Management</option>
+<option>Marketing</option>
+<option>Sales</option>
+</select>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-xs">EMPLOYMENT TYPE</label>
+<select class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg p-md text-body-lg">
+<option>Full-time</option>
+<option>Contract</option>
+<option>Part-time</option>
+<option>Internship</option>
+</select>
+</div>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-xs">SALARY BAND (ANNUAL USD)</label>
+<div class="flex items-center gap-md">
+<div class="relative flex-1">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-outline">$</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-8 p-md text-body-lg" placeholder="Min" type="number"/>
+</div>
+<span class="text-outline">to</span>
+<div class="relative flex-1">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-outline">$</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg pl-8 p-md text-body-lg" placeholder="Max" type="number"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- AI-Assisted Job Description -->
+<div class="form-card rounded-xl p-lg space-y-lg shadow-sm overflow-hidden relative">
+<div class="flex justify-between items-center">
+<h3 class="text-title-md font-title-md text-primary flex items-center gap-2">
+<span class="material-symbols-outlined">description</span>
+                                Job Description
+                            </h3>
+<button class="ai-sparkle-btn flex items-center gap-xs px-md py-2 rounded-full text-white text-label-sm font-label-sm" id="ai-generate">
+<span class="material-symbols-outlined text-[18px]">temp_preferences_custom</span>
+                                ✨ Generate with AI
+                            </button>
+</div>
+<div class="relative">
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg p-md text-body-md custom-scrollbar resize-none focus:border-primary transition-all" id="job-desc" placeholder="Describe the role, impact, and daily life..." rows="12"></textarea>
+<div class="hidden absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center rounded-lg" id="ai-loading">
+<div class="flex flex-col items-center gap-md">
+<div class="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+<p class="text-label-sm font-label-sm text-primary uppercase tracking-widest">AI is drafting...</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Culture & Responsibilities -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-lg">
+<div class="form-card rounded-xl p-lg space-y-md shadow-sm">
+<h4 class="text-label-sm font-label-sm text-primary uppercase tracking-wider">Culture Notes</h4>
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg p-md text-body-md h-32 focus:border-primary transition-all" placeholder="Describe the team vibe and values..."></textarea>
+</div>
+<div class="form-card rounded-xl p-lg space-y-md shadow-sm">
+<h4 class="text-label-sm font-label-sm text-primary uppercase tracking-wider">Key Responsibilities</h4>
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg p-md text-body-md h-32 focus:border-primary transition-all" placeholder="Bullet point the top 5 duties..."></textarea>
+</div>
+</div>
+</div>
+<!-- Right Column: Sidebar Settings -->
+<div class="space-y-lg">
+<!-- Skills Section -->
+<div class="form-card rounded-xl p-lg space-y-lg shadow-sm">
+<h3 class="text-title-md font-title-md text-primary flex items-center gap-2">
+<span class="material-symbols-outlined">psychology</span>
+                            Required Skills
+                        </h3>
+<div class="space-y-md">
+<div class="flex flex-wrap gap-xs" id="tag-container">
+<span class="bg-secondary-container text-on-secondary-container px-md py-1 rounded-full text-label-sm font-label-sm flex items-center gap-1 group">
+                                    TypeScript
+                                    <button class="material-symbols-outlined text-[16px] hover:text-error transition-colors">close</button>
+</span>
+<span class="bg-secondary-container text-on-secondary-container px-md py-1 rounded-full text-label-sm font-label-sm flex items-center gap-1">
+                                    React
+                                    <button class="material-symbols-outlined text-[16px] hover:text-error transition-colors">close</button>
+</span>
+<span class="bg-secondary-container text-on-secondary-container px-md py-1 rounded-full text-label-sm font-label-sm flex items-center gap-1">
+                                    PostgreSQL
+                                    <button class="material-symbols-outlined text-[16px] hover:text-error transition-colors">close</button>
+</span>
+</div>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg p-md text-body-md focus:border-primary transition-all pr-12" id="skill-input" placeholder="Type a skill and press Enter" type="text"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-primary">add_circle</button>
+</div>
+<p class="text-label-sm text-on-surface-variant italic">Tip: AI will prioritize candidates with these exact skills.</p>
+</div>
+</div>
+<!-- AI Insights Preview Card -->
+<div class="bg-primary text-on-primary rounded-xl p-lg space-y-md shadow-lg overflow-hidden relative group">
+<!-- Background Glow Effect -->
+<div class="absolute -top-12 -right-12 w-32 h-32 bg-primary-container rounded-full blur-3xl opacity-50 group-hover:opacity-80 transition-opacity"></div>
+<div class="flex items-center gap-md relative z-10">
+<div class="w-10 h-10 rounded-lg bg-on-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary">bolt</span>
+</div>
+<div>
+<p class="text-label-sm font-label-sm opacity-80 uppercase">AI Matching Insights</p>
+<p class="font-bold">High Precision Potential</p>
+</div>
+</div>
+<div class="space-y-xs relative z-10">
+<div class="flex justify-between items-center text-body-md">
+<span>Estimated Candidates</span>
+<span class="font-bold">450+</span>
+</div>
+<div class="h-1 bg-on-primary/20 rounded-full overflow-hidden">
+<div class="h-full bg-secondary-fixed-dim w-3/4"></div>
+</div>
+<p class="text-label-sm opacity-80 italic">The current salary band and tech stack match 75% of available talent in your region.</p>
+</div>
+</div>
+<!-- Additional Details Checklist -->
+<div class="form-card rounded-xl p-lg space-y-md shadow-sm">
+<h4 class="text-label-sm font-label-sm text-primary uppercase tracking-wider">Hiring Preferences</h4>
+<div class="space-y-sm">
+<label class="flex items-center gap-md cursor-pointer group">
+<div class="w-5 h-5 rounded border border-outline-variant flex items-center justify-center group-hover:border-primary transition-colors">
+<input checked="" class="hidden" type="checkbox"/>
+<span class="material-symbols-outlined text-[16px] text-primary">check</span>
+</div>
+<span class="text-body-md">Remote Friendly</span>
+</label>
+<label class="flex items-center gap-md cursor-pointer group">
+<div class="w-5 h-5 rounded border border-outline-variant flex items-center justify-center group-hover:border-primary transition-colors">
+<input class="hidden" type="checkbox"/>
+<span class="material-symbols-outlined text-[16px] text-primary hidden">check</span>
+</div>
+<span class="text-body-md">Relocation Assistance</span>
+</label>
+<label class="flex items-center gap-md cursor-pointer group">
+<div class="w-5 h-5 rounded border border-outline-variant flex items-center justify-center group-hover:border-primary transition-colors">
+<input checked="" class="hidden" type="checkbox"/>
+<span class="material-symbols-outlined text-[16px] text-primary">check</span>
+</div>
+<span class="text-body-md">Visa Sponsorship</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Mobile Navigation -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-low flex justify-around items-center h-16 z-50">
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-bold">Dashboard</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined">work</span>
+<span class="text-[10px] font-bold">Postings</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[10px] font-bold">Candidates</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-bold">Settings</span>
+</button>
+</nav>
+<script>
+        // AI Generation Micro-interaction
+        const aiBtn = document.getElementById('ai-generate');
+        const textArea = document.getElementById('job-desc');
+        const loadingOverlay = document.getElementById('ai-loading');
+
+        aiBtn.addEventListener('click', () => {
+            loadingOverlay.classList.remove('hidden');
+            
+            // Simulating AI generation delay
+            setTimeout(() => {
+                loadingOverlay.classList.add('hidden');
+                textArea.value = "Overview:\nWe are seeking a visionary Senior Full Stack Engineer to join our core engineering team. You will be instrumental in architecting scalable solutions and mentoring junior developers as we expand our global talent ecosystem.\n\nKey Focus Areas:\n- Design and implement robust API architectures using Node.js and TypeScript.\n- Build immersive, responsive frontend experiences with React and Tailwind CSS.\n- Collaborate directly with Product and Design to translate complex requirements into high-performance code.\n\nWhat We Offer:\n- Competitive salary band with equity options.\n- Fully remote workspace with $2k annual stipend for home office or travel.\n- A high-trust environment where your architectural decisions define our roadmap.";
+            }, 1500);
+        });
+
+        // Skill Tagging Logic
+        const skillInput = document.getElementById('skill-input');
+        const tagContainer = document.getElementById('tag-container');
+
+        skillInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && skillInput.value.trim() !== '') {
+                const tag = document.createElement('span');
+                tag.className = 'bg-secondary-container text-on-secondary-container px-md py-1 rounded-full text-label-sm font-label-sm flex items-center gap-1 animate-pulse';
+                tag.innerHTML = `
+                    ${skillInput.value.trim()}
+                    <button class="material-symbols-outlined text-[16px] hover:text-error transition-colors" onclick="this.parentElement.remove()">close</button>
+                `;
+                tagContainer.appendChild(tag);
+                skillInput.value = '';
+                
+                setTimeout(() => tag.classList.remove('animate-pulse'), 500);
+            }
+        });
+    </script>
+</body></html>

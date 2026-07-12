@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Applications Kanban Board | TalentBridge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .kanban-column {
+            min-width: 320px;
+            max-width: 320px;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c6c5d3;
+            border-radius: 10px;
+        }
+        .kanban-card:hover .drag-handle {
+            opacity: 1;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#006c49",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-secondary-fixed-variant": "#005236",
+                        "on-background": "#0d1c2e",
+                        "on-primary-fixed": "#000d60",
+                        "secondary-container": "#6cf8bb",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f8f9ff",
+                        "primary-container": "#2e3a8c",
+                        "secondary-fixed-dim": "#4edea3",
+                        "tertiary": "#412600",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#5f3a00",
+                        "on-primary-fixed-variant": "#333f91",
+                        "error": "#ba1a1a",
+                        "surface-tint": "#4b57aa",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "surface-container-low": "#eff4ff",
+                        "surface": "#f8f9ff",
+                        "surface-container-high": "#dce9ff",
+                        "on-surface-variant": "#454651",
+                        "outline-variant": "#c6c5d3",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#142175",
+                        "primary-fixed": "#dfe0ff",
+                        "on-surface": "#0d1c2e",
+                        "on-primary-container": "#9ea9ff",
+                        "surface-variant": "#d5e3fc",
+                        "on-error-container": "#93000a",
+                        "background": "#f8f9ff",
+                        "inverse-surface": "#233144",
+                        "outline": "#767682",
+                        "on-tertiary-container": "#f29c06",
+                        "surface-container": "#e6eeff",
+                        "on-tertiary-fixed": "#2a1700",
+                        "primary-fixed-dim": "#bcc3ff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#00714d",
+                        "on-primary": "#ffffff",
+                        "inverse-primary": "#bcc3ff",
+                        "surface-container-highest": "#d5e3fc",
+                        "on-secondary-fixed": "#002113",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed": "#6ffbbe",
+                        "surface-dim": "#ccdbf3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "md": "16px",
+                        "margin-desktop": "40px",
+                        "sm": "12px",
+                        "gutter": "20px",
+                        "xl": "32px",
+                        "xs": "8px",
+                        "margin-mobile": "16px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "title-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background font-body-md text-on-surface flex h-screen overflow-hidden">
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col h-full p-md space-y-xs bg-surface-container-low border-r border-outline-variant w-64 shrink-0">
+<div class="flex items-center gap-sm mb-lg px-xs">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">badge</span>
+</div>
+<div>
+<h1 class="text-primary font-bold text-title-md leading-tight">TalentBridge</h1>
+<p class="text-label-sm text-outline uppercase tracking-wider">Recruiter Workspace</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container rounded-lg font-bold scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">work</span>
+<span class="font-body-md">Postings</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-md">Candidates</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-body-md">Analytics</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+</nav>
+<div class="pt-lg border-t border-outline-variant space-y-1">
+<button class="w-full bg-primary text-on-primary py-sm rounded-lg font-bold flex items-center justify-center gap-sm mb-md hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">add</span>
+                Post New Job
+            </button>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-body-md">Help</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body-md">Logout</span>
+</a>
+</div>
+</aside>
+<main class="flex-1 flex flex-col min-w-0">
+<!-- TopNavBar -->
+<header class="h-16 flex items-center justify-between px-margin-desktop bg-surface-container-low shadow-sm z-10 shrink-0">
+<div class="flex items-center gap-lg flex-1">
+<h2 class="text-title-md font-bold text-primary">Senior Product Designer <span class="text-outline font-normal">#SD-204</span></h2>
+<div class="relative max-w-sm w-full hidden md:block">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-xl pr-md py-xs bg-surface border-none rounded-full text-body-md focus:ring-2 focus:ring-primary-fixed" placeholder="Search candidates..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="flex items-center gap-xs px-sm py-xs bg-surface-container-high rounded-lg border border-outline-variant">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="text-label-sm font-bold text-on-secondary-container">AI Insights On</span>
+</div>
+<button class="p-xs text-on-surface-variant hover:bg-surface-variant rounded-full transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden border-2 border-primary-fixed">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a female recruiter in a bright, modern office setting. She has a warm, confident expression, soft corporate lighting, and is wearing a stylish navy blazer. The background is slightly blurred with soft indigo and white tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdxPgaVu9fKzWpIJYTAd0wzD9hSseVIfGnGXQ0LlxNvHWuZadCESF65NL473d3-1UzutiETR46zhhUnNcUuoj6lnl1NKKL1zsi5VhR9HpaObK2rWcLXobkRoTEb4AZJVqU54A3TO3Ov-3CD9W1EMUAUXO_hoMVvyGGJFdEc1ppJpQvfSOysHECQlv_acw9SLj9Kq2ICfW6RKL5YUBBP8o5WO2YojzBu9PcmPeQNhowKBIseSMgE1l5"/>
+</div>
+</div>
+</header>
+<!-- Tool Bar -->
+<div class="px-margin-desktop py-md bg-background flex flex-wrap items-center justify-between gap-md border-b border-outline-variant/30">
+<div class="flex items-center gap-sm">
+<div class="flex items-center gap-xs bg-surface-container-high rounded-lg p-1 border border-outline-variant">
+<button class="px-md py-xs bg-surface-container-lowest text-primary rounded-md shadow-sm font-bold text-label-sm flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">view_kanban</span> Kanban
+                    </button>
+<button class="px-md py-xs text-on-surface-variant hover:bg-surface-container-lowest/50 rounded-md transition-colors text-label-sm flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">list</span> Table
+                    </button>
+</div>
+<div class="h-6 w-[1px] bg-outline-variant mx-xs"></div>
+<div class="flex items-center gap-xs">
+<span class="text-label-sm text-outline">Sort by:</span>
+<button class="text-label-sm font-bold flex items-center gap-xs hover:text-primary">
+                        Highest Match <span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<button class="px-md py-xs border border-outline-variant text-on-surface-variant rounded-lg text-label-sm flex items-center gap-sm hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_list</span> Filters
+                </button>
+<div class="flex items-center gap-xs bg-primary-container/10 px-md py-xs rounded-lg border border-primary-fixed">
+<span class="text-label-sm text-primary font-bold">12 Selected</span>
+<button class="bg-primary text-on-primary px-sm py-1 rounded text-label-sm font-bold hover:opacity-90">Bulk Action</button>
+</div>
+</div>
+</div>
+<!-- Kanban Board Area -->
+<div class="flex-1 overflow-x-auto overflow-y-hidden flex px-margin-desktop py-lg gap-lg custom-scrollbar">
+<!-- Column: Applied -->
+<div class="kanban-column flex flex-col h-full bg-surface-container/30 rounded-xl border border-outline-variant/20">
+<div class="p-md flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<h3 class="text-title-md font-bold text-on-background">Applied</h3>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded-full text-label-sm">48</span>
+</div>
+<button class="text-outline hover:text-primary"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+<div class="flex-1 overflow-y-auto px-md pb-md space-y-md custom-scrollbar">
+<!-- Candidate Card 1 -->
+<div class="kanban-card bg-surface-container-lowest border border-outline-variant p-sm rounded-xl shadow-sm hover:shadow-md transition-all cursor-grab active:cursor-grabbing relative group">
+<div class="absolute top-sm right-sm opacity-0 drag-handle transition-opacity">
+<span class="material-symbols-outlined text-outline">drag_indicator</span>
+</div>
+<div class="flex items-start gap-sm mb-sm">
+<input class="rounded text-primary focus:ring-primary border-outline-variant mt-1" type="checkbox"/>
+<div class="w-10 h-10 rounded-lg bg-surface-variant overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close-up portrait of a diverse male candidate in a professional grey sweater. He is smiling warmly against a soft-focus background of a collaborative co-working space. High-end lifestyle photography, vibrant colors, clean lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDr7gd-9oAUzP6cNZRhdtQQ9hcTQTxBemf6hTrLfFwqMiN1ypmT9gETrVsP1W-Su-PSg4pHqos40jYXSVbv9xdKDoMDZ6PyLKsgDFrjIglGPz68LaOn-1jKpU8wq5TLvw5xumoUu_slqHIDLmmBNVCAoF9C_I7QX9x7DNXHPccMMbut_q58R6qZC5YGigP0yluqTjlu5uhW7l7dCbhfxFb8Hs_dBQkRHFTs6HJEq_1fgmj8UeSUvXB2"/>
+</div>
+<div class="min-w-0 pr-4">
+<h4 class="font-bold text-on-surface truncate">Alex Rivera</h4>
+<p class="text-label-sm text-outline truncate">UX Designer at FinTech Corp</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-md pt-sm border-t border-outline-variant/30">
+<div class="flex items-center gap-xs px-2 py-0.5 rounded-full bg-secondary/10 border border-secondary/20">
+<span class="material-symbols-outlined text-[14px] text-secondary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="text-label-sm font-bold text-secondary">98% Match</span>
+</div>
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full bg-surface-container border border-surface-container-lowest flex items-center justify-center text-[10px] text-outline">AR</div>
+</div>
+</div>
+<div class="mt-sm flex gap-xs flex-wrap">
+<span class="bg-surface-variant px-2 py-0.5 rounded text-[10px] font-bold text-on-surface-variant">Figma</span>
+<span class="bg-surface-variant px-2 py-0.5 rounded text-[10px] font-bold text-on-surface-variant">Design Systems</span>
+</div>
+</div>
+<!-- Candidate Card 2 -->
+<div class="kanban-card bg-surface-container-lowest border border-outline-variant p-sm rounded-xl shadow-sm hover:shadow-md transition-all cursor-grab active:cursor-grabbing relative group">
+<div class="flex items-start gap-sm mb-sm">
+<input class="rounded text-primary focus:ring-primary border-outline-variant mt-1" type="checkbox"/>
+<div class="w-10 h-10 rounded-lg bg-surface-variant overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of an Asian female candidate with glasses, wearing a minimalist white shirt. She has a thoughtful, intelligent gaze. The background is a clean, minimal white and light indigo gradient. High-key lighting, corporate modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxyjELgPZRBDH6zNo2f0xJE0oisu3-hFiAYrBU2YJs2PtQNpo--pQp5zhosrK_a_2Mnr0DLgv6Prn3_BQ91V4w8novZi_NoFDO3H_KqPkZ7bykeoAXBuoDawWOEBcBG5qJ4UfBx5PKmck41lm2UjS27ZCZqa46uuJlPnKqo97Lf_8y7-RMctjTRoR7c7Z46QdzKVHO_AfeNr7DLTWLC-PZ80OqUvRuLzClqztX3gyufyI2YsLNAbZW"/>
+</div>
+<div class="min-w-0">
+<h4 class="font-bold text-on-surface truncate">Sarah Zhang</h4>
+<p class="text-label-sm text-outline truncate">Senior Product Designer</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-md pt-sm border-t border-outline-variant/30">
+<div class="flex items-center gap-xs px-2 py-0.5 rounded-full bg-secondary/10 border border-secondary/20">
+<span class="material-symbols-outlined text-[14px] text-secondary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="text-label-sm font-bold text-secondary">94% Match</span>
+</div>
+<span class="text-[10px] text-outline font-medium">Applied 2d ago</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Column: Screened -->
+<div class="kanban-column flex flex-col h-full bg-surface-container/30 rounded-xl border border-outline-variant/20">
+<div class="p-md flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<h3 class="text-title-md font-bold text-on-background">Screened</h3>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded-full text-label-sm">24</span>
+</div>
+<button class="text-outline hover:text-primary"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+<div class="flex-1 overflow-y-auto px-md pb-md space-y-md custom-scrollbar">
+<!-- Candidate Card 3 -->
+<div class="kanban-card bg-surface-container-lowest border border-outline-variant p-sm rounded-xl shadow-sm hover:shadow-md transition-all cursor-grab active:cursor-grabbing relative group border-l-4 border-l-secondary">
+<div class="flex items-start gap-sm mb-sm">
+<input checked="" class="rounded text-primary focus:ring-primary border-outline-variant mt-1" type="checkbox"/>
+<div class="w-10 h-10 rounded-lg bg-surface-variant overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Profile photo of a charismatic Black male candidate in a tailored navy suit. Professional, high-contrast studio lighting, focused expression. Background is a dark charcoal texture with subtle hints of indigo, projecting corporate leadership and expertise." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6-Xa4ODl7o4gw2cBD8oJEhpr8GX4k6yezhOzuWq3s3B-iJmpmtYtATAxlen5r1d4mzY9tfz3hnAPnde3RMsGgEhdftbPZNXpSkfjCXX3vYUos1B3JYReF-_fUfeMJmbEb06MdN0xyP5kiZ18b_gn2q2IjdeITlz1CIl5bEocPZpq83rs8boCV_e77ntLSsDW7InlpgY76sp0ceSJX2NYMguLRE3_bmHysvbiEEz9gnyGcW073rOxw"/>
+</div>
+<div class="min-w-0">
+<h4 class="font-bold text-on-surface truncate">Marcus Johnson</h4>
+<p class="text-label-sm text-outline truncate">Design Lead at GrowthX</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-md pt-sm border-t border-outline-variant/30">
+<div class="flex items-center gap-xs px-2 py-0.5 rounded-full bg-secondary/10 border border-secondary/20">
+<span class="material-symbols-outlined text-[14px] text-secondary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="text-label-sm font-bold text-secondary">92% Match</span>
+</div>
+<div class="flex gap-xs">
+<span class="material-symbols-outlined text-secondary text-[18px]">verified</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column: Shortlisted -->
+<div class="kanban-column flex flex-col h-full bg-surface-container/30 rounded-xl border border-outline-variant/20">
+<div class="p-md flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<h3 class="text-title-md font-bold text-on-background">Shortlisted</h3>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded-full text-label-sm">12</span>
+</div>
+<button class="text-outline hover:text-primary"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+<div class="flex-1 overflow-y-auto px-md pb-md space-y-md custom-scrollbar">
+<!-- Candidate Card 4 -->
+<div class="kanban-card bg-surface-container-lowest border border-outline-variant p-sm rounded-xl shadow-sm hover:shadow-md transition-all cursor-grab active:cursor-grabbing relative group border-l-4 border-l-primary">
+<div class="flex items-start gap-sm mb-sm">
+<input class="rounded text-primary focus:ring-primary border-outline-variant mt-1" type="checkbox"/>
+<div class="w-10 h-10 rounded-lg bg-surface-variant overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close up portrait of a blonde female professional in a modern glass office. Natural soft lighting, she is looking slightly away with a visionary gaze. Cinematic depth of field. High-end executive portrait style with clean, minimalist surroundings." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDggrToIoiVa9odPP3a-6o52iD-fC1qdM-6v06Ex5P0kJhA4GLm9G3VFE7evGLL9TRxqNNONbHv8GyHh88SA64VPGt9FjGV09DMB65JE_-zg_tESG8QsjyDG3gAJbfeCyDMaApuJeRcl39HX0kW1j2kWstBfF1GWhBjqONIjT5-TFNmvleEkyaUGh02ZrkIpS7sBFJglz2l8zpVh2YohPGYWh0MSABU6qiSJGvhO-AyXMo3FM7x1fgD"/>
+</div>
+<div class="min-w-0">
+<h4 class="font-bold text-on-surface truncate">Elena Petrova</h4>
+<p class="text-label-sm text-outline truncate">Principal Designer</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-md pt-sm border-t border-outline-variant/30">
+<div class="flex items-center gap-xs px-2 py-0.5 rounded-full bg-secondary/10 border border-secondary/20">
+<span class="material-symbols-outlined text-[14px] text-secondary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="text-label-sm font-bold text-secondary">95% Match</span>
+</div>
+<span class="bg-tertiary-fixed text-on-tertiary-fixed-variant px-2 py-0.5 rounded text-[10px] font-bold">Top Talent</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Column: Interview -->
+<div class="kanban-column flex flex-col h-full bg-surface-container/30 rounded-xl border border-outline-variant/20">
+<div class="p-md flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<h3 class="text-title-md font-bold text-on-background">Interview</h3>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded-full text-label-sm">5</span>
+</div>
+<button class="text-outline hover:text-primary"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+<div class="flex-1 overflow-y-auto px-md pb-md space-y-md custom-scrollbar">
+<!-- Interview card placeholder -->
+<div class="p-lg border-2 border-dashed border-outline-variant rounded-xl flex flex-col items-center justify-center text-center opacity-60">
+<span class="material-symbols-outlined text-[32px] mb-xs text-outline">event_available</span>
+<p class="text-label-sm font-bold">Scheduled today</p>
+</div>
+<div class="kanban-card bg-surface-container-lowest border border-outline-variant p-sm rounded-xl shadow-sm hover:shadow-md transition-all cursor-grab active:cursor-grabbing relative group border-l-4 border-l-on-tertiary-container">
+<div class="flex items-start gap-sm mb-sm">
+<input class="rounded text-primary focus:ring-primary border-outline-variant mt-1" type="checkbox"/>
+<div class="w-10 h-10 rounded-lg bg-surface-variant overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Portrait of a young Latinx professional male in a bright creative studio space. He is wearing a mustard-colored casual shirt. The lighting is warm and artistic. The background contains blurred sketches and wireframes on a whiteboard. Energetic and creative vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAEQlXnrnIUPRwfuGfTwqvRuw7DoCKMADcVhzSbIQIv96Q1e6Deu81u5jqk0aRUJNQ6JZmBbb5znYBNygX50WPZcxa2nNTAy3FOT9xkQ9v7E-InUr5l3XsFGyZ4AfOmtrAM_ny9wdrXFbdDAC0LZylQJPUAgMgm4IZBShjtgUpQHUBeMENO6Vio1NXUufebWyUsdqXr6GzPqpRi_VDwkRc9FnbFa8sHlMV1kyI0202GEP9pKwBKp_3"/>
+</div>
+<div class="min-w-0">
+<h4 class="font-bold text-on-surface truncate">David Ortiz</h4>
+<p class="text-label-sm text-outline truncate">Senior UI/UX Engineer</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-md pt-sm border-t border-outline-variant/30">
+<div class="flex items-center gap-xs px-2 py-0.5 rounded-full bg-secondary/10 border border-secondary/20">
+<span class="material-symbols-outlined text-[14px] text-secondary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="text-label-sm font-bold text-secondary">89% Match</span>
+</div>
+<div class="text-[10px] font-bold text-on-tertiary-container bg-tertiary-container/10 px-2 py-0.5 rounded">Round 2</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column: Offer -->
+<div class="kanban-column flex flex-col h-full bg-surface-container/30 rounded-xl border border-outline-variant/20">
+<div class="p-md flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<h3 class="text-title-md font-bold text-on-background">Offer</h3>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded-full text-label-sm">2</span>
+</div>
+<button class="text-outline hover:text-primary"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+<div class="flex-1 overflow-y-auto px-md pb-md space-y-md custom-scrollbar">
+<div class="kanban-card bg-surface-container-lowest border border-outline-variant p-sm rounded-xl shadow-sm hover:shadow-md transition-all cursor-grab active:cursor-grabbing relative group border-l-4 border-l-secondary">
+<div class="flex items-start gap-sm mb-sm">
+<input class="rounded text-primary focus:ring-primary border-outline-variant mt-1" type="checkbox"/>
+<div class="w-10 h-10 rounded-lg bg-surface-variant overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Portrait of a South Asian woman with a poised and confident smile. She is wearing a modern green professional dress. Shot in a bright atrium with natural light filtering through glass. The aesthetic is clean, light, and very professional. High detail on skin textures and fabric." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiB8Rhk9KB7LUwF2nyHHjMw6CNaCfy_YnASSimNuxXwrB-MfIyIT-yhOchceMT5uLFHWY2x2S5OCuve57cHJedLihuBVzbmGdUR03u_kLXmOh1xr-N-oUNimZ29-nSNlmpCPrMIZiI9Ms__i9BpoWV7C_M2cyrcwnlG-vEQH687IhftT6t7NpZUdwpS5t4wuvyW-eqm8NSZIY3ijHiP7Zcgg2_xGLMDA_IvkFz08zQ5yAUt--SSIKa"/>
+</div>
+<div class="min-w-0">
+<h4 class="font-bold text-on-surface truncate">Priya Sharma</h4>
+<p class="text-label-sm text-outline truncate">Staff Product Designer</p>
+</div>
+</div>
+<div class="flex items-center justify-between mt-md pt-sm border-t border-outline-variant/30">
+<div class="flex items-center gap-xs px-2 py-0.5 rounded-full bg-secondary/10 border border-secondary/20">
+<span class="material-symbols-outlined text-[14px] text-secondary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="text-label-sm font-bold text-secondary">97% Match</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-secondary">task_alt</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Action Button for AI Assistant -->
+<button class="fixed bottom-lg right-lg w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-50 group">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<div class="absolute right-full mr-sm bg-inverse-surface text-inverse-on-surface px-md py-xs rounded-lg text-label-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+                AI Match Insights
+            </div>
+</button>
+</main>
+<script>
+        // Simple Micro-interaction: Checkbox listener for "Bulk Action" bar visibility
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const bulkActionBadge = document.querySelector('.bg-primary-container\\/10 span');
+        
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', () => {
+                const checkedCount = document.querySelectorAll('input[type="checkbox"]:checked').length;
+                bulkActionBadge.textContent = `${checkedCount} Selected`;
+                
+                // Visual feedback for selected card
+                const card = cb.closest('.kanban-card');
+                if (cb.checked) {
+                    card.classList.add('ring-2', 'ring-primary/20', 'bg-surface-container-high');
+                } else {
+                    card.classList.remove('ring-2', 'ring-primary/20', 'bg-surface-container-high');
+                }
+            });
+        });
+
+        // Hover effect for columns
+        document.querySelectorAll('.kanban-column').forEach(col => {
+            col.addEventListener('mouseenter', () => {
+                col.classList.add('bg-surface-container/50');
+            });
+            col.addEventListener('mouseleave', () => {
+                col.classList.remove('bg-surface-container/50');
+            });
+        });
+    </script>
+</body></html>

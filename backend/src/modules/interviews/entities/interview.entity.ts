@@ -41,6 +41,14 @@ export class Interview {
   @Column({ type: 'timestamptz', name: 'reminder_sent_at', nullable: true })
   reminderSentAt: Date | null;
 
+  /**
+   * Final, hiring-manager-edited interview questions (AI-suggested, then
+   * possibly added-to/removed/reordered client-side). Populated via
+   * Module 3's PATCH /ai/interview-questions/:interviewId.
+   */
+  @Column({ type: 'jsonb', nullable: true })
+  questions: { question: string; listenFor: string }[] | null;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 }

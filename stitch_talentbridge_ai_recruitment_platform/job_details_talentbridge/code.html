@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Job Details | TalentBridge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#006c49",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-secondary-fixed-variant": "#005236",
+                    "on-background": "#0d1c2e",
+                    "on-primary-fixed": "#000d60",
+                    "secondary-container": "#6cf8bb",
+                    "on-secondary": "#ffffff",
+                    "surface-bright": "#f8f9ff",
+                    "primary-container": "#2e3a8c",
+                    "secondary-fixed-dim": "#4edea3",
+                    "tertiary": "#412600",
+                    "error-container": "#ffdad6",
+                    "tertiary-container": "#5f3a00",
+                    "on-primary-fixed-variant": "#333f91",
+                    "error": "#ba1a1a",
+                    "surface-tint": "#4b57aa",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-container-low": "#eff4ff",
+                    "surface": "#f8f9ff",
+                    "surface-container-high": "#dce9ff",
+                    "on-surface-variant": "#454651",
+                    "outline-variant": "#c6c5d3",
+                    "on-tertiary": "#ffffff",
+                    "primary": "#142175",
+                    "primary-fixed": "#dfe0ff",
+                    "on-surface": "#0d1c2e",
+                    "on-primary-container": "#9ea9ff",
+                    "surface-variant": "#d5e3fc",
+                    "on-error-container": "#93000a",
+                    "background": "#f8f9ff",
+                    "inverse-surface": "#233144",
+                    "outline": "#767682",
+                    "on-tertiary-container": "#f29c06",
+                    "surface-container": "#e6eeff",
+                    "on-tertiary-fixed": "#2a1700",
+                    "primary-fixed-dim": "#bcc3ff",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#00714d",
+                    "on-primary": "#ffffff",
+                    "inverse-primary": "#bcc3ff",
+                    "surface-container-highest": "#d5e3fc",
+                    "on-secondary-fixed": "#002113",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#6ffbbe",
+                    "surface-dim": "#ccdbf3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "md": "16px",
+                    "margin-desktop": "40px",
+                    "sm": "12px",
+                    "gutter": "20px",
+                    "xl": "32px",
+                    "xs": "8px",
+                    "margin-mobile": "16px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "title-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(220, 233, 255, 0.5);
+        }
+        .ai-sparkle-border {
+            position: relative;
+            border: 1px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(to right, #142175, #6cf8bb) border-box;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f8f9ff;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c6c5d3;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #767682;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-lg">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface-container-low shadow-sm">
+<div class="flex items-center gap-xl">
+<span class="text-title-md font-title-md font-bold text-primary">TalentBridge</span>
+<nav class="hidden md:flex gap-lg">
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-label-sm font-label-sm text-primary border-b-2 border-primary pb-1" href="#">Postings</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Candidates</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-xs hover:bg-surface-variant transition-colors rounded-full">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A clean, professional headshot of a recruitment specialist against a neutral corporate office background. The lighting is bright and warm, with a high-key aesthetic that complements a modern software interface. The individual has a friendly but expert expression, fitting for a 'Sophisticated Partner' brand personality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuATrvDwD7zXp3m-yqiopbtG49y1ZV-eUSyH9eqcgI6SnaWJ-LqvcQubucXYgCnis_5ZYspPyONptXl4ivxEtrH05FeFD79HUw3ABluN-0WO2PGYGzbLG4CDH1v6LLOhVhC9rfuEOw8ZybZVkvpnrqqJs1MMvwEs3g4EMecXB-QlnHqsKgL1jPqAv9nhrg0Mbdb2JTo0-2EN6Ilk_M1a5dA5Sm2xtYlyZkS30Cn3KPPc6VQSgjOqEg8p"/>
+</div>
+</div>
+</header>
+<main class="pt-16 min-h-screen">
+<!-- Hero Section -->
+<section class="relative overflow-hidden bg-primary py-xl md:py-32 px-margin-mobile md:px-margin-desktop text-on-primary">
+<div class="absolute inset-0 opacity-10 pointer-events-none">
+<div class="absolute -top-1/2 -right-1/4 w-96 h-96 bg-secondary-container rounded-full blur-3xl"></div>
+<div class="absolute -bottom-1/2 -left-1/4 w-96 h-96 bg-tertiary-fixed rounded-full blur-3xl"></div>
+</div>
+<div class="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-lg">
+<div class="space-y-md">
+<div class="flex items-center gap-sm">
+<span class="bg-secondary-container text-on-secondary-container px-sm py-xs rounded-lg text-label-sm font-bold uppercase tracking-wider">Engineering</span>
+<span class="text-primary-fixed-dim text-label-sm font-medium">Posted 2 days ago</span>
+</div>
+<h1 class="text-headline-lg-mobile md:text-display-lg font-display-lg leading-tight">Senior Full Stack Engineer (AI Platforms)</h1>
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center overflow-hidden">
+<img class="w-8 h-8 object-contain" data-alt="A minimalist tech company logo featuring abstract geometric shapes in shades of indigo and emerald green. The design is clean, professional, and suggests a high-growth AI startup. The logo is centered on a white background with a subtle drop shadow." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAK1AJ04SxaC9jJhsLosbecj8vk0RZETldkpcrK_LJaP33p70A3wmEn1eRpA7CdmtnktRx9iIuD8vgvsxQlaP9O5lAU6HXFb3Et5U-oYtCOBzVy_TbL56FQ38vzDorvoJzFntUT0q0I6ljV-pD7EEjTRd2Cicyh9satgvfbg2cBrIbhVO6gc6KkEAW2vtGx6biChFrizCQs1l1bX1OVVm6644aK0_pTVata-_Xyq9NtwRi5d6bIoDPG"/>
+</div>
+<span class="text-title-md font-medium text-primary-fixed">NexTech Solutions • Remote (Global)</span>
+</div>
+</div>
+<div class="flex gap-md w-full md:w-auto">
+<button class="flex-1 md:flex-none px-xl py-md bg-secondary text-on-secondary rounded-lg font-bold hover:opacity-90 transition-all active:scale-95 shadow-lg">Apply Now</button>
+<button class="p-md border border-primary-fixed text-primary-fixed rounded-lg hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined">bookmark</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Content Grid -->
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-xl">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
+<!-- Left Column: Job Description -->
+<article class="lg:col-span-8 space-y-xl">
+<div class="bg-surface-container-lowest p-xl rounded-xl border border-outline-variant shadow-sm">
+<h2 class="text-headline-lg font-headline-lg mb-lg text-primary">The Opportunity</h2>
+<p class="text-body-lg text-on-surface-variant leading-relaxed mb-md">
+                            Join our core AI Infrastructure team at NexTech Solutions. We're building the next generation of recruitment tools that leverage large language models to help companies find the right talent faster. You'll be responsible for architecting scalable services, optimizing vector database performance, and creating seamless user experiences.
+                        </p>
+<h3 class="text-title-md font-title-md mt-xl mb-md text-on-surface">Key Responsibilities</h3>
+<ul class="space-y-sm list-none">
+<li class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-secondary mt-1">check_circle</span>
+<span class="text-body-lg text-on-surface-variant">Design and implement robust APIs using Node.js and TypeScript.</span>
+</li>
+<li class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-secondary mt-1">check_circle</span>
+<span class="text-body-lg text-on-surface-variant">Architect frontend features using React.js with a focus on high-density data visualization.</span>
+</li>
+<li class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-secondary mt-1">check_circle</span>
+<span class="text-body-lg text-on-surface-variant">Integrate LLM providers (OpenAI, Anthropic) into our workflow automation engine.</span>
+</li>
+<li class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-secondary mt-1">check_circle</span>
+<span class="text-body-lg text-on-surface-variant">Collaborate with product designers to translate complex AI insights into intuitive UI.</span>
+</li>
+</ul>
+<h3 class="text-title-md font-title-md mt-xl mb-md text-on-surface">Technical Requirements</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="p-md bg-surface-container-low rounded-lg border border-outline-variant">
+<h4 class="font-bold text-primary mb-xs">Frontend Stack</h4>
+<p class="text-body-md text-on-surface-variant">React 18, TypeScript, Tailwind CSS, TanStack Query.</p>
+</div>
+<div class="p-md bg-surface-container-low rounded-lg border border-outline-variant">
+<h4 class="font-bold text-primary mb-xs">Backend Stack</h4>
+<p class="text-body-md text-on-surface-variant">Node.js, GraphQL, PostgreSQL, Pinecone DB.</p>
+</div>
+</div>
+<div class="mt-xl p-lg ai-sparkle-border rounded-xl bg-surface-container-highest/30">
+<div class="flex items-center gap-xs mb-sm">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="text-label-sm font-bold text-primary">AI MATCH INSIGHT</span>
+</div>
+<p class="text-body-md text-on-primary-fixed-variant">Based on your profile, you have 92% of the required skills. Your experience with <span class="font-bold">Next.js</span> and <span class="font-bold">Vector Databases</span> makes you a top candidate for this role.</p>
+</div>
+</div>
+</article>
+<!-- Right Sidebar -->
+<aside class="lg:col-span-4 space-y-lg">
+<!-- Job Facts -->
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-sm space-y-lg">
+<h3 class="text-title-md font-title-md text-on-surface">Job Summary</h3>
+<div class="space-y-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-secondary-container/30 flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<p class="text-label-sm text-on-surface-variant">Salary Range</p>
+<p class="text-body-lg font-bold text-on-surface">$140k – $190k / year</p>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+<div>
+<p class="text-label-sm text-on-surface-variant">Location</p>
+<p class="text-body-lg font-bold text-on-surface">Remote, Worldwide</p>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-tertiary-fixed/50 flex items-center justify-center text-on-tertiary-fixed-variant">
+<span class="material-symbols-outlined">schedule</span>
+</div>
+<div>
+<p class="text-label-sm text-on-surface-variant">Job Type</p>
+<p class="text-body-lg font-bold text-on-surface">Full-time</p>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">group</span>
+</div>
+<div>
+<p class="text-label-sm text-on-surface-variant">Team Size</p>
+<p class="text-body-lg font-bold text-on-surface">25 - 50 employees</p>
+</div>
+</div>
+</div>
+<button class="w-full py-md border border-primary text-primary rounded-lg font-bold hover:bg-primary/5 transition-colors">Save Job for Later</button>
+</div>
+<!-- Similar Jobs -->
+<div class="space-y-md">
+<h3 class="text-title-md font-title-md text-on-surface flex items-center justify-between">
+                            Similar Jobs
+                            <a class="text-label-sm text-primary hover:underline" href="#">View All</a>
+</h3>
+<!-- Mini Card 1 -->
+<div class="group bg-surface-container-lowest p-md rounded-xl border border-outline-variant hover:border-primary transition-all cursor-pointer">
+<div class="flex items-center gap-md mb-xs">
+<div class="w-8 h-8 bg-surface-container rounded flex items-center justify-center">
+<img class="w-6 h-6" data-alt="A stylized minimalist icon of a cloud with a lightning bolt inside, representing a high-performance cloud computing company. The icon is rendered in a soft slate blue with white accents, reflecting a clean corporate modern tech aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFQ3Yy32vA4pkPSVa3MVWD4cIpjLU-ijvqNmfuMRMXTQxuGCKp3X0JtufBpK-nndJua5Cw4RO_DX88PujCjQ7NnuLZWFe1fMcIDeCKdTIunkB_UIXPxZWX7qI65n_c94_6IMCwxKNS5qYrdYvCYGwWL0qpqwrVw0P3zJ0Qw0jG0mhHaHuvAi87-_pkwpMsbseB6avBxY28odr6M2SE4vh6aHcKCD_vZnFUiWh8aDWRvdg7ysZ_Kjtn"/>
+</div>
+<h4 class="text-body-lg font-bold group-hover:text-primary transition-colors">Backend Engineer</h4>
+</div>
+<p class="text-label-sm text-on-surface-variant mb-md">CloudScale Systems • Austin, TX</p>
+<div class="flex justify-between items-center">
+<span class="text-body-md font-medium text-secondary">$130k - $160k</span>
+<span class="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+<!-- Mini Card 2 -->
+<div class="group bg-surface-container-lowest p-md rounded-xl border border-outline-variant hover:border-primary transition-all cursor-pointer">
+<div class="flex items-center gap-md mb-xs">
+<div class="w-8 h-8 bg-surface-container rounded flex items-center justify-center">
+<img class="w-6 h-6" data-alt="A sleek corporate logo for a data analytics company, featuring three ascending bars within a circle. The palette uses deep indigo and soft teal. The design is modern, professional, and exudes confidence and reliability, perfectly matching a high-efficiency recruitment platform's aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZkV62d3DvXaAXR_NuJWO_vxOLMHGvpA4oyC9sPQMjOMfMZQsQd6V0OC2rGon0P2_8OHz-x4OmMItaWqLxQDvlxvyikdHb8tADwMKeDDLOmyvZPho6mw6_3Z-LKl3eAlLZQ1248KY6BHSpAidDbTN_FpZqz3qSBedGATVvrT6tB0KW7YriPvn-ZEyxWsnbjUD6KWQzmG-FEkwL6ULmufepBH_6qNQDOsstNp9oWYmv6WyeY0TO5JDb"/>
+</div>
+<h4 class="text-body-lg font-bold group-hover:text-primary transition-colors">AI Product Designer</h4>
+</div>
+<p class="text-label-sm text-on-surface-variant mb-md">DataMind AI • Remote</p>
+<div class="flex justify-between items-center">
+<span class="text-body-md font-medium text-secondary">$120k - $155k</span>
+<span class="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</main>
+<!-- Success Toast (Hidden by default) -->
+<div class="fixed bottom-lg right-lg bg-primary text-on-primary px-xl py-md rounded-xl shadow-2xl translate-y-24 transition-transform duration-300 flex items-center gap-md z-[100]" id="applyToast">
+<span class="material-symbols-outlined text-secondary-container">check_circle</span>
+<div>
+<p class="font-bold">Application Started!</p>
+<p class="text-label-sm text-primary-fixed-dim">Redirecting to application portal...</p>
+</div>
+</div>
+<script>
+        // Simple Interaction logic
+        const applyBtn = document.querySelector('button.bg-secondary');
+        const toast = document.getElementById('applyToast');
+
+        applyBtn.addEventListener('click', () => {
+            toast.classList.remove('translate-y-24');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24');
+            }, 3000);
+        });
+
+        // Add hover effect logic for job cards
+        document.querySelectorAll('.group').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-2px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body></html>

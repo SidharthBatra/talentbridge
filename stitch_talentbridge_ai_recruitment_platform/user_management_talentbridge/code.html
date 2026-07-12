@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TalentBridge | Admin User Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#006c49",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-secondary-fixed-variant": "#005236",
+                    "on-background": "#0d1c2e",
+                    "on-primary-fixed": "#000d60",
+                    "secondary-container": "#6cf8bb",
+                    "on-secondary": "#ffffff",
+                    "surface-bright": "#f8f9ff",
+                    "primary-container": "#2e3a8c",
+                    "secondary-fixed-dim": "#4edea3",
+                    "tertiary": "#412600",
+                    "error-container": "#ffdad6",
+                    "tertiary-container": "#5f3a00",
+                    "on-primary-fixed-variant": "#333f91",
+                    "error": "#ba1a1a",
+                    "surface-tint": "#4b57aa",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "surface-container-low": "#eff4ff",
+                    "surface": "#f8f9ff",
+                    "surface-container-high": "#dce9ff",
+                    "on-surface-variant": "#454651",
+                    "outline-variant": "#c6c5d3",
+                    "on-tertiary": "#ffffff",
+                    "primary": "#142175",
+                    "primary-fixed": "#dfe0ff",
+                    "on-surface": "#0d1c2e",
+                    "on-primary-container": "#9ea9ff",
+                    "surface-variant": "#d5e3fc",
+                    "on-error-container": "#93000a",
+                    "background": "#f8f9ff",
+                    "inverse-surface": "#233144",
+                    "outline": "#767682",
+                    "on-tertiary-container": "#f29c06",
+                    "surface-container": "#e6eeff",
+                    "on-tertiary-fixed": "#2a1700",
+                    "primary-fixed-dim": "#bcc3ff",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#00714d",
+                    "on-primary": "#ffffff",
+                    "inverse-primary": "#bcc3ff",
+                    "surface-container-highest": "#d5e3fc",
+                    "on-secondary-fixed": "#002113",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#6ffbbe",
+                    "surface-dim": "#ccdbf3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "md": "16px",
+                    "margin-desktop": "40px",
+                    "sm": "12px",
+                    "gutter": "20px",
+                    "xl": "32px",
+                    "xs": "8px",
+                    "margin-mobile": "16px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "title-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9ff;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .user-row:hover {
+            box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
+        }
+        .user-row:hover .accent-bar {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface-container-low shadow-sm">
+<div class="flex items-center gap-xl">
+<span class="text-title-md font-title-md font-bold text-primary">TalentBridge</span>
+<nav class="hidden md:flex gap-lg items-center">
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Postings</a>
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Candidates</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-high border-none rounded-full text-body-md w-64 focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Global search..." type="text"/>
+</div>
+<button class="p-2 rounded-full hover:bg-surface-variant transition-colors relative">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional studio headshot of a female executive with a friendly smile, wearing a charcoal grey blazer. The lighting is soft and directional, against a minimalist light blue office background, maintaining a corporate yet approachable aesthetic consistent with a high-end recruitment platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHr5CZgAXxfBsH0qNqCuL9KKMmSngRQ61YdhmjjbU_fwiiA11tgLwuXUva3E8U4JBqJhJ0pxwinU3se-DuSyrdfFuIueoGgqyfhaaD5iKWem8TeAAuxuLObyu4llbEjyu_slnllbbtNocaf_o8tYxEvoIDD3qgefSL0AswpbKJSDmAWIfYUEGvMFLdb3oqmmbuPZ4dBagdptkGOP1QRtfFRe6Me7nevooT3bEc85-CKWgJbQQwtuVy"/>
+</div>
+</div>
+</header>
+<div class="flex pt-16 min-h-screen">
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col h-[calc(100vh-64px)] w-64 p-md space-y-xs bg-surface-container-low border-r border-outline-variant sticky top-16">
+<div class="px-xs py-md mb-md">
+<h2 class="text-title-md font-title-md text-primary">Recruiter Workspace</h2>
+<p class="text-label-sm font-label-sm text-outline">Global Talent Hub</p>
+</div>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary" data-icon="dashboard">dashboard</span>
+<span class="text-body-md font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md p-md bg-secondary-container text-on-secondary-container rounded-lg font-bold scale-95 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="text-body-md font-body-md">User Management</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary" data-icon="work">work</span>
+<span class="text-body-md font-body-md">Postings</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary" data-icon="analytics">analytics</span>
+<span class="text-body-md font-body-md">Analytics</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary" data-icon="settings">settings</span>
+<span class="text-body-md font-body-md">Settings</span>
+</a>
+<div class="mt-auto pt-md border-t border-outline-variant space-y-xs">
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="text-body-md font-body-md">Help Center</span>
+</a>
+<a class="flex items-center gap-md p-md text-error hover:bg-error-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="text-body-md font-body-md">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 p-margin-desktop bg-surface">
+<div class="max-w-6xl mx-auto">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-lg mb-xl">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface mb-xs">User Management</h1>
+<p class="text-body-lg text-on-surface-variant">Manage administrative roles, candidate access, and system permissions.</p>
+</div>
+<button class="bg-primary text-on-primary px-lg py-md rounded-lg font-bold flex items-center gap-sm hover:opacity-90 transition-all active:scale-95 shadow-md">
+<span class="material-symbols-outlined" data-icon="person_add">person_add</span>
+                        Add New User
+                    </button>
+</div>
+<!-- Filters Bento -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-lg mb-lg shadow-sm">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-lg items-center">
+<div class="md:col-span-5 relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-2 border border-outline-variant rounded-lg text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="Search by name, email or ID..." type="text"/>
+</div>
+<div class="md:col-span-3">
+<select class="w-full px-4 py-2 border border-outline-variant rounded-lg text-body-md bg-surface-container-lowest focus:border-primary focus:ring-1 focus:ring-primary outline-none appearance-none cursor-pointer">
+<option value="">All Roles</option>
+<option value="admin">Administrator</option>
+<option value="recruiter">Recruiter</option>
+<option value="candidate">Candidate</option>
+<option value="hiring_manager">Hiring Manager</option>
+</select>
+</div>
+<div class="md:col-span-3">
+<select class="w-full px-4 py-2 border border-outline-variant rounded-lg text-body-md bg-surface-container-lowest focus:border-primary focus:ring-1 focus:ring-primary outline-none appearance-none cursor-pointer">
+<option value="">Any Status</option>
+<option value="active">Active</option>
+<option value="pending">Pending</option>
+<option value="deactivated">Deactivated</option>
+</select>
+</div>
+<div class="md:col-span-1 flex justify-end">
+<button class="p-2 text-primary hover:bg-primary-fixed rounded-lg transition-colors" title="Export Data">
+<span class="material-symbols-outlined" data-icon="download">download</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container text-on-surface-variant border-b border-outline-variant">
+<th class="px-lg py-md text-label-sm font-label-sm uppercase tracking-wider">User Details</th>
+<th class="px-lg py-md text-label-sm font-label-sm uppercase tracking-wider">Role</th>
+<th class="px-lg py-md text-label-sm font-label-sm uppercase tracking-wider">Status</th>
+<th class="px-lg py-md text-label-sm font-label-sm uppercase tracking-wider">Date Joined</th>
+<th class="px-lg py-md text-label-sm font-label-sm uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- User Row 1 -->
+<tr class="user-row transition-all relative group">
+<td class="px-lg py-md">
+<div class="absolute left-0 top-0 bottom-0 w-[2px] bg-primary opacity-0 accent-bar transition-opacity"></div>
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-primary font-bold">EM</div>
+<div>
+<p class="text-body-md font-bold text-on-surface">Elena Mitchell</p>
+<p class="text-label-sm text-on-surface-variant">elena.m@talentbridge.com</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="px-sm py-xs bg-primary-fixed text-on-primary-fixed-variant rounded-full text-label-sm">Administrator</span>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-body-md text-secondary font-medium">Active</span>
+</div>
+</td>
+<td class="px-lg py-md text-body-md text-on-surface-variant">Jan 12, 2023</td>
+<td class="px-lg py-md text-right">
+<div class="flex items-center justify-end gap-sm">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
+<button class="p-2 text-error hover:bg-error-container rounded-lg transition-colors group/btn" onclick="confirmDeactivation('Elena Mitchell')">
+<span class="material-symbols-outlined" data-icon="person_off">person_off</span>
+<span class="hidden group-hover/btn:inline-block ml-xs text-label-sm">Deactivate</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- User Row 2 -->
+<tr class="user-row transition-all relative">
+<td class="px-lg py-md">
+<div class="absolute left-0 top-0 bottom-0 w-[2px] bg-primary opacity-0 accent-bar transition-opacity"></div>
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-primary font-bold">JD</div>
+<div>
+<p class="text-body-md font-bold text-on-surface">Julian De Marco</p>
+<p class="text-label-sm text-on-surface-variant">julian.dm@agency.org</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="px-sm py-xs bg-surface-container-high text-on-surface-variant rounded-full text-label-sm">Recruiter</span>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-body-md text-secondary font-medium">Active</span>
+</div>
+</td>
+<td class="px-lg py-md text-body-md text-on-surface-variant">Mar 05, 2023</td>
+<td class="px-lg py-md text-right">
+<div class="flex items-center justify-end gap-sm">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
+<button class="p-2 text-error hover:bg-error-container rounded-lg transition-colors group/btn" onclick="confirmDeactivation('Julian De Marco')">
+<span class="material-symbols-outlined" data-icon="person_off">person_off</span>
+<span class="hidden group-hover/btn:inline-block ml-xs text-label-sm">Deactivate</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- User Row 3 -->
+<tr class="user-row transition-all relative">
+<td class="px-lg py-md">
+<div class="absolute left-0 top-0 bottom-0 w-[2px] bg-primary opacity-0 accent-bar transition-opacity"></div>
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-primary font-bold">SW</div>
+<div>
+<p class="text-body-md font-bold text-on-surface">Sarah Wu</p>
+<p class="text-label-sm text-on-surface-variant">sarah.wu@techcorp.com</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="px-sm py-xs bg-surface-container-high text-on-surface-variant rounded-full text-label-sm">Hiring Manager</span>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-tertiary-container"></span>
+<span class="text-body-md text-on-tertiary-container font-medium">Pending</span>
+</div>
+</td>
+<td class="px-lg py-md text-body-md text-on-surface-variant">Nov 20, 2023</td>
+<td class="px-lg py-md text-right">
+<div class="flex items-center justify-end gap-sm">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="edit">edit</span></button>
+<button class="p-2 text-error hover:bg-error-container rounded-lg transition-colors group/btn" onclick="confirmDeactivation('Sarah Wu')">
+<span class="material-symbols-outlined" data-icon="person_off">person_off</span>
+<span class="hidden group-hover/btn:inline-block ml-xs text-label-sm">Deactivate</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- User Row 4 -->
+<tr class="user-row transition-all relative bg-surface-container-low opacity-60">
+<td class="px-lg py-md">
+<div class="absolute left-0 top-0 bottom-0 w-[2px] bg-primary opacity-0 accent-bar transition-opacity"></div>
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-outline-variant flex items-center justify-center text-on-surface-variant font-bold">BK</div>
+<div>
+<p class="text-body-md font-bold text-on-surface">Brian Kim</p>
+<p class="text-label-sm text-on-surface-variant">b.kim@inactive.com</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<span class="px-sm py-xs bg-surface-container-high text-on-surface-variant rounded-full text-label-sm">Candidate</span>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span class="text-body-md text-outline font-medium">Deactivated</span>
+</div>
+</td>
+<td class="px-lg py-md text-body-md text-on-surface-variant">Aug 15, 2022</td>
+<td class="px-lg py-md text-right">
+<div class="flex items-center justify-end gap-sm">
+<button class="p-2 text-primary hover:bg-primary-fixed rounded-lg transition-colors"><span class="material-symbols-outlined" data-icon="person_check">person_check</span></button>
+<button class="p-2 text-outline-variant cursor-not-allowed"><span class="material-symbols-outlined" data-icon="delete">delete</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination Footer -->
+<div class="px-lg py-md bg-surface-container-lowest flex items-center justify-between border-t border-outline-variant">
+<span class="text-body-md text-on-surface-variant">Showing 1 to 4 of 1,248 users</span>
+<div class="flex gap-xs">
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="px-4 py-2 rounded-lg bg-primary text-on-primary font-bold">1</button>
+<button class="px-4 py-2 rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors">2</button>
+<button class="px-4 py-2 rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors">3</button>
+<span class="px-2 py-2">...</span>
+<button class="px-4 py-2 rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors">125</button>
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- AI Insights Bento -->
+<div class="mt-xl grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div class="bg-primary-container text-on-primary-container p-lg rounded-xl shadow-sm border border-primary relative overflow-hidden group">
+<div class="relative z-10">
+<div class="flex items-center justify-between mb-md">
+<span class="material-symbols-outlined text-4xl opacity-50" data-icon="bolt">bolt</span>
+<span class="px-sm py-1 bg-primary text-on-primary rounded-full text-label-sm">AI Recommendation</span>
+</div>
+<h3 class="text-title-md font-title-md mb-xs">Role Auditing</h3>
+<p class="text-body-md opacity-80">3 recruiter accounts haven't logged in for over 90 days. We recommend reviewing their permissions.</p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-[120px]" data-icon="security">security</span>
+</div>
+</div>
+<div class="bg-surface-container-highest p-lg rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between">
+<div>
+<h3 class="text-title-md font-title-md text-on-surface mb-xs">Registration Trend</h3>
+<div class="h-16 flex items-end gap-1 mb-md">
+<div class="w-full bg-primary h-1/2 rounded-t-sm"></div>
+<div class="w-full bg-primary h-2/3 rounded-t-sm"></div>
+<div class="w-full bg-primary h-1/3 rounded-t-sm"></div>
+<div class="w-full bg-primary h-4/5 rounded-t-sm"></div>
+<div class="w-full bg-primary h-1/2 rounded-t-sm"></div>
+<div class="w-full bg-primary h-3/4 rounded-t-sm"></div>
+<div class="w-full bg-primary h-full rounded-t-sm"></div>
+</div>
+</div>
+<p class="text-body-md text-on-surface-variant">+14% user growth this month</p>
+</div>
+<div class="bg-secondary-container p-lg rounded-xl border border-secondary shadow-sm flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-on-secondary-container text-4xl mb-sm" data-icon="shield_person">shield_person</span>
+<h3 class="text-title-md font-title-md text-on-secondary-container mb-xs">Security Checkup</h3>
+<p class="text-body-md text-on-secondary-container opacity-80 mb-md">Your security protocols are currently optimal.</p>
+<button class="text-on-secondary-container font-bold underline hover:opacity-70 transition-opacity">View Details</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Confirmation Modal (Hidden) -->
+<div class="fixed inset-0 z-[100] hidden" id="deactivate-modal">
+<div class="absolute inset-0 bg-on-background/40 backdrop-blur-sm"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-surface-container-lowest rounded-xl p-xl shadow-2xl border border-outline-variant">
+<div class="flex items-center gap-md text-error mb-lg">
+<span class="material-symbols-outlined text-4xl" data-icon="warning">warning</span>
+<h2 class="text-title-md font-title-md">Confirm Deactivation</h2>
+</div>
+<p class="text-body-lg text-on-surface-variant mb-xl">Are you sure you want to deactivate <span class="font-bold text-on-surface" id="target-user-name"></span>? This will immediately revoke all access to the system.</p>
+<div class="flex gap-md justify-end">
+<button class="px-lg py-md border border-outline-variant rounded-lg font-bold text-on-surface-variant hover:bg-surface-container-high transition-all" onclick="closeModal()">Cancel</button>
+<button class="px-lg py-md bg-error text-on-error rounded-lg font-bold hover:opacity-90 transition-all shadow-md" onclick="closeModal()">Confirm Deactivate</button>
+</div>
+</div>
+</div>
+<!-- Mobile Bottom NavBar -->
+<div class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-surface-container-low flex justify-around items-center px-md z-50 border-t border-outline-variant">
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-label-sm font-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" data-icon="group" data-variation-settings="'FILL' 1">group</span>
+<span class="text-label-sm font-label-sm">Users</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="work">work</span>
+<span class="text-label-sm font-label-sm">Jobs</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-label-sm font-label-sm">Menu</span>
+</a>
+</div>
+<script>
+        function confirmDeactivation(userName) {
+            document.getElementById('target-user-name').innerText = userName;
+            document.getElementById('deactivate-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('deactivate-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Handle Escape key for modal
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body></html>
