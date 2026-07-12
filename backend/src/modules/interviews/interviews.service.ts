@@ -177,4 +177,14 @@ export class InterviewsService {
   async markReminderSent(id: string): Promise<void> {
     await this.interviewsRepository.update(id, { reminderSentAt: new Date() });
   }
+
+  /** Persists the hiring manager's final edited question list (Module 3). */
+  async setQuestions(
+    id: string,
+    questions: { question: string; listenFor: string }[],
+  ): Promise<Interview> {
+    const interview = await this.findById(id);
+    interview.questions = questions;
+    return this.interviewsRepository.save(interview);
+  }
 }

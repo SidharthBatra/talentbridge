@@ -11,6 +11,7 @@ export { JobStatus } from './enums/job-status.enum';
 export { ApplicationStage } from './enums/application-stage.enum';
 export { InterviewType } from './enums/interview-type.enum';
 export { InterviewStatus } from './enums/interview-status.enum';
+export { OfferStatus } from './enums/offer-status.enum';
 export { Roles, ROLES_KEY } from './decorators/roles.decorator';
 export {
   CurrentUser,

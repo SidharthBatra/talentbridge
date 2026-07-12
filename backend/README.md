@@ -1,17 +1,19 @@
-# TalentBridge — Backend (Foundation + Pipeline)
+# TalentBridge — Backend (Foundation + Pipeline + AI)
 
-Modules 1–2 of 4. Module 1 provides **authentication + user management**;
-Module 2 builds the **job posting, candidate pipeline, interview
-scheduling, and real-time notification** layer on top of it, reusing
-Module 1's guards/decorators rather than reimplementing auth. AI features
-(Module 3) and the frontend (Module 4) live elsewhere.
+Modules 1–3 of 4. Module 1: **authentication + user management**. Module 2:
+**job postings, candidate pipeline, interview scheduling, real-time
+notifications**. Module 3: **AI proxy layer** (Gemini) for job description
+generation, CV screening, interview question suggestions, and offer letter
+drafting — all reusing Module 1/2's guards, decorators, and entities rather
+than duplicating logic. The frontend (Module 4) lives elsewhere.
 
 ## Stack
 
 NestJS 10 · TypeScript · PostgreSQL 15 · TypeORM (migrations) · Passport.js
 (JWT) · Socket.io (`@nestjs/websockets`) · `@nestjs/schedule` (cron) ·
-`multer` + `pdf-parse` (CV upload/extraction) · bcrypt · Swagger ·
-Jest + Supertest · Docker Compose.
+`multer` + `pdf-parse` (CV upload/extraction) · Google Gemini
+(`@google/generative-ai`) · bcrypt · Swagger · Jest + Supertest ·
+Docker Compose.
 
 ## What's inside
 
@@ -23,10 +25,13 @@ Jest + Supertest · Docker Compose.
 | Applications / pipeline (apply, stage transitions, bulk actions, CV upload) | `src/modules/applications` |
 | Interview scheduler (propose/confirm, conflict detection, calendar) | `src/modules/interviews` |
 | Real-time notifications (Socket.io gateway) | `src/modules/notifications` |
+| Offers (draft, explicit approve-and-send, candidate response) | `src/modules/offers` |
+| **AI proxy** (Gemini wrapper, 4 features, prompts, fallbacks) | `src/modules/ai` |
 | Shared auth scaffolding (guards, decorators, enums) | `src/common` |
 | App/DB config | `src/config`, `src/database`, `src/app.module.ts` |
 | Migrations | `src/migrations` |
 | Tests | `src/**/*.spec.ts` (unit), `test/*.e2e-spec.ts` (integration) |
+| Prompt design docs | [`../PROMPTS.md`](../PROMPTS.md) (repo root) |
 
 ---
 
@@ -67,7 +72,7 @@ Copy `.env.example` → `.env`. **`.env` is gitignored — never commit secrets.
 | `DATABASE_URL` | Postgres connection string |
 | `JWT_ACCESS_SECRET` / `JWT_REFRESH_SECRET` | Signing secrets |
 | `JWT_ACCESS_EXPIRES_IN` / `JWT_REFRESH_EXPIRES_IN` | `15m` / `7d` |
-| `GEMINI_API_KEY` | Shared contract for the AI module (unused here) |
+| `GEMINI_API_KEY` | Google Gemini API key, read **only** by `src/modules/ai/ai.service.ts` — never exposed in any response DTO or reachable from the frontend |
 
 ---
 
@@ -82,10 +87,11 @@ npm run migration:revert    # roll back the last migration
 npm run migration:generate -- src/migrations/DescribeChange
 ```
 
-Two migrations ship so far, and both run cleanly against an empty database:
+Three migrations ship so far, and all run cleanly against an empty database:
 
 - `src/migrations/1720000000000-InitSchema.ts` — `users`, `refresh_tokens`
 - `src/migrations/1720100000000-JobsPipelineInterviews.ts` — `job_postings`, `applications`, `interviews`
+- `src/migrations/1720200000000-AiOffersAndInterviewQuestions.ts` — `interviews.questions` (jsonb), `offers`
 
 ---
 
@@ -155,7 +161,41 @@ tokens are disconnected immediately after the handshake.
 | --- | --- | --- |
 | `application.stageChanged` | `user:{candidateId}` | `PATCH /applications/:id/stage` (or bulk-action) succeeds |
 | `interview.reminder` | `user:{candidateId}`, `user:{hiringManagerId}` | Cron scan finds a confirmed interview ~24h out (`InterviewReminderCron`, every 10 min) |
-| `offer.responded` | `user:{recruiterId}` | Stub — call `NotificationsGateway.emitOfferResponded()` from Module 3's Offer flow |
+| `offer.responded` | `user:{recruiterId}` | Emitted by `OffersController` on `PATCH /offers/:id/respond` |
+
+### Offers (Module 3)
+
+| Method | Route | Auth | Notes |
+| --- | --- | --- | --- |
+| POST | `/api/offers` | RECRUITER/HM/ADMIN | Creates a `draft` offer (letter drafted separately via `/ai/offer-letter`) |
+| GET | `/api/offers/:id` | any authenticated | |
+| POST | `/api/offers/:id/approve-and-send` | RECRUITER/HM/ADMIN | The **only** way status becomes `sent` — requires `draft` status + a letter already attached |
+| PATCH | `/api/offers/:id/respond` | CANDIDATE | Accept/reject/negotiate; only valid once status is `sent`; emits `offer.responded` |
+
+### AI proxy (Module 3)
+
+All Gemini calls happen **only** inside `AiService` (`src/modules/ai/ai.service.ts`) —
+the frontend never sees `GEMINI_API_KEY` or calls Gemini directly; every
+feature below is a normal JWT-guarded REST endpoint on this backend.
+
+| Method | Route | Auth | Notes |
+| --- | --- | --- | --- |
+| POST | `/api/ai/job-description` | RECRUITER/ADMIN | Inclusive, structured JD. Call again with the same input to regenerate — no special flag |
+| POST | `/api/ai/cv-score/:applicationId` | RECRUITER/HM/ADMIN | Pulls `cvExtractedText` + job data from the DB; persists `aiScore`/`aiStrengths`/`aiGaps` onto the application |
+| POST | `/api/ai/interview-questions` | RECRUITER/HM/ADMIN | Pulls JD + CV summary from the DB automatically; 9 tailored questions |
+| PATCH | `/api/ai/interview-questions/:interviewId` | RECRUITER/HM/ADMIN | Persists the hiring manager's final edited question list onto `interviews.questions` |
+| POST | `/api/ai/offer-letter` | RECRUITER/ADMIN | Drafts letter text only — never touches the `Offer` entity or sends anything |
+
+**Graceful degradation** (see [`PROMPTS.md`](../PROMPTS.md) for the full
+rationale): every feature has a fallback, but **CV scoring is the
+designated must-degrade feature** per the project constraints — if Gemini
+fails or rate-limits (429), `aiScore` is left `null` and the endpoint
+returns `{ scored: false, message: "...manual review is required" }`
+instead of a 500. The application is never hidden or blocked from
+`GET /applications` because of an AI outage; only the AI convenience layer
+(auto-score/auto-sort) degrades, not candidate visibility. `AiService`
+retries once on a transient failure (timeout/429/5xx) before handing back
+a typed `AiResult` for the caller's fallback path — it never throws.
 
 **Token transport decision:** both tokens are returned in the JSON body
 (not httpOnly cookies). The client stores the refresh token and sends it as
@@ -254,9 +294,20 @@ applied (`docker-compose up -d postgres && npm run migration:run`). Coverage:
   mimetype/size/ownership validation
 - `test/interviews.e2e-spec.ts` — propose→confirm flow, invalid-slot
   rejection, overlapping-confirmed-interview conflict detection (409)
+- `test/ai.e2e-spec.ts` — all 4 AI endpoints + the interview-questions PATCH
+  + the full offer draft→approve-and-send→respond flow, with
+  `AiService.generateJson` overridden at the provider level (no real Gemini
+  calls in tests) so every fallback path is exercised deterministically:
+  rate-limit, timeout, and "not configured" all trigger their respective
+  fallback responses
 - Unit specs (`src/modules/applications/applications.service.spec.ts`,
   `src/modules/interviews/interviews.service.spec.ts`) cover the same
   stage-transition and conflict-detection logic in isolation, without a DB
+- `src/modules/ai/ai.service.spec.ts` — unit tests for `AiService` itself,
+  mocking `@google/generative-ai` directly (one level lower than the e2e
+  suite): JSON parsing, markdown-fence stripping, 429/5xx/timeout
+  classification, the single-retry behavior, and missing-API-key handling
 
 Controller coverage from the e2e suite alone is comfortably above the 60%
-target (auth 100%, applications ~96%, interviews ~92%, jobs ~77%, users 86%).
+target (auth 100%, applications ~96%, interviews ~92%, jobs ~77%, users 86%,
+ai 100%, offers ~97%).

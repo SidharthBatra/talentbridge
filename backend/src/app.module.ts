@@ -14,6 +14,9 @@ import { ApplicationsModule } from './modules/applications/applications.module';
 import { Interview } from './modules/interviews/entities/interview.entity';
 import { InterviewsModule } from './modules/interviews/interviews.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
+import { Offer } from './modules/offers/entities/offer.entity';
+import { OffersModule } from './modules/offers/offers.module';
+import { AiModule } from './modules/ai/ai.module';
 
 @Module({
   imports: [
@@ -27,7 +30,7 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
       useFactory: (config: ConfigService) => ({
         type: 'postgres',
         url: config.get<string>('databaseUrl'),
-        entities: [User, RefreshToken, JobPosting, Application, Interview],
+        entities: [User, RefreshToken, JobPosting, Application, Interview, Offer],
         migrations: ['dist/migrations/*.js'],
         // Schema is owned by migrations, never auto-sync.
         synchronize: false,
@@ -40,6 +43,8 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
     ApplicationsModule,
     InterviewsModule,
     NotificationsModule,
+    OffersModule,
+    AiModule,
   ],
 })
 export class AppModule {}

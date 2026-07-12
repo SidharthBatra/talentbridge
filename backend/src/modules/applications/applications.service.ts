@@ -106,6 +106,30 @@ export class ApplicationsService {
     query: ApplicationQueryDto,
     restrictToCandidateId?: string,
   ): Promise<Application[]> {
+    const sortBy = query.sortBy ?? 'createdAt';
+
+    // aiScore is nullable (unscored applications). Postgres's default DESC
+    // ordering puts NULLs first, which would bury every AI-scored candidate
+    // under the unscored ones on a "top candidates" shortlist — the opposite
+    // of what "sort by aiScore descending" means. Explicit NULLS LAST fixes it.
+    if (sortBy === 'aiScore') {
+      const qb = this.applicationsRepository
+        .createQueryBuilder('application')
+        .orderBy('application.aiScore', 'DESC', 'NULLS LAST');
+      if (query.jobId) {
+        qb.andWhere('application.jobPostingId = :jobId', { jobId: query.jobId });
+      }
+      if (query.stage) {
+        qb.andWhere('application.stage = :stage', { stage: query.stage });
+      }
+      if (restrictToCandidateId) {
+        qb.andWhere('application.candidateId = :candidateId', {
+          candidateId: restrictToCandidateId,
+        });
+      }
+      return qb.getMany();
+    }
+
     const where: Record<string, unknown> = {};
     if (query.jobId) where.jobPostingId = query.jobId;
     if (query.stage) where.stage = query.stage;
@@ -113,7 +137,7 @@ export class ApplicationsService {
 
     return this.applicationsRepository.find({
       where,
-      order: { [query.sortBy ?? 'createdAt']: 'DESC' },
+      order: { [sortBy]: 'DESC' },
     });
   }
 
@@ -220,5 +244,19 @@ export class ApplicationsService {
     if (application.candidateId !== candidateId) {
       throw new ForbiddenException('This application does not belong to you');
     }
+  }
+
+  /** Persists the AI scorer's output (Module 3) onto the application. */
+  async setAiScore(
+    id: string,
+    aiScore: number,
+    aiStrengths: string[],
+    aiGaps: string[],
+  ): Promise<Application> {
+    const application = await this.findById(id);
+    application.aiScore = aiScore;
+    application.aiStrengths = aiStrengths;
+    application.aiGaps = aiGaps;
+    return this.applicationsRepository.save(application);
   }
 }
