@@ -11,5 +11,8 @@ dist/
 coverage/
 coverage-e2e/
 
+# Uploaded CVs (local-disk placeholder for S3 in production)
+uploads/
+
 # Logs
 *.log

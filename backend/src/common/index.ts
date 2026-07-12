@@ -6,6 +6,11 @@
  *   import { JwtAuthGuard, RolesGuard, Roles, CurrentUser, Role } from '@common';
  */
 export { Role } from './enums/role.enum';
+export { JobType } from './enums/job-type.enum';
+export { JobStatus } from './enums/job-status.enum';
+export { ApplicationStage } from './enums/application-stage.enum';
+export { InterviewType } from './enums/interview-type.enum';
+export { InterviewStatus } from './enums/interview-status.enum';
 export { Roles, ROLES_KEY } from './decorators/roles.decorator';
 export {
   CurrentUser,
