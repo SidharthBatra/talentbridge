@@ -6,7 +6,7 @@ import {
 } from '@google/generative-ai';
 import { AiFailureReason, AiResult } from './ai.types';
 
-const GEMINI_MODEL = 'gemini-2.0-flash';
+const GEMINI_MODEL = 'gemini-2.5-flash-lite';
 const REQUEST_TIMEOUT_MS = 15_000;
 /** Single retry after a short backoff — free-tier rate limits are often a one-request blip. */
 const RETRY_BACKOFF_MS = 1_200;
