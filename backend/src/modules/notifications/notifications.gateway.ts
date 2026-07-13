@@ -87,9 +87,10 @@ export class NotificationsGateway
     candidateId: string,
     hiringManagerId: string,
     interviewId: string,
+    applicationId: string,
     confirmedSlot: Date,
   ): void {
-    const payload = { interviewId, confirmedSlot };
+    const payload = { interviewId, applicationId, confirmedSlot };
     this.server.to(`user:${candidateId}`).emit('interview.reminder', payload);
     this.server
       .to(`user:${hiringManagerId}`)
@@ -104,10 +105,11 @@ export class NotificationsGateway
   emitOfferResponded(
     recruiterId: string,
     offerId: string,
+    applicationId: string,
     response: 'accepted' | 'rejected' | 'negotiating',
   ): void {
     this.server
       .to(`user:${recruiterId}`)
-      .emit('offer.responded', { offerId, response });
+      .emit('offer.responded', { offerId, applicationId, response });
   }
 }

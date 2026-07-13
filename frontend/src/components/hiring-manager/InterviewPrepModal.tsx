@@ -1,19 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { aiApi } from '../../api/ai';
 import { apiErrorMessage } from '../../api/client';
+import { interviewsApi } from '../../api/interviews';
 import { Button } from '../ui/Button';
 import { Icon } from '../ui/Icon';
-import { Input, Select, Textarea } from '../ui/Input';
+import { Select, Textarea } from '../ui/Input';
 import { Modal } from '../ui/Modal';
 import { toast } from '../../store/toastStore';
-import { InterviewType, type Application, type InterviewQuestion } from '../../types';
+import { InterviewType, type Application, type Interview, type InterviewQuestion } from '../../types';
 
-/**
- * LIMITATION: there's no API to look up an application's interview id
- * (see notificationStore.ts), so the hiring manager enters the interview
- * id manually (shared by the recruiter who proposed it) before AI
- * questions can be generated and saved against it.
- */
 export function InterviewPrepModal({
   application,
   onClose,
@@ -21,12 +16,21 @@ export function InterviewPrepModal({
   application: Application;
   onClose: () => void;
 }) {
-  const [interviewId, setInterviewId] = useState('');
+  // The interview to save the final question list against is looked up by
+  // application id — the hiring manager never needs to know or type it.
+  const [interview, setInterview] = useState<Interview | null | undefined>(undefined);
   const [interviewType, setInterviewType] = useState<InterviewType>(InterviewType.TECHNICAL);
   const [questions, setQuestions] = useState<InterviewQuestion[]>([]);
   const [generating, setGenerating] = useState(false);
   const [saving, setSaving] = useState(false);
   const [isFallback, setIsFallback] = useState(false);
+
+  useEffect(() => {
+    interviewsApi
+      .byApplication(application.id)
+      .then((interviews) => setInterview(interviews[0] ?? null))
+      .catch(() => setInterview(null));
+  }, [application.id]);
 
   const generate = async () => {
     setGenerating(true);
@@ -60,13 +64,13 @@ export function InterviewPrepModal({
   const addQuestion = () => setQuestions((qs) => [...qs, { question: '', listenFor: '' }]);
 
   const save = async () => {
-    if (!interviewId.trim()) {
-      toast.error('Missing interview ID');
+    if (!interview) {
+      toast.error('No interview found for this application');
       return;
     }
     setSaving(true);
     try {
-      await aiApi.saveInterviewQuestions(interviewId.trim(), questions);
+      await aiApi.saveInterviewQuestions(interview.id, questions);
       toast.success('Question list saved to the interview');
       onClose();
     } catch (err) {
@@ -87,19 +91,24 @@ export function InterviewPrepModal({
           <Button variant="ghost" onClick={onClose}>
             Close
           </Button>
-          <Button onClick={save} loading={saving} icon="save" disabled={questions.length === 0}>
+          <Button
+            onClick={save}
+            loading={saving}
+            icon="save"
+            disabled={questions.length === 0 || !interview}
+          >
             Save Final List
           </Button>
         </>
       }
     >
       <div className="space-y-md">
-        <Input
-          label="Interview ID"
-          hint="Ask the recruiter who scheduled this interview for its ID."
-          value={interviewId}
-          onChange={(e) => setInterviewId(e.target.value)}
-        />
+        {interview === null && (
+          <p className="text-label-sm text-tertiary-container">
+            No interview has been scheduled for this application yet — you can still generate and
+            edit questions below, but saving them requires an interview to be proposed first.
+          </p>
+        )}
         <div className="flex items-end gap-sm">
           <Select
             label="Interview Type"
