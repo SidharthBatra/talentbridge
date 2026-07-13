@@ -64,6 +64,18 @@ export class UsersService {
     return this.usersRepository.find({ order: { createdAt: 'DESC' } });
   }
 
+  /**
+   * Active users with a given role. Backs lightweight cross-role lookups
+   * (e.g. a recruiter picking a hiring manager to propose an interview to)
+   * that don't need the full ADMIN user-management surface.
+   */
+  findActiveByRole(role: Role): Promise<User[]> {
+    return this.usersRepository.find({
+      where: { role, isActive: true },
+      order: { name: 'ASC' },
+    });
+  }
+
   async updateRole(id: string, role: Role): Promise<User> {
     const user = await this.findById(id);
     user.role = role;

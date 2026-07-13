@@ -9,6 +9,12 @@ export const interviewsApi = {
   myPending: () =>
     apiClient.get<Interview[]>('/interviews/mine/pending').then((r) => r.data),
 
+  /** Interviews scheduled for a given application (newest first). */
+  byApplication: (applicationId: string) =>
+    apiClient
+      .get<Interview[]>(`/interviews/by-application/${applicationId}`)
+      .then((r) => r.data),
+
   calendar: (userId: string) =>
     apiClient
       .get<Interview[]>('/interviews/calendar', { params: { userId } })

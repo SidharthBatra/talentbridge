@@ -4,6 +4,10 @@ import type { Role, User } from '../types';
 export const usersApi = {
   list: () => apiClient.get<User[]>('/users').then((r) => r.data),
 
+  /** Active hiring managers, for picking one by name (e.g. when proposing an interview). */
+  hiringManagers: () =>
+    apiClient.get<User[]>('/users/hiring-managers').then((r) => r.data),
+
   get: (id: string) => apiClient.get<User>(`/users/${id}`).then((r) => r.data),
 
   updateRole: (id: string, role: Role) =>
