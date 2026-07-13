@@ -6,7 +6,7 @@ import {
 } from '@google/generative-ai';
 import { AiFailureReason, AiResult } from './ai.types';
 
-const GEMINI_MODEL = 'gemini-2.5-flash-lite';
+const GEMINI_MODEL = 'gemini-2.5-flash';
 const REQUEST_TIMEOUT_MS = 15_000;
 /** Single retry after a short backoff — free-tier rate limits are often a one-request blip. */
 const RETRY_BACKOFF_MS = 1_200;
@@ -51,7 +51,9 @@ export class AiService {
       return first;
     }
 
-    this.logger.warn(`Gemini call failed (${first.reason}), retrying once...`);
+    this.logger.warn(
+      `Gemini call failed (${first.reason}): ${first.message} — retrying once...`,
+    );
     await this.sleep(RETRY_BACKOFF_MS);
     return this.attempt<T>(this.model, prompt);
   }
