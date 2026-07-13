@@ -9,7 +9,7 @@ export type AiResult<T> =
   | { ok: false; reason: AiFailureReason; message: string };
 
 export type AiFailureReason =
-  | 'rate_limited' // OpenRouter free-tier 429 — expected under load, not exceptional
+  | 'rate_limited' // Gemini free-tier 429 — expected under load, not exceptional
   | 'timeout' // request took too long (network stall, model overloaded)
   | 'invalid_response' // model returned text that didn't parse as the expected JSON shape
   | 'error'; // anything else (auth, network, 5xx, missing API key)
