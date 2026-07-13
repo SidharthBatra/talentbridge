@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { apiErrorMessage } from '../../api/client';
 import { offersApi } from '../../api/offers';
 import { Card } from '../../components/ui/Card';
@@ -20,6 +21,8 @@ export function OfferResponsesPage() {
   const lastOfferResponded = useNotificationStore((s) => s.lastOfferResponded);
   const offerRespondedSeq = useNotificationStore((s) => s.offerRespondedSeq);
   const [events, setEvents] = useState<{ event: OfferRespondedEvent; offer: Offer | null; error?: string }[]>([]);
+  const [searchParams] = useSearchParams();
+  const highlightId = searchParams.get('applicationId');
 
   useEffect(() => {
     if (!lastOfferResponded) return;
@@ -57,7 +60,13 @@ export function OfferResponsesPage() {
 
       <div className="space-y-sm">
         {events.map(({ event, offer, error }, i) => (
-          <Card key={`${event.offerId}-${i}`} className="p-md flex items-center justify-between gap-md">
+          <Card
+            key={`${event.offerId}-${i}`}
+            id={`application-${event.applicationId}`}
+            className={`p-md flex items-center justify-between gap-md ${
+              highlightId === event.applicationId ? 'ring-2 ring-primary border-primary' : ''
+            }`}
+          >
             <div>
               <p className="text-body-md font-semibold text-on-surface">
                 Offer #{event.offerId.slice(0, 8)}…

@@ -38,6 +38,7 @@ export class InterviewReminderCron {
         application.candidateId,
         interview.hiringManagerId,
         interview.id,
+        application.id,
         interview.confirmedSlot as Date,
       );
       await this.interviewsService.markReminderSent(interview.id);

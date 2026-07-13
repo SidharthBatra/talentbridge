@@ -7,6 +7,8 @@ export interface Toast {
   variant: ToastVariant;
   title: string;
   description?: string;
+  /** In-app route to navigate to when the toast body is clicked (e.g. deep-link to an application). */
+  link?: string;
 }
 
 interface ToastState {
@@ -28,10 +30,10 @@ export const useToastStore = create<ToastState>((set) => ({
 }));
 
 export const toast = {
-  success: (title: string, description?: string) =>
-    useToastStore.getState().push({ variant: 'success', title, description }),
-  error: (title: string, description?: string) =>
-    useToastStore.getState().push({ variant: 'error', title, description }),
-  info: (title: string, description?: string) =>
-    useToastStore.getState().push({ variant: 'info', title, description }),
+  success: (title: string, description?: string, link?: string) =>
+    useToastStore.getState().push({ variant: 'success', title, description, link }),
+  error: (title: string, description?: string, link?: string) =>
+    useToastStore.getState().push({ variant: 'error', title, description, link }),
+  info: (title: string, description?: string, link?: string) =>
+    useToastStore.getState().push({ variant: 'info', title, description, link }),
 };

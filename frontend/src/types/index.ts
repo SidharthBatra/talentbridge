@@ -272,11 +272,13 @@ export interface ApplicationStageChangedEvent {
 
 export interface InterviewReminderEvent {
   interviewId: string;
+  applicationId: string;
   confirmedSlot: string;
 }
 
 export interface OfferRespondedEvent {
   offerId: string;
+  applicationId: string;
   response: OfferResponseAction;
 }
 

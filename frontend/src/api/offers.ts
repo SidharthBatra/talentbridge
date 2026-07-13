@@ -7,6 +7,9 @@ export const offersApi = {
 
   get: (id: string) => apiClient.get<Offer>(`/offers/${id}`).then((r) => r.data),
 
+  /** Offers awaiting the current candidate's response, across all of their applications. */
+  myPending: () => apiClient.get<Offer[]>('/offers/mine/pending').then((r) => r.data),
+
   approveAndSend: (id: string) =>
     apiClient.post<Offer>(`/offers/${id}/approve-and-send`).then((r) => r.data),
 

@@ -8,7 +8,7 @@ import type {
   InterviewReminderEvent,
   OfferRespondedEvent,
 } from '../types';
-import { ApplicationStage } from '../types';
+import { ApplicationStage, Role } from '../types';
 
 const STAGE_LABELS: Record<ApplicationStage, string> = {
   [ApplicationStage.APPLIED]: 'Applied',
@@ -26,8 +26,17 @@ const STAGE_LABELS: Record<ApplicationStage, string> = {
  * to both a toast and the notification store (so lists elsewhere can
  * react without prop drilling or a full query-cache library).
  */
+/** Where a role lands when it wants to look at a specific application. */
+function applicationLink(role: Role | undefined, applicationId: string): string | undefined {
+  if (role === Role.CANDIDATE) return `/candidate/applications?applicationId=${applicationId}`;
+  if (role === Role.HIRING_MANAGER) return `/hiring-manager/shortlist?applicationId=${applicationId}`;
+  if (role === Role.RECRUITER || role === Role.ADMIN) return `/recruiter/offers?applicationId=${applicationId}`;
+  return undefined;
+}
+
 export function NotificationsProvider() {
   const accessToken = useAuthStore((s) => s.accessToken);
+  const role = useAuthStore((s) => s.user?.role);
   const emitStageChange = useNotificationStore((s) => s.emitStageChange);
   const emitInterviewReminder = useNotificationStore((s) => s.emitInterviewReminder);
   const emitOfferResponded = useNotificationStore((s) => s.emitOfferResponded);
@@ -50,11 +59,19 @@ export function NotificationsProvider() {
     const onInterviewReminder = (event: InterviewReminderEvent) => {
       emitInterviewReminder(event);
       const when = new Date(event.confirmedSlot).toLocaleString();
-      toast.info('Interview reminder', `Upcoming interview at ${when}`);
+      toast.info(
+        'Interview reminder',
+        `Upcoming interview at ${when}`,
+        applicationLink(role, event.applicationId),
+      );
     };
     const onOfferResponded = (event: OfferRespondedEvent) => {
       emitOfferResponded(event);
-      toast.info('Offer response received', `Candidate ${event.response} the offer`);
+      toast.info(
+        'Offer response received',
+        `Candidate ${event.response} the offer`,
+        applicationLink(role, event.applicationId),
+      );
     };
     const onConnectError = () => {
       toast.error('Live updates unavailable', 'Could not connect to the notification service');
@@ -71,7 +88,7 @@ export function NotificationsProvider() {
       socket.off('offer.responded', onOfferResponded);
       socket.off('connect_error', onConnectError);
     };
-  }, [accessToken, emitStageChange, emitInterviewReminder, emitOfferResponded]);
+  }, [accessToken, role, emitStageChange, emitInterviewReminder, emitOfferResponded]);
 
   return null;
 }

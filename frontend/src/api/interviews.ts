@@ -5,6 +5,10 @@ export const interviewsApi = {
   propose: (input: ProposeInterviewInput) =>
     apiClient.post<Interview>('/interviews', input).then((r) => r.data),
 
+  /** Interviews awaiting the current candidate's response, across all of their applications. */
+  myPending: () =>
+    apiClient.get<Interview[]>('/interviews/mine/pending').then((r) => r.data),
+
   calendar: (userId: string) =>
     apiClient
       .get<Interview[]>('/interviews/calendar', { params: { userId } })

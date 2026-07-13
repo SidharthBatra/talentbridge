@@ -14,6 +14,10 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import {
+  AuthenticatedUser,
+  CurrentUser,
+} from '../../common/decorators/current-user.decorator';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { Role } from '../../common/enums/role.enum';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
@@ -47,6 +51,25 @@ export class OffersController {
     // Ensures the application exists (404s otherwise) before drafting an offer against it.
     await this.applicationsService.findById(dto.applicationId);
     return OfferResponseDto.fromEntity(await this.offersService.create(dto));
+  }
+
+  @Get('mine/pending')
+  @Roles(Role.CANDIDATE)
+  @UseGuards(RolesGuard)
+  @ApiOperation({
+    summary:
+      "Offers awaiting the current candidate's response, across all of " +
+      'their applications — used to wire a "Respond" link directly to ' +
+      'each pending offer without requiring an id to be typed in.',
+  })
+  @ApiOkResponse({ type: [OfferResponseDto] })
+  async myPending(
+    @CurrentUser() user: AuthenticatedUser,
+  ): Promise<OfferResponseDto[]> {
+    const offers = await this.offersService.findPendingForCandidate(
+      user.userId,
+    );
+    return offers.map(OfferResponseDto.fromEntity);
   }
 
   @Get(':id')
@@ -94,7 +117,12 @@ export class OffersController {
       offer.applicationId,
     );
     const job = await this.jobsService.findById(application.jobPostingId);
-    this.notifications.emitOfferResponded(job.createdBy, offer.id, dto.response);
+    this.notifications.emitOfferResponded(
+      job.createdBy,
+      offer.id,
+      application.id,
+      dto.response,
+    );
 
     return OfferResponseDto.fromEntity(offer);
   }
