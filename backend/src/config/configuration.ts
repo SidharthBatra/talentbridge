@@ -12,7 +12,7 @@ export interface AppConfig {
     accessExpiresIn: string;
     refreshExpiresIn: string;
   };
-  geminiApiKey: string;
+  openRouterApiKey: string;
 }
 
 export default (): AppConfig => ({
@@ -27,5 +27,5 @@ export default (): AppConfig => ({
     accessExpiresIn: process.env.JWT_ACCESS_EXPIRES_IN ?? '15m',
     refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN ?? '7d',
   },
-  geminiApiKey: process.env.GEMINI_API_KEY ?? '',
+  openRouterApiKey: process.env.OPENROUTER_API_KEY ?? '',
 });
