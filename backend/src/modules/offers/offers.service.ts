@@ -6,6 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { OfferStatus } from '../../common/enums/offer-status.enum';
+import { ApplicationsService } from '../applications/applications.service';
 import { CreateOfferDto } from './dto/create-offer.dto';
 import { Offer } from './entities/offer.entity';
 
@@ -14,6 +15,7 @@ export class OffersService {
   constructor(
     @InjectRepository(Offer)
     private readonly offersRepository: Repository<Offer>,
+    private readonly applicationsService: ApplicationsService,
   ) {}
 
   create(dto: CreateOfferDto): Promise<Offer> {
@@ -34,6 +36,30 @@ export class OffersService {
       throw new NotFoundException('Offer not found');
     }
     return offer;
+  }
+
+  /**
+   * Offers awaiting this candidate's response (status SENT), across all of
+   * their applications. Backs the "My Applications" view so a candidate can
+   * respond directly from a button instead of having to discover and paste
+   * an offer id from anywhere.
+   */
+  async findPendingForCandidate(candidateId: string): Promise<Offer[]> {
+    const applications = await this.applicationsService.findAll(
+      {},
+      candidateId,
+    );
+    const applicationIds = applications.map((a) => a.id);
+    if (applicationIds.length === 0) {
+      return [];
+    }
+    return this.offersRepository
+      .createQueryBuilder('offer')
+      .where('offer.applicationId IN (:...applicationIds)', {
+        applicationIds,
+      })
+      .andWhere('offer.status = :status', { status: OfferStatus.SENT })
+      .getMany();
   }
 
   /**

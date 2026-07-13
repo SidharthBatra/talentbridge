@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { applicationsApi } from '../../api/applications';
 import { apiErrorMessage } from '../../api/client';
 import { jobsApi } from '../../api/jobs';
@@ -27,6 +28,9 @@ export function ShortlistPage() {
   const [offerTarget, setOfferTarget] = useState<Application | null>(null);
   const [actingId, setActingId] = useState<string | null>(null);
   const stageChangeSeq = useNotificationStore((s) => s.stageChangeSeq);
+  const interviewReminderSeq = useNotificationStore((s) => s.interviewReminderSeq);
+  const [searchParams] = useSearchParams();
+  const highlightId = searchParams.get('applicationId');
 
   const load = () => {
     setError(null);
@@ -43,7 +47,15 @@ export function ShortlistPage() {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(load, [stageChangeSeq]);
+  useEffect(load, [stageChangeSeq, interviewReminderSeq]);
+
+  // Scroll to the application a notification linked to (rendered id below).
+  useEffect(() => {
+    if (!highlightId || !applications) return;
+    document
+      .getElementById(`application-${highlightId}`)
+      ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [highlightId, applications]);
 
   const advance = async (app: Application, next: ApplicationStage) => {
     setActingId(app.id);
@@ -79,8 +91,13 @@ export function ShortlistPage() {
       <div className="space-y-sm">
         {applications.map((app) => {
           const job = jobsById[app.jobPostingId];
+          const isHighlighted = highlightId === app.id;
           return (
-            <Card key={app.id} className="p-lg space-y-sm">
+            <Card
+              key={app.id}
+              id={`application-${app.id}`}
+              className={`p-lg space-y-sm ${isHighlighted ? 'ring-2 ring-primary border-primary' : ''}`}
+            >
               <div className="flex flex-wrap items-center justify-between gap-sm">
                 <div>
                   <p className="text-title-md font-title-md text-on-surface">

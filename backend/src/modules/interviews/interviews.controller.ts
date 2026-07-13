@@ -56,6 +56,25 @@ export class InterviewsController {
     );
   }
 
+  @Get('mine/pending')
+  @Roles(Role.CANDIDATE)
+  @UseGuards(RolesGuard)
+  @ApiOperation({
+    summary:
+      "Interviews awaiting the current candidate's response, across all " +
+      'of their applications — used to wire a "Respond" link directly to ' +
+      'each pending interview without requiring an id to be typed in.',
+  })
+  @ApiOkResponse({ type: [InterviewResponseDto] })
+  async myPending(
+    @CurrentUser() user: AuthenticatedUser,
+  ): Promise<InterviewResponseDto[]> {
+    const interviews = await this.interviewsService.findPendingForCandidate(
+      user.userId,
+    );
+    return interviews.map(InterviewResponseDto.fromEntity);
+  }
+
   @Get('calendar')
   @ApiQuery({ name: 'userId', required: true, type: String })
   @ApiOperation({

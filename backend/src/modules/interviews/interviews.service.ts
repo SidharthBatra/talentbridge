@@ -48,6 +48,32 @@ export class InterviewsService {
     return interview;
   }
 
+  /**
+   * Interviews awaiting this candidate's response (status PROPOSED), across
+   * all of their applications. Backs the "My Applications" view so a
+   * candidate can respond directly from a button instead of having to
+   * discover and paste an interview id from anywhere.
+   */
+  async findPendingForCandidate(candidateId: string): Promise<Interview[]> {
+    const applications = await this.applicationsService.findAll(
+      {},
+      candidateId,
+    );
+    const applicationIds = applications.map((a) => a.id);
+    if (applicationIds.length === 0) {
+      return [];
+    }
+    return this.interviewsRepository
+      .createQueryBuilder('interview')
+      .where('interview.applicationId IN (:...applicationIds)', {
+        applicationIds,
+      })
+      .andWhere('interview.status = :status', {
+        status: InterviewStatus.PROPOSED,
+      })
+      .getMany();
+  }
+
   /** Candidate confirms one of the proposed slots. Detects double-booking. */
   async confirmSlot(id: string, dto: ConfirmSlotDto): Promise<Interview> {
     const interview = await this.findById(id);
