@@ -2,7 +2,7 @@
 
 Modules 1–3 of 4. Module 1: **authentication + user management**. Module 2:
 **job postings, candidate pipeline, interview scheduling, real-time
-notifications**. Module 3: **AI proxy layer** (Gemini) for job description
+notifications**. Module 3: **AI proxy layer** (OpenRouter) for job description
 generation, CV screening, interview question suggestions, and offer letter
 drafting — all reusing Module 1/2's guards, decorators, and entities rather
 than duplicating logic. The frontend (Module 4) lives elsewhere.
@@ -11,8 +11,8 @@ than duplicating logic. The frontend (Module 4) lives elsewhere.
 
 NestJS 10 · TypeScript · PostgreSQL 15 · TypeORM (migrations) · Passport.js
 (JWT) · Socket.io (`@nestjs/websockets`) · `@nestjs/schedule` (cron) ·
-`multer` + `pdf-parse` (CV upload/extraction) · Google Gemini
-(`@google/generative-ai`) · bcrypt · Swagger · Jest + Supertest ·
+`multer` + `pdf-parse` (CV upload/extraction) · OpenRouter
+(OpenAI-compatible chat completions API) · bcrypt · Swagger · Jest + Supertest ·
 Docker Compose.
 
 ## What's inside
@@ -26,7 +26,7 @@ Docker Compose.
 | Interview scheduler (propose/confirm, conflict detection, calendar) | `src/modules/interviews` |
 | Real-time notifications (Socket.io gateway) | `src/modules/notifications` |
 | Offers (draft, explicit approve-and-send, candidate response) | `src/modules/offers` |
-| **AI proxy** (Gemini wrapper, 4 features, prompts, fallbacks) | `src/modules/ai` |
+| **AI proxy** (OpenRouter wrapper, 4 features, prompts, fallbacks) | `src/modules/ai` |
 | Shared auth scaffolding (guards, decorators, enums) | `src/common` |
 | App/DB config | `src/config`, `src/database`, `src/app.module.ts` |
 | Migrations | `src/migrations` |
@@ -72,7 +72,7 @@ Copy `.env.example` → `.env`. **`.env` is gitignored — never commit secrets.
 | `DATABASE_URL` | Postgres connection string |
 | `JWT_ACCESS_SECRET` / `JWT_REFRESH_SECRET` | Signing secrets |
 | `JWT_ACCESS_EXPIRES_IN` / `JWT_REFRESH_EXPIRES_IN` | `15m` / `7d` |
-| `GEMINI_API_KEY` | Google Gemini API key, read **only** by `src/modules/ai/ai.service.ts` — never exposed in any response DTO or reachable from the frontend |
+| `OPENROUTER_API_KEY` | OpenRouter API key, read **only** by `src/modules/ai/ai.service.ts` — never exposed in any response DTO or reachable from the frontend |
 
 ---
 
@@ -174,8 +174,8 @@ tokens are disconnected immediately after the handshake.
 
 ### AI proxy (Module 3)
 
-All Gemini calls happen **only** inside `AiService` (`src/modules/ai/ai.service.ts`) —
-the frontend never sees `GEMINI_API_KEY` or calls Gemini directly; every
+All OpenRouter calls happen **only** inside `AiService` (`src/modules/ai/ai.service.ts`) —
+the frontend never sees `OPENROUTER_API_KEY` or calls OpenRouter directly; every
 feature below is a normal JWT-guarded REST endpoint on this backend.
 
 | Method | Route | Auth | Notes |
@@ -188,7 +188,7 @@ feature below is a normal JWT-guarded REST endpoint on this backend.
 
 **Graceful degradation** (see [`PROMPTS.md`](../PROMPTS.md) for the full
 rationale): every feature has a fallback, but **CV scoring is the
-designated must-degrade feature** per the project constraints — if Gemini
+designated must-degrade feature** per the project constraints — if OpenRouter
 fails or rate-limits (429), `aiScore` is left `null` and the endpoint
 returns `{ scored: false, message: "...manual review is required" }`
 instead of a 500. The application is never hidden or blocked from
@@ -296,15 +296,15 @@ applied (`docker-compose up -d postgres && npm run migration:run`). Coverage:
   rejection, overlapping-confirmed-interview conflict detection (409)
 - `test/ai.e2e-spec.ts` — all 4 AI endpoints + the interview-questions PATCH
   + the full offer draft→approve-and-send→respond flow, with
-  `AiService.generateJson` overridden at the provider level (no real Gemini
-  calls in tests) so every fallback path is exercised deterministically:
+  `AiService.generateJson` overridden at the provider level (no real
+  OpenRouter calls in tests) so every fallback path is exercised deterministically:
   rate-limit, timeout, and "not configured" all trigger their respective
   fallback responses
 - Unit specs (`src/modules/applications/applications.service.spec.ts`,
   `src/modules/interviews/interviews.service.spec.ts`) cover the same
   stage-transition and conflict-detection logic in isolation, without a DB
 - `src/modules/ai/ai.service.spec.ts` — unit tests for `AiService` itself,
-  mocking `@google/generative-ai` directly (one level lower than the e2e
+  mocking the global `fetch` call to OpenRouter directly (one level lower than the e2e
   suite): JSON parsing, markdown-fence stripping, 429/5xx/timeout
   classification, the single-retry behavior, and missing-API-key handling
 

@@ -2,16 +2,10 @@ import { ConfigService } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
 import { AiService } from './ai.service';
 
-const generateContentMock = jest.fn();
-
-jest.mock('@google/generative-ai', () => ({
-  GoogleGenerativeAI: jest.fn().mockImplementation(() => ({
-    getGenerativeModel: () => ({ generateContent: generateContentMock }),
-  })),
-}));
+const fetchMock = jest.fn();
 
 /**
- * Unit coverage for AiService itself — mocks the Gemini SDK (not
+ * Unit coverage for AiService itself — mocks global `fetch` (not
  * AiService), so this is the layer that actually exercises the
  * retry/timeout/rate-limit classification and JSON-parsing logic that the
  * e2e suite mocks past (it stubs AiService.generateJson directly to avoid
@@ -20,10 +14,11 @@ jest.mock('@google/generative-ai', () => ({
 describe('AiService', () => {
   let service: AiService;
 
-  const configValues: Record<string, string> = { geminiApiKey: 'fake-key' };
+  const configValues: Record<string, string> = { openRouterApiKey: 'fake-key' };
 
   beforeEach(async () => {
-    generateContentMock.mockReset();
+    fetchMock.mockReset();
+    (global as unknown as { fetch: typeof fetch }).fetch = fetchMock;
     const moduleRef = await Test.createTestingModule({
       providers: [
         AiService,
@@ -36,26 +31,31 @@ describe('AiService', () => {
     service = moduleRef.get(AiService);
   });
 
-  const respondWith = (text: string) => ({
-    response: { text: () => text },
+  const okResponse = (text: string) => ({
+    ok: true,
+    json: async () => ({ choices: [{ message: { content: text } }] }),
+  });
+
+  const errorResponse = (status: number, body = '') => ({
+    ok: false,
+    status,
+    text: async () => body,
   });
 
   it('parses a clean JSON response', async () => {
-    generateContentMock.mockResolvedValue(respondWith('{"foo":"bar"}'));
+    fetchMock.mockResolvedValue(okResponse('{"foo":"bar"}'));
     const result = await service.generateJson<{ foo: string }>('prompt');
     expect(result).toEqual({ ok: true, data: { foo: 'bar' } });
   });
 
   it('strips markdown fences before parsing', async () => {
-    generateContentMock.mockResolvedValue(
-      respondWith('```json\n{"foo":"bar"}\n```'),
-    );
+    fetchMock.mockResolvedValue(okResponse('```json\n{"foo":"bar"}\n```'));
     const result = await service.generateJson<{ foo: string }>('prompt');
     expect(result).toEqual({ ok: true, data: { foo: 'bar' } });
   });
 
   it('returns invalid_response when the model does not return JSON', async () => {
-    generateContentMock.mockResolvedValue(respondWith('not json at all'));
+    fetchMock.mockResolvedValue(okResponse('not json at all'));
     const result = await service.generateJson('prompt');
     expect(result).toEqual({
       ok: false,
@@ -63,38 +63,38 @@ describe('AiService', () => {
       message: expect.any(String),
     });
     // invalid_response is not retryable — only one attempt should be made.
-    expect(generateContentMock).toHaveBeenCalledTimes(1);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
   it('classifies a 429 as rate_limited and retries once', async () => {
-    generateContentMock.mockRejectedValue({ status: 429, message: 'Too Many Requests' });
+    fetchMock.mockResolvedValue(errorResponse(429, 'Too Many Requests'));
     const result = await service.generateJson('prompt');
     expect(result).toEqual({
       ok: false,
       reason: 'rate_limited',
       message: expect.any(String),
     });
-    expect(generateContentMock).toHaveBeenCalledTimes(2);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
   it('succeeds on the retry after a transient failure', async () => {
-    generateContentMock
-      .mockRejectedValueOnce({ status: 500, message: 'Internal error' })
-      .mockResolvedValueOnce(respondWith('{"foo":"bar"}'));
+    fetchMock
+      .mockResolvedValueOnce(errorResponse(500, 'Internal error'))
+      .mockResolvedValueOnce(okResponse('{"foo":"bar"}'));
 
     const result = await service.generateJson<{ foo: string }>('prompt');
     expect(result).toEqual({ ok: true, data: { foo: 'bar' } });
-    expect(generateContentMock).toHaveBeenCalledTimes(2);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
   it('gives up after the retry also fails', async () => {
-    generateContentMock.mockRejectedValue(new Error('network down'));
+    fetchMock.mockRejectedValue(new Error('network down'));
     const result = await service.generateJson('prompt');
     expect(result.ok).toBe(false);
-    expect(generateContentMock).toHaveBeenCalledTimes(2);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
-  it('returns a typed error result without throwing when GEMINI_API_KEY is missing', async () => {
+  it('returns a typed error result without throwing when OPENROUTER_API_KEY is missing', async () => {
     const moduleRef = await Test.createTestingModule({
       providers: [
         AiService,
@@ -105,6 +105,6 @@ describe('AiService', () => {
 
     const result = await unconfigured.generateJson('prompt');
     expect(result.ok).toBe(false);
-    expect(generateContentMock).not.toHaveBeenCalled();
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 });

@@ -10,7 +10,7 @@ import { INTERVIEW_QUESTION_FALLBACKS } from '../src/modules/ai/interview-questi
 
 /**
  * AI proxy e2e coverage (Module 3). `AiService.generateJson` is mocked at
- * the provider level so no real Gemini call ever happens in tests — we
+ * the provider level so no real OpenRouter call ever happens in tests — we
  * control exactly what "the AI" returns per test, including simulated
  * failures, to assert both the success path and every fallback path.
  */
