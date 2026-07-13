@@ -1,5 +1,5 @@
 /**
- * Every prompt sent to OpenRouter lives here as a named, exported builder —
+ * Every prompt sent to Gemini lives here as a named, exported builder —
  * never inlined at the call site. This is the single source referenced by
  * PROMPTS.md (the AI Integration Report deliverable), so a change to a
  * prompt and its documented rationale never drift apart.

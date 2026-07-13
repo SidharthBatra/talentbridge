@@ -1,35 +1,38 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import {
+  GenerativeModel,
+  GoogleGenerativeAI,
+} from '@google/generative-ai';
 import { AiFailureReason, AiResult } from './ai.types';
 
-const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
-const OPENROUTER_MODEL = 'google/gemma-4-31b-it:free';
+const GEMINI_MODEL = 'gemini-2.0-flash';
 const REQUEST_TIMEOUT_MS = 15_000;
 /** Single retry after a short backoff — free-tier rate limits are often a one-request blip. */
 const RETRY_BACKOFF_MS = 1_200;
 
 /**
- * Thin wrapper around OpenRouter's OpenAI-compatible chat completions
- * endpoint. This is the *only* place in the codebase that calls OpenRouter
- * or reads `OPENROUTER_API_KEY` — every AI feature goes through
- * `generateJson()` here, so the key and the request logic are never
- * constructed anywhere reachable from the frontend.
+ * Thin wrapper around the Gemini SDK. This is the *only* place in the
+ * codebase that touches `@google/generative-ai` or reads `GEMINI_API_KEY`
+ * — every AI feature goes through `generateJson()` here, so the key and
+ * the client are never constructed anywhere reachable from the frontend.
  */
 @Injectable()
 export class AiService {
   private readonly logger = new Logger(AiService.name);
-  private readonly apiKey: string | null;
+  private readonly model: GenerativeModel | null;
 
   constructor(private readonly config: ConfigService) {
-    const apiKey = this.config.get<string>('openRouterApiKey');
+    const apiKey = this.config.get<string>('geminiApiKey');
     if (!apiKey) {
       this.logger.warn(
-        'OPENROUTER_API_KEY is not set — AI features will run in fallback mode only.',
+        'GEMINI_API_KEY is not set — AI features will run in fallback mode only.',
       );
-      this.apiKey = null;
+      this.model = null;
       return;
     }
-    this.apiKey = apiKey;
+    const client = new GoogleGenerativeAI(apiKey);
+    this.model = client.getGenerativeModel({ model: GEMINI_MODEL });
   }
 
   /**
@@ -39,45 +42,30 @@ export class AiService {
    * an `AiResult`, so the caller's fallback path is a plain `if (!ok)`.
    */
   async generateJson<T>(prompt: string): Promise<AiResult<T>> {
-    if (!this.apiKey) {
+    if (!this.model) {
       return { ok: false, reason: 'error', message: 'AI service is not configured' };
     }
 
-    const first = await this.attempt<T>(this.apiKey, prompt);
+    const first = await this.attempt<T>(this.model, prompt);
     if (first.ok || !this.isRetryable(first.reason)) {
       return first;
     }
 
-    this.logger.warn(`OpenRouter call failed (${first.reason}), retrying once...`);
+    this.logger.warn(`Gemini call failed (${first.reason}), retrying once...`);
     await this.sleep(RETRY_BACKOFF_MS);
-    return this.attempt<T>(this.apiKey, prompt);
+    return this.attempt<T>(this.model, prompt);
   }
 
-  private async attempt<T>(apiKey: string, prompt: string): Promise<AiResult<T>> {
+  private async attempt<T>(
+    model: GenerativeModel,
+    prompt: string,
+  ): Promise<AiResult<T>> {
     try {
-      const response = await this.withTimeout(
-        fetch(OPENROUTER_URL, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${apiKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: OPENROUTER_MODEL,
-            messages: [{ role: 'user', content: prompt }],
-          }),
-        }),
+      const result = await this.withTimeout(
+        model.generateContent(prompt),
         REQUEST_TIMEOUT_MS,
       );
-
-      if (!response.ok) {
-        return { ok: false, ...(await this.classifyHttpError(response)) };
-      }
-
-      const body = (await response.json()) as {
-        choices?: { message?: { content?: string } }[];
-      };
-      const text = body.choices?.[0]?.message?.content ?? '';
+      const text = result.response.text();
       return this.parseJson<T>(text);
     } catch (err) {
       return { ok: false, ...this.classifyError(err) };
@@ -102,26 +90,14 @@ export class AiService {
     }
   }
 
-  private async classifyHttpError(
-    response: Response,
-  ): Promise<{ reason: AiFailureReason; message: string }> {
-    if (response.status === 429) {
-      return { reason: 'rate_limited', message: 'AI service rate limit reached' };
-    }
-    const body = await response.text().catch(() => '');
-    return {
-      reason: 'error',
-      message: `AI request failed with status ${response.status}: ${body}`,
-    };
-  }
-
   private classifyError(err: unknown): { reason: AiFailureReason; message: string } {
     const message = err instanceof Error ? err.message : String(err);
+    const status = (err as { status?: number })?.status;
 
     if (message === 'timeout') {
       return { reason: 'timeout', message: 'AI request timed out' };
     }
-    if (/429|rate.?limit|quota/i.test(message)) {
+    if (status === 429 || /429|rate.?limit|quota/i.test(message)) {
       return { reason: 'rate_limited', message: 'AI service rate limit reached' };
     }
     return { reason: 'error', message };
