@@ -5,6 +5,7 @@ import { applicationsApi } from '../../api/applications';
 import { apiErrorMessage } from '../../api/client';
 import { interviewsApi } from '../../api/interviews';
 import { jobsApi } from '../../api/jobs';
+import { usersApi } from '../../api/users';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { Input, Select } from '../../components/ui/Input';
@@ -13,7 +14,7 @@ import { PageHeader } from '../../components/ui/PageHeader';
 import { StageBadge } from '../../components/ui/Badge';
 import { EmptyState, ErrorState, LoadingState } from '../../components/ui/States';
 import { toast } from '../../store/toastStore';
-import { ApplicationStage, InterviewType, type Application, type JobPosting } from '../../types';
+import { ApplicationStage, InterviewType, type Application, type JobPosting, type User } from '../../types';
 
 export function ApplicationsForJobPage() {
   const { id } = useParams<{ id: string }>();
@@ -187,27 +188,39 @@ function ScheduleInterviewModal({
   application: Application;
   onClose: () => void;
 }) {
+  const [hiringManagers, setHiringManagers] = useState<User[] | null>(null);
+  const [hiringManagersError, setHiringManagersError] = useState<string | null>(null);
   const [hiringManagerId, setHiringManagerId] = useState('');
   const [type, setType] = useState<InterviewType>(InterviewType.TECHNICAL);
   const [slot1, setSlot1] = useState('');
   const [slot2, setSlot2] = useState('');
   const [saving, setSaving] = useState(false);
 
+  useEffect(() => {
+    usersApi
+      .hiringManagers()
+      .then((users) => {
+        setHiringManagers(users);
+        if (users.length > 0) setHiringManagerId(users[0].id);
+      })
+      .catch((err) => setHiringManagersError(apiErrorMessage(err, 'Could not load hiring managers')));
+  }, []);
+
   const handleSubmit = async () => {
     const slots = [slot1, slot2].filter(Boolean).map((s) => new Date(s).toISOString());
     if (!hiringManagerId || slots.length === 0) {
-      toast.error('Missing details', 'Hiring manager ID and at least one time slot are required.');
+      toast.error('Missing details', 'A hiring manager and at least one time slot are required.');
       return;
     }
     setSaving(true);
     try {
-      const interview = await interviewsApi.propose({
+      await interviewsApi.propose({
         applicationId: application.id,
         hiringManagerId,
         type,
         proposedSlots: slots,
       });
-      toast.success('Interview proposed', `Share interview ID ${interview.id.slice(0, 8)}… with the candidate.`);
+      toast.success('Interview proposed', 'The candidate can now respond from their applications list.');
       onClose();
     } catch (err) {
       toast.error('Could not propose interview', apiErrorMessage(err));
@@ -226,23 +239,37 @@ function ScheduleInterviewModal({
           <Button variant="ghost" onClick={onClose}>
             Cancel
           </Button>
-          <Button onClick={handleSubmit} loading={saving} icon="send">
+          <Button
+            onClick={handleSubmit}
+            loading={saving}
+            icon="send"
+            disabled={!hiringManagerId}
+          >
             Propose
           </Button>
         </>
       }
     >
       <div className="space-y-md">
-        {/* LIMITATION: GET /users is ADMIN-only, so a recruiter has no API
-            to look up hiring manager user ids. Entered manually here as a
-            workaround (see notificationStore.ts for the analogous
-            candidate-side gap). */}
-        <Input
-          label="Hiring Manager User ID"
-          hint="Ask your Admin for the hiring manager's user ID."
-          value={hiringManagerId}
-          onChange={(e) => setHiringManagerId(e.target.value)}
-        />
+        {hiringManagersError && <p className="text-error text-body-md">{hiringManagersError}</p>}
+        {hiringManagers && hiringManagers.length === 0 && !hiringManagersError && (
+          <p className="text-body-md text-on-surface-variant">
+            No hiring managers are set up yet — ask an admin to add one before scheduling.
+          </p>
+        )}
+        {hiringManagers && hiringManagers.length > 0 && (
+          <Select
+            label="Hiring Manager"
+            value={hiringManagerId}
+            onChange={(e) => setHiringManagerId(e.target.value)}
+          >
+            {hiringManagers.map((hm) => (
+              <option key={hm.id} value={hm.id}>
+                {hm.name} ({hm.email})
+              </option>
+            ))}
+          </Select>
+        )}
         <Select label="Interview Type" value={type} onChange={(e) => setType(e.target.value as InterviewType)}>
           <option value={InterviewType.TECHNICAL}>Technical</option>
           <option value={InterviewType.BEHAVIOURAL}>Behavioural</option>

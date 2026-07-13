@@ -48,6 +48,19 @@ export class UsersController {
     return users.map(UserResponseDto.fromEntity);
   }
 
+  @Get('hiring-managers')
+  @Roles(Role.RECRUITER, Role.HIRING_MANAGER, Role.ADMIN)
+  @ApiOperation({
+    summary:
+      'Active hiring managers, for picking one when proposing interview ' +
+      'slots — lets a recruiter select a name instead of typing a user id.',
+  })
+  @ApiOkResponse({ type: [UserResponseDto] })
+  async hiringManagers(): Promise<UserResponseDto[]> {
+    const users = await this.usersService.findActiveByRole(Role.HIRING_MANAGER);
+    return users.map(UserResponseDto.fromEntity);
+  }
+
   @Get(':id')
   @ApiOperation({ summary: 'Get a single user by id (ADMIN only)' })
   @ApiOkResponse({ type: UserResponseDto })

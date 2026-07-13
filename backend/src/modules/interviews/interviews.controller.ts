@@ -75,6 +75,24 @@ export class InterviewsController {
     return interviews.map(InterviewResponseDto.fromEntity);
   }
 
+  @Get('by-application/:applicationId')
+  @Roles(Role.RECRUITER, Role.HIRING_MANAGER, Role.ADMIN)
+  @UseGuards(RolesGuard)
+  @ApiOperation({
+    summary:
+      'Interviews scheduled for a given application (newest first) — lets ' +
+      'the UI attach a "prep"/"reschedule" action directly to an ' +
+      'application card instead of requiring an interview id to be typed in.',
+  })
+  @ApiOkResponse({ type: [InterviewResponseDto] })
+  async byApplication(
+    @Param('applicationId', ParseUUIDPipe) applicationId: string,
+  ): Promise<InterviewResponseDto[]> {
+    const interviews =
+      await this.interviewsService.findByApplicationId(applicationId);
+    return interviews.map(InterviewResponseDto.fromEntity);
+  }
+
   @Get('calendar')
   @ApiQuery({ name: 'userId', required: true, type: String })
   @ApiOperation({

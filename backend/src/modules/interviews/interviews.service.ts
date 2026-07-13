@@ -49,6 +49,19 @@ export class InterviewsService {
   }
 
   /**
+   * All interviews scheduled for a given application (any status), newest
+   * first. Backs UI that needs "the interview for this application" (e.g.
+   * hiring-manager interview prep) without the user having to know or type
+   * an interview id.
+   */
+  findByApplicationId(applicationId: string): Promise<Interview[]> {
+    return this.interviewsRepository.find({
+      where: { applicationId },
+      order: { createdAt: 'DESC' },
+    });
+  }
+
+  /**
    * Interviews awaiting this candidate's response (status PROPOSED), across
    * all of their applications. Backs the "My Applications" view so a
    * candidate can respond directly from a button instead of having to
