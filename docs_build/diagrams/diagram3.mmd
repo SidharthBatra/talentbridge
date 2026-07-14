@@ -1,0 +1,31 @@
+sequenceDiagram
+    participant C as Client (React)
+    participant Ctl as AiController
+    participant Repo as Applications/Jobs/Interviews Services (DB)
+    participant P as prompts.ts (template builder)
+    participant AiS as AiService.generateJson()
+    participant G as Gemini API (gemini-2.5-flash)
+
+    C->>Ctl: POST /ai/... (JwtAuthGuard + RolesGuard)
+    Ctl->>Repo: fetch context (Application/JobPosting/Interview entities)
+    Repo-->>Ctl: entity data (CV text, job title, skills, etc.)
+    Ctl->>P: build*Prompt(context)
+    P-->>Ctl: prompt string (ends with "respond with JSON only")
+    Ctl->>AiS: generateJson<T>(prompt)
+    AiS->>G: model.generateContent(prompt) [15s timeout]
+    alt success, valid JSON
+        G-->>AiS: response text
+        AiS-->>Ctl: { ok: true, data }
+        Ctl-->>C: feature response (isFallback:false / scored:true)
+    else rate_limited / timeout / error (retryable)
+        G-->>AiS: failure
+        AiS->>G: retry once after 1.2s backoff
+        G-->>AiS: success or final failure
+        AiS-->>Ctl: { ok: true, data } or { ok:false, reason, message }
+    else invalid JSON (not retried)
+        G-->>AiS: unparsable text
+        AiS-->>Ctl: { ok:false, reason:"invalid_response" }
+    end
+    opt result.ok === false
+        Ctl-->>C: fallback payload (isFallback:true / scored:false), never a 500
+    end

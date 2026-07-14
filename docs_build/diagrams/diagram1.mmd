@@ -1,0 +1,88 @@
+erDiagram
+    USER ||--o{ APPLICATION : "submits (candidateId)"
+    USER ||--o{ JOB_POSTING : "creates (createdBy)"
+    USER ||--o{ INTERVIEW : "conducts (hiringManagerId)"
+    USER ||--o{ REFRESH_TOKEN : "owns (userId)"
+    JOB_POSTING ||--o{ APPLICATION : "receives (jobPostingId)"
+    APPLICATION ||--o{ INTERVIEW : "scheduled for (applicationId)"
+    APPLICATION ||--o{ OFFER : "results in (applicationId)"
+
+    USER {
+        uuid id PK
+        varchar email UK
+        varchar passwordHash
+        varchar name
+        enum role "CANDIDATE, RECRUITER, HIRING_MANAGER, ADMIN"
+        uuid companyId "nullable"
+        boolean isActive
+        timestamptz createdAt
+        timestamptz updatedAt
+    }
+
+    REFRESH_TOKEN {
+        uuid id PK
+        uuid userId FK
+        varchar tokenHash
+        boolean revoked
+        timestamptz expiresAt
+        timestamptz createdAt
+    }
+
+    JOB_POSTING {
+        uuid id PK
+        varchar title
+        varchar department
+        enum type "full_time, part_time, contract"
+        int salaryBandMin
+        int salaryBandMax
+        text[] requiredSkills
+        text responsibilities
+        text cultureNotes "nullable"
+        enum status "draft, published, closed, archived"
+        uuid createdBy FK
+        timestamptz createdAt
+    }
+
+    APPLICATION {
+        uuid id PK
+        uuid jobPostingId FK
+        uuid candidateId FK
+        varchar cvUrl "nullable"
+        text cvExtractedText "nullable"
+        text coverLetter "nullable"
+        int yearsOfExperience
+        int salaryExpectation "nullable"
+        date availabilityDate "nullable"
+        enum stage "applied..rejected"
+        int aiScore "nullable"
+        text[] aiStrengths "nullable"
+        text[] aiGaps "nullable"
+        timestamptz createdAt
+        timestamptz updatedAt
+    }
+
+    INTERVIEW {
+        uuid id PK
+        uuid applicationId FK
+        timestamptz[] proposedSlots
+        timestamptz confirmedSlot "nullable"
+        enum type "technical, behavioural, final"
+        uuid hiringManagerId FK
+        enum status "proposed, confirmed, cancelled"
+        timestamptz reminderSentAt "nullable"
+        jsonb questions "nullable"
+        timestamptz createdAt
+    }
+
+    OFFER {
+        uuid id PK
+        uuid applicationId FK
+        int salary
+        date startDate
+        text[] benefits
+        text letterText "nullable"
+        enum status "draft, sent, accepted, rejected, negotiating"
+        text counterOffer "nullable"
+        timestamptz createdAt
+        timestamptz updatedAt
+    }

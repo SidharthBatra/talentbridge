@@ -1,0 +1,32 @@
+graph TD
+    App["App.tsx (BrowserRouter)"]
+    App --> Root["/ → RootRedirect (role-based or /login)"]
+    App --> Login["/login → LoginPage"]
+    App --> Register["/register → RegisterPage"]
+
+    App --> PR1["ProtectedRoute allow=[CANDIDATE]"]
+    PR1 --> CandLayout["CandidateLayout"]
+    CandLayout --> CJobs["/candidate/jobs → FindJobsPage"]
+    CandLayout --> CJobDetail["/candidate/jobs/:id → JobDetailsPage"]
+    CandLayout --> CApps["/candidate/applications → MyApplicationsPage"]
+
+    App --> PR2["ProtectedRoute allow=[RECRUITER, ADMIN]"]
+    PR2 --> RecLayout["RecruiterLayout"]
+    RecLayout --> RJobs["/recruiter/jobs → PostingsListPage"]
+    RecLayout --> RJobNew["/recruiter/jobs/new → JobFormPage"]
+    RecLayout --> RJobEdit["/recruiter/jobs/:id/edit → JobFormPage"]
+    RecLayout --> RJobApps["/recruiter/jobs/:id/applications → ApplicationsForJobPage"]
+    RecLayout --> ROffers["/recruiter/offers → OfferResponsesPage"]
+
+    App --> PR3["ProtectedRoute allow=[HIRING_MANAGER, ADMIN]"]
+    PR3 --> HMLayout["HiringManagerLayout"]
+    HMLayout --> HMShortlist["/hiring-manager/shortlist → ShortlistPage"]
+
+    App --> PR4["ProtectedRoute allow=[ADMIN]"]
+    PR4 --> AdminLayout["AdminLayout"]
+    AdminLayout --> AUsers["/admin/users → UserManagementPage"]
+    AdminLayout --> AAnalytics["/admin/analytics → AnalyticsPage"]
+
+    App --> NotFound["* → RootRedirect"]
+
+    App -.shared.-> Shared["Shared: NotificationsProvider, Toaster, DashboardLayout (components/layout)"]
