@@ -11,7 +11,7 @@ iterating on each prompt individually, then applied everywhere:
 
 1. **"Respond with JSON only, no markdown fences" + an exact shape.**
    `AiService.generateJson()` parses the raw model response text as JSON.
-   The model (like most chat-tuned LLMs) defaults to wrapping structured output
+   Gemini (like most chat-tuned LLMs) defaults to wrapping structured output
    in explanatory prose or ` ```json ` fences unless told not to. The parser
    also strips fences defensively as a second line of defense, but the
    instruction cuts failure rate far more than the strip does alone.
